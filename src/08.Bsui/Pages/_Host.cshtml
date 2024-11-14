@@ -1,0 +1,75 @@
+﻿@page "/"
+
+@using Microsoft.AspNetCore.Authentication
+@using Microsoft.AspNetCore.Components.Web
+@using Microsoft.Extensions.Options
+@using IdentityModel
+@using Pertamina.SIMIT.Bsui.Services.AppInfo
+@using Pertamina.SIMIT.Bsui.Services.Authentication
+@using Pertamina.SIMIT.Bsui.Services.FrontEnd
+@using Pertamina.SIMIT.Shared.Common.Constants
+
+@namespace Pertamina.SIMIT.Bsui.Pages
+@addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
+
+@inject IOptions<AppInfoOptions> _appInfoOptions
+@inject IOptions<FrontEndOptions> _frontEndOptions
+@inject IOptions<Services.Authentication.AuthenticationOptions> _authenticationOptions
+
+@{
+    var ipAddress = string.Empty;
+
+    var ptmnIpAddress = HttpContext.Request.Headers[HttpHeaderName.PtmnIpAddress].FirstOrDefault();
+
+    if (!string.IsNullOrWhiteSpace(ptmnIpAddress))
+    {
+        ipAddress = ptmnIpAddress;
+    }
+    else
+    {
+        var remoteIpAddress = HttpContext.Connection.RemoteIpAddress;
+
+        ipAddress = remoteIpAddress is not null ? remoteIpAddress.ToString() : DefaultTextFor.SystemBackgroundJob;
+    }
+
+    var initialApplicationState = new InitialApplicationState
+    {
+        IpAddress = ipAddress
+    };
+}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@_appInfoOptions.Value.FullName</title>
+    <base href="~/" />
+    <link rel="shortcut icon" href='@Url.Content("~/favicon.ico")'>
+    <link href="_content/MudBlazor/MudBlazor.min.css" rel="stylesheet" />
+    <link href="css/site.css" rel="stylesheet" />
+    <link href="Pertamina.SIMIT.Bsui.styles.css" rel="stylesheet" />
+    <component type="typeof(HeadOutlet)" render-mode="ServerPrerendered" />
+</head>
+<body>
+    <component type="typeof(App)" param-InitialApplicationState="initialApplicationState" render-mode="ServerPrerendered" />
+    <div id="blazor-error-ui">
+        Please click <a href="javascript:window.location.reload();"><b>HERE</b></a> to refresh the page. If this issue persists, please contact support. Thank you.
+        <a class="dismiss">🗙</a>
+    </div>
+    <script src="_framework/blazor.server.js" autostart="false"></script>
+    <script>
+        Blazor.start({
+            configureSignalR: function (builder)
+            {
+                builder.withUrl("@Html.Raw(_frontEndOptions.Value.BasePath)/_blazor", {
+                    skipNegotiation: true,
+                    transport: 1
+                });
+            }
+        });
+    </script>
+    <script src="_content/MudBlazor/MudBlazor.min.js"></script>
+    <script src="js/downloadFile.js"></script>
+</body>
+</html>

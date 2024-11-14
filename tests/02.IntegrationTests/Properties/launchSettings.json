@@ -1,0 +1,13 @@
+{
+  "profiles":
+  {
+    "Pertamina.SIMIT.IntegrationTests":
+    {
+      "commandName": "Project",
+      "environmentVariables":
+      {
+        "ASPNETCORE_ENVIRONMENT": "Local"
+      }
+    }
+  }
+}

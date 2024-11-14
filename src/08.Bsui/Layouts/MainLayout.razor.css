@@ -1,0 +1,16 @@
+.logo
+{
+    margin: 16px;
+    background-image: url(~/../img/pertamina.png);
+    background-repeat: no-repeat;
+    background-size: contain;
+    background-position: left center;
+    min-height: 44px;
+}
+
+.main-content
+{
+    position: relative;
+    height: calc(100vh - 64px);
+    padding: 12px 24px 24px 24px;
+}

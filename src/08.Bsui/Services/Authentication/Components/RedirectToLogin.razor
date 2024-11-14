@@ -1,0 +1,6 @@
+﻿@code {
+    protected override void OnInitialized()
+    {
+        _navigationManager.NavigateTo($"Account/Login?returnUrl={Uri.EscapeDataString(_navigationManager.Uri)}", true);
+    }
+}

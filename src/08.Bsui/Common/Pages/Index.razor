@@ -1,0 +1,11 @@
+﻿@page "/"
+
+@using Pertamina.SIMIT.Bsui.Services.AppInfo
+
+@inject IOptions<AppInfoOptions> _appInfoOptions
+
+<MudBreadcrumbs Items="_breadcrumbItems"></MudBreadcrumbs>
+<PageTitle>@CommonDisplayTextFor.Home | @_appInfoOptions.Value.FullName</PageTitle>
+<MudText Typo="Typo.h3">@_greetings</MudText>
+<MudText Typo="Typo.h5" Class="mt-16">Welcome to</MudText>
+<MudText Typo="Typo.h4" Class="mt-4">@_appInfoOptions.Value.FullName</MudText>

@@ -1,0 +1,10 @@
+﻿$env:ASPNETCORE_ENVIRONMENT='Local'
+dotnet tool update --global dotnet-ef
+
+dotnet ef migrations add MySqlSIMITDbContext_001_InitialSchema --context MySqlSIMITDbContext --project src/05.Infrastructure --startup-project src/06.WebApi --output-dir Persistence/MySql/Migrations
+
+dotnet ef migrations remove  --context MySqlSIMITDbContext --project src/05.Infrastructure --startup-project src/06.WebApi
+
+dotnet ef database update --context MySqlSIMITDbContext --project src/05.Infrastructure --startup-project src/06.WebApi
+
+dotnet ef database drop --force --context MySqlSIMITDbContext --project src/05.Infrastructure --startup-project src/06.WebApi

@@ -1,0 +1,40 @@
+[
+  {
+    "id": "30093636",
+    "name": "Kepala Teknologi Informasi",
+    "roleNames":
+    [
+      "Auditor"
+    ],
+    "customParameters":
+    [
+      {
+        "key": "KeyA",
+        "value": "ValueA-30093636"
+      },
+      {
+        "key": "KeyB",
+        "value": "ValueB-30093636"
+      }
+    ]
+  },
+  {
+    "id": "30203779",
+    "name": "Ast Manager Infrastructure Apps Support",
+    "roleNames":
+    [
+      "Doctor"
+    ],
+    "customParameters":
+    [
+      {
+        "key": "KeyA",
+        "value": "ValueA-30203779"
+      },
+      {
+        "key": "KeyB",
+        "value": "ValueB-30203779"
+      }
+    ]
+  }
+]

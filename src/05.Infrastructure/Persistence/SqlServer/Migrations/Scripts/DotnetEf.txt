@@ -1,0 +1,13 @@
+﻿$env:ASPNETCORE_ENVIRONMENT='Local'
+set ASPNETCORE_ENVIRONMENT=Local
+dotnet tool update --global dotnet-ef
+
+dotnet ef migrations add SqlServerSIMITDbContext_001_InitialSchema --context SqlServerSIMITDbContext --project src/05.Infrastructure --startup-project src/06.WebApi --output-dir Persistence/SqlServer/Migrations
+
+dotnet ef migrations remove  --context SqlServerSIMITDbContext --project src/05.Infrastructure --startup-project src/06.WebApi
+
+dotnet ef database update --context SqlServerSIMITDbContext --project src/05.Infrastructure --startup-project src/06.WebApi
+
+dotnet ef database drop --force --context SqlServerSIMITDbContext --project src/05.Infrastructure --startup-project src/06.WebApi
+
+dotnet ef migrations add SqlServerSIMITDbContext_002_MahasiswaSchema --context SqlServerSIMITDbContext --project src/05.Infrastructure --startup-project src/06.WebApi --output-dir Persistence/SqlServer/Migrations

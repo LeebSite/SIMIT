@@ -1,0 +1,67 @@
+[
+  {
+    "id": "a2d5ce89-190e-4fd2-b2ec-9d72df486356",
+    "username": "ticketing.multirole@poffice.pertamina.com",
+    "personas":
+    [
+      {
+        "type": "permanent",
+        "positionIds":
+        [
+        ]
+      },
+      {
+        "type": "temporary",
+        "positionIds":
+        [
+          "30203779",
+          "30093636"
+        ]
+      },
+      {
+        "type": "functional",
+        "positionIds":
+        [
+        ]
+      },
+      {
+        "type": "adhoc",
+        "positionIds":
+        [
+        ]
+      }
+    ]
+  },
+  {
+    "id": "91cadf0c-10b6-43da-be35-583d8cf522a0",
+    "username": "ticketing.superadmin@poffice.pertamina.com",
+    "personas":
+    [
+      {
+        "type": "permanent",
+        "positionIds":
+        [
+          "30093636"
+        ]
+      },
+      {
+        "type": "temporary",
+        "positionIds":
+        [
+        ]
+      },
+      {
+        "type": "functional",
+        "positionIds":
+        [
+        ]
+      },
+      {
+        "type": "adhoc",
+        "positionIds":
+        [
+        ]
+      }
+    ]
+  }
+]

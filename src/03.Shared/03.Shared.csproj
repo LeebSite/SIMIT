@@ -1,0 +1,23 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <TargetFramework>net8.0</TargetFramework>
+    <AssemblyName>Pertamina.SIMIT.Shared</AssemblyName>
+    <RootNamespace>Pertamina.SIMIT.Shared</RootNamespace>
+    <EnforceCodeStyleInBuild>true</EnforceCodeStyleInBuild>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+  </PropertyGroup>
+  <ItemGroup>
+    <PackageReference Include="FluentValidation.DependencyInjectionExtensions" Version="10.4.0" />
+    <PackageReference Include="Microsoft.AspNetCore.Http.Features" Version="5.0.17" />
+    <PackageReference Include="Microsoft.Extensions.Configuration.Abstractions" Version="6.0.0" />
+    <PackageReference Include="Microsoft.Extensions.DependencyInjection.Abstractions" Version="6.0.0" />
+    <PackageReference Include="Microsoft.Extensions.Options.ConfigurationExtensions" Version="6.0.0" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\01.Base\01.Base.csproj" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Pembimbings\Commands\" />
+  </ItemGroup>
+</Project>

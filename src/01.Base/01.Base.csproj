@@ -1,0 +1,10 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <TargetFramework>net8.0</TargetFramework>
+    <AssemblyName>Pertamina.SIMIT.Base</AssemblyName>
+    <RootNamespace>Pertamina.SIMIT.Base</RootNamespace>
+    <EnforceCodeStyleInBuild>true</EnforceCodeStyleInBuild>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+  </PropertyGroup>
+</Project>

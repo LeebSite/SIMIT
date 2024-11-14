@@ -1,0 +1,17 @@
+[
+  {
+    "name": "Auditor",
+    "scopes":
+    [
+      "soltem.audit.index",
+      "soltem.audit.view"
+    ]
+  },
+  {
+    "name": "Doctor",
+    "scopes":
+    [
+      "soltem.healthcheck.view"
+    ]
+  }
+]

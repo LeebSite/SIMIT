@@ -1,0 +1,33 @@
+﻿<Project Sdk="Microsoft.NET.Sdk.Web">
+  <PropertyGroup>
+    <TargetFramework>net8.0</TargetFramework>
+    <AssemblyName>Pertamina.SIMIT.Bsui</AssemblyName>
+    <RootNamespace>Pertamina.SIMIT.Bsui</RootNamespace>
+    <EnforceCodeStyleInBuild>true</EnforceCodeStyleInBuild>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+  </PropertyGroup>
+  <ItemGroup>
+    <PackageReference Include="Azure.Extensions.AspNetCore.DataProtection.Blobs" Version="1.2.1" />
+    <PackageReference Include="Blazored.FluentValidation" Version="2.0.3" />
+    <PackageReference Include="Darnton.Blazor.DeviceInterop" Version="0.1.2" />
+    <PackageReference Include="IdentityModel" Version="6.0.0" />
+    <PackageReference Include="Microsoft.ApplicationInsights.AspNetCore" Version="2.21.0" />
+    <PackageReference Include="Microsoft.AspNetCore.Authentication.JwtBearer" Version="6.0.8" />
+    <PackageReference Include="Microsoft.AspNetCore.Authentication.OpenIdConnect" Version="6.0.8" />
+    <PackageReference Include="MudBlazor" Version="6.0.14" />
+    <PackageReference Include="NWebsec.AspNetCore.Middleware" Version="3.0.0" />
+    <PackageReference Include="NWebsec.AspNetCore.Mvc.TagHelpers" Version="3.0.0" />
+    <PackageReference Include="Serilog.AspNetCore" Version="6.0.1" />
+    <PackageReference Include="Serilog.Enrichers.Context" Version="4.6.0" />
+    <PackageReference Include="Serilog.Enrichers.Environment" Version="2.2.0" />
+    <PackageReference Include="Serilog.Sinks.ApplicationInsights" Version="4.0.0" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\07.Client\07.Client.csproj" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Features\Pembimbings\Components\" />
+    <Folder Include="Features\Pembimbings\Constants\" />
+  </ItemGroup>
+</Project>

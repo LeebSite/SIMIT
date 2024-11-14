@@ -1,0 +1,16 @@
+{
+  "profiles":
+  {
+    "Pertamina.SIMIT.Bsui":
+    {
+      "commandName": "Project",
+      "dotnetRunMessages": "true",
+      "launchBrowser": false,
+      "applicationUrl": "https://localhost:44302",
+      "environmentVariables":
+      {
+        "ASPNETCORE_ENVIRONMENT": "Local"
+      }
+    }
+  }
+}

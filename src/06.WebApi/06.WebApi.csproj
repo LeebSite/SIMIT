@@ -1,0 +1,27 @@
+﻿<Project Sdk="Microsoft.NET.Sdk.Web">
+  <PropertyGroup>
+    <TargetFramework>net8.0</TargetFramework>
+    <AssemblyName>Pertamina.SIMIT.WebApi</AssemblyName>
+    <RootNamespace>Pertamina.SIMIT.WebApi</RootNamespace>
+    <EnforceCodeStyleInBuild>true</EnforceCodeStyleInBuild>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+  </PropertyGroup>
+  <ItemGroup>
+    <PackageReference Include="FluentValidation.AspNetCore" Version="11.2.1" />
+    <PackageReference Include="IdentityServer4.AccessTokenValidation" Version="3.0.1" />
+    <PackageReference Include="Microsoft.AspNetCore.Mvc.NewtonsoftJson" Version="6.0.8" />
+    <PackageReference Include="Microsoft.AspNetCore.Mvc.Versioning" Version="5.0.0" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="6.0.8">
+      <PrivateAssets>all</PrivateAssets>
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+    </PackageReference>
+    <PackageReference Include="Swashbuckle.AspNetCore" Version="6.4.0" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\05.Infrastructure\05.Infrastructure.csproj" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Services\Documentation\description.md" CopyToOutputDirectory="PreserveNewest" />
+  </ItemGroup>
+</Project>

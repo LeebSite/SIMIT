@@ -1,0 +1,16 @@
+﻿{
+  "profiles":
+  {
+    "Pertamina.SIMIT.WebApi":
+    {
+      "commandName": "Project",
+      "dotnetRunMessages": "true",
+      "launchBrowser": false,
+      "applicationUrl": "https://localhost:44301",
+      "environmentVariables":
+      {
+        "ASPNETCORE_ENVIRONMENT": "Local"
+      }
+    }
+  }
+}

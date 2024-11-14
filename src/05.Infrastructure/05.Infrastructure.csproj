@@ -1,0 +1,52 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <TargetFramework>net8.0</TargetFramework>
+    <AssemblyName>Pertamina.SIMIT.Infrastructure</AssemblyName>
+    <RootNamespace>Pertamina.SIMIT.Infrastructure</RootNamespace>
+    <EnforceCodeStyleInBuild>true</EnforceCodeStyleInBuild>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+  </PropertyGroup>
+  <ItemGroup>
+    <PackageReference Include="AspNetCore.HealthChecks.AzureStorage" Version="6.0.4" />
+    <PackageReference Include="AspNetCore.HealthChecks.Hangfire" Version="6.0.2" />
+    <PackageReference Include="AspNetCore.HealthChecks.MySql" Version="6.0.2" />
+    <PackageReference Include="AspNetCore.HealthChecks.Network" Version="6.0.4" />
+    <PackageReference Include="AspNetCore.HealthChecks.SendGrid" Version="6.0.2" />
+    <PackageReference Include="AspNetCore.HealthChecks.SqlServer" Version="6.0.2" />
+    <PackageReference Include="AspNetCore.HealthChecks.UI" Version="6.0.5" />
+    <PackageReference Include="AspNetCore.HealthChecks.UI.Client" Version="6.0.5" />
+    <PackageReference Include="AspNetCore.HealthChecks.UI.MySql.Storage" Version="6.0.5" />
+    <PackageReference Include="AspNetCore.HealthChecks.UI.SqlServer.Storage" Version="6.0.5" />
+    <PackageReference Include="AspNetCore.HealthChecks.Uris" Version="6.0.3" />
+    <PackageReference Include="Azure.Storage.Blobs" Version="12.13.0" />
+    <PackageReference Include="FluentEmail.Core" Version="3.0.2" />
+    <PackageReference Include="FluentEmail.MailKit" Version="3.0.2" />
+    <PackageReference Include="FluentEmail.SendGrid" Version="3.0.2" />
+    <PackageReference Include="Hangfire" Version="1.7.30" />
+    <PackageReference Include="Hangfire.Dashboard.BasicAuthorization" Version="1.0.2" />
+    <PackageReference Include="Hangfire.MySqlStorage" Version="2.0.3" />
+    <PackageReference Include="IdentityModel" Version="6.0.0" />
+    <PackageReference Include="MailKit" Version="3.3.0" />
+    <PackageReference Include="Microsoft.ApplicationInsights.AspNetCore" Version="2.21.0" />
+    <PackageReference Include="Microsoft.AspNetCore.Authentication.JwtBearer" Version="6.0.8" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Relational" Version="6.0.8" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="6.0.8" />
+    <PackageReference Include="Otp.NET" Version="1.2.2" />
+    <PackageReference Include="Pomelo.EntityFrameworkCore.MySql" Version="6.0.2" />
+    <PackageReference Include="QRCoder" Version="1.4.3" />
+    <PackageReference Include="RestSharp" Version="112.1.0" />
+    <PackageReference Include="Serilog" Version="2.11.0" />
+    <PackageReference Include="Serilog.AspNetCore" Version="6.0.1" />
+    <PackageReference Include="Serilog.Enrichers.Context" Version="4.6.0" />
+    <PackageReference Include="Serilog.Enrichers.Environment" Version="2.2.0" />
+    <PackageReference Include="Serilog.Extensions.Logging" Version="3.1.0" />
+    <PackageReference Include="Serilog.Sinks.ApplicationInsights" Version="4.0.0" />
+    <PackageReference Include="System.ServiceModel.Http" Version="4.9.0" />
+    <PackageReference Include="System.ServiceModel.Primitives" Version="4.9.0" />
+    <PackageReference Include="Twilio" Version="5.78.1" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\04.Application\04.Application.csproj" />
+  </ItemGroup>
+</Project>

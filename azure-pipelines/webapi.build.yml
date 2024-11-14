@@ -1,0 +1,76 @@
+name: 'Pertamina.SIMIT.WebApi_Build_$(Date:yyyy.MM.dd)_$(Rev:r)'
+
+trigger:
+  branches:
+    include:
+      - main
+  paths:
+    include:
+      - src/*
+    exclude:
+      - src/07.Client/*
+      - src/08.Bsui/*
+
+pool:
+  vmImage: 'ubuntu-latest'
+
+variables:
+  buildConfiguration: 'Release'
+  versionMajor: 1
+  versionMinor: 0
+  versionPatch: 0
+
+steps:
+- powershell: |
+    $assemblyVersion = "$(versionMajor).$(versionMinor).$(versionPatch)"
+    $mainVersion = "$(versionMajor).$(versionMinor).$(versionPatch).$(Build.BuildNumber)"
+    $commitId = "$(Build.SourceVersion)".Substring(0,7)
+    Write-Host "##vso[task.setvariable variable=mainVersion]$mainVersion"
+    Write-Host "##vso[task.setvariable variable=semanticVersion]$mainVersion+$commitId"
+    Write-Host "##vso[task.setvariable variable=assemblyVersion]$assemblyVersion"
+  displayName: Set Variables
+- powershell: |
+    Write-Host 'mainVersion: $(mainVersion)'
+    Write-Host 'semanticVersion: $(semanticVersion)'
+    Write-Host 'assemblyVersion: $(assemblyVersion)'
+  displayName: Print Variables
+- task: UseDotNet@2
+  inputs:
+    packageType: 'sdk'
+    version: '6.0.x'
+  displayName: Use .NET 6.0
+- task: DotNetCoreCLI@2
+  displayName: Run Unit Tests
+  inputs:
+    command: test
+    projects: './tests/01.UnitTests'
+    arguments: '--collect "Code coverage"'
+    publishTestResults: true
+- task: DotNetCoreCLI@2
+  displayName: Publish WebApi
+  inputs:
+    command: 'publish'
+    projects: './src/06.WebApi'
+    arguments: '--configuration $(buildConfiguration) -p:AssemblyVersion=$(assemblyVersion) -p:FileVersion=$(mainVersion) -p:InformationalVersion=$(semanticVersion) --output $(Build.ArtifactStagingDirectory) -f net6.0'
+    publishWebProjects: false
+    zipAfterPublish: false
+- task: PublishPipelineArtifact@1
+  displayName: Publish Pipeline Artifact
+  inputs:
+    targetPath: '$(Build.ArtifactStagingDirectory)/src'
+    ArtifactName: 'Pertamina.SIMIT.WebApi'
+    publishLocation: 'pipeline'
+- task: DotNetCoreCLI@2
+  displayName: Publish ApiTests
+  inputs:
+    command: 'publish'
+    projects: './tests/03.ApiTests'
+    arguments: '--configuration $(buildConfiguration) -p:AssemblyVersion=$(assemblyVersion) -p:FileVersion=$(mainVersion) -p:InformationalVersion=$(semanticVersion) --output $(Build.ArtifactStagingDirectory) -f net6.0'
+    publishWebProjects: false
+    zipAfterPublish: false
+- task: PublishPipelineArtifact@1
+  displayName: Publish Pipeline Artifact
+  inputs:
+    targetPath: '$(Build.ArtifactStagingDirectory)/tests'
+    ArtifactName: 'Pertamina.SIMIT.ApiTests'
+    publishLocation: 'pipeline'
