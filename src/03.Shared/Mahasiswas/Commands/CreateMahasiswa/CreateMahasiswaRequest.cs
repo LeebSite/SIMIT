@@ -26,7 +26,7 @@ public class CreateMahasiswaRequest
     public string Bagian { get; set; } = default!;
 
     [OpenApiContentType(ContentTypes.TextPlain)]
-    public string PembimbingNip { get; set; } = default!;
+    public Guid PembimbingId { get; set; } = default!;
 
 }
 

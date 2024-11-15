@@ -7,5 +7,4 @@ public class Pembimbing
     public string Jabatan { get; set; } = default!;
 
     public List<Mahasiswa> Mahasiswas { get; set; } = new List<Mahasiswa>();
-
 }

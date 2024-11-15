@@ -1,0 +1,19 @@
+﻿
+using Pertamina.SIMIT.Shared.Common.Extensions;
+
+namespace Pertamina.SIMIT.Shared.Mahasiswas.Constants;
+public class DisplayTextFor
+{
+    public const string Mahasiswas = nameof(Mahasiswas);
+    public const string Mahasiswa = nameof(Mahasiswa);
+
+    public static readonly string ListMahasiswa = nameof(ListMahasiswa).SplitWords();
+
+    public const string Nama = nameof(Nama);
+    public const string Nim = nameof(Nim);
+    public const string Kampus = nameof(Kampus);
+    public static readonly string MulaiMagang = nameof(MulaiMagang).SplitWords();
+    public static readonly string SelesaiMagang = nameof(SelesaiMagang).SplitWords();
+    public const string Bagian = nameof(Bagian);
+    public const string Pembimbing = nameof(Pembimbing);
+}

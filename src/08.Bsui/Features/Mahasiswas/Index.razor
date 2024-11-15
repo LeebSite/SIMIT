@@ -1,5 +1,60 @@
-﻿<h3>Index</h3>
+﻿@page "/Mahasiswas"
 
-@code {
+@using Pertamina.SIMIT.Shared.Mahasiswas.Queries.GetMahasiswas
 
-}
+<BrowserTabTitle>@DisplayTextFor.Mahasiswas</BrowserTabTitle>
+<MudBreadcrumbs Items="_breadcrumbItems"></MudBreadcrumbs>
+<PageHeader Title="@DisplayTextFor.ListMahasiswa" />
+<ErrorViewer Error="_error" />
+
+ <MudTable Elevation="0" Hover="true" Breakpoint="Breakpoint.Sm"
+              FixedHeader="true" Height="@HeightFor.ScrollableTable"
+              @ref="_tableMahasiswas"
+              ServerData="@(new Func<TableState, Task<TableData<GetMahasiswasMahasiswa>>>(ReloadTableApps))"
+              CommitEditTooltip="@($"{CommonDisplayTextFor.Commit} {CommonDisplayTextFor.Edit}")">
+
+	<ToolBarContent>
+			<MudButton Variant="Variant.Filled" Color="Color.Primary" StartIcon="@Icons.Material.Filled.Add" OnClick="ShowDialogAdd">@CommonDisplayTextFor.Add @DisplayTextFor.Mahasiswa</MudButton>
+		<MudSpacer />
+		<MudTextField Adornment="Adornment.Start" AdornmentIcon="@Icons.Material.Filled.Search" Placeholder="@CommonDisplayTextFor.Search" T="string" ValueChanged="@(async(keyword) => await OnSearch(keyword))"></MudTextField>
+	</ToolBarContent>
+
+	<HeaderContent>
+		<MudTh><MudTableSortLabel SortLabel="@nameof(GetMahasiswasMahasiswa.Nama)" T="GetMahasiswasMahasiswa">@DisplayTextFor.Nama</MudTableSortLabel></MudTh>
+		<MudTh><MudTableSortLabel SortLabel="@nameof(GetMahasiswasMahasiswa.Nim)" T="GetMahasiswasMahasiswa">@DisplayTextFor.Nim</MudTableSortLabel></MudTh>
+		<MudTh><MudTableSortLabel SortLabel="@nameof(GetMahasiswasMahasiswa.Kampus)" T="GetMahasiswasMahasiswa">@DisplayTextFor.Kampus</MudTableSortLabel></MudTh>
+		<MudTh><MudTableSortLabel SortLabel="@nameof(GetMahasiswasMahasiswa.MulaiMagang)" T="GetMahasiswasMahasiswa">@DisplayTextFor.MulaiMagang</MudTableSortLabel></MudTh>
+		<MudTh><MudTableSortLabel SortLabel="@nameof(GetMahasiswasMahasiswa.SelesaiMagang)" T="GetMahasiswasMahasiswa">@DisplayTextFor.SelesaiMagang</MudTableSortLabel></MudTh>
+		<MudTh><MudTableSortLabel SortLabel="@nameof(GetMahasiswasMahasiswa.Bagian)" T="GetMahasiswasMahasiswa">@DisplayTextFor.Bagian</MudTableSortLabel></MudTh>
+		<MudTh><MudTableSortLabel SortLabel="@nameof(GetMahasiswasMahasiswa.Pembimbing)" T="GetMahasiswasMahasiswa">@DisplayTextFor.Pembimbing</MudTableSortLabel></MudTh>
+	</HeaderContent>
+
+	<RowTemplate>
+		<MudTd DataLabel="@DisplayTextFor.Nama">
+			<MudLink Href="@RouteFor.Details(context.Id)">
+				<MudHighlighter Text="@context.Nama" HighlightedText="@_searchKeyword" />
+			</MudLink>
+		</MudTd>
+		<MudTd DataLabel="@DisplayTextFor.Nim">
+			<MudHighlighter Text="@context.Nim" HighlightedText="@_searchKeyword" />
+		</MudTd>
+		<MudTd DataLabel="@DisplayTextFor.Kampus">
+			<MudHighlighter Text="@context.Kampus.ToString()" HighlightedText="@_searchKeyword" />
+		</MudTd>
+		<MudTd DataLabel="@DisplayTextFor.MulaiMagang">
+			<MudHighlighter Text="@context.MulaiMagang.ToString()" HighlightedText="@_searchKeyword" />
+		</MudTd>
+		<MudTd DataLabel="@DisplayTextFor.SelesaiMagang">
+			<MudHighlighter Text="@context.SelesaiMagang.ToString()" HighlightedText="@_searchKeyword" />
+		</MudTd>
+		<MudTd DataLabel="@DisplayTextFor.Bagian">
+			<MudHighlighter Text="@context.Bagian.ToString()" HighlightedText="@_searchKeyword" />
+		</MudTd>
+		<MudTd DataLabel="@DisplayTextFor.Pembimbing">
+			<MudHighlighter Text="@context.Pembimbing.ToString()" HighlightedText="@_searchKeyword" />
+		</MudTd>
+	</RowTemplate>
+	<PagerContent>
+		<MudTablePager />
+	</PagerContent>
+ </MudTable>
