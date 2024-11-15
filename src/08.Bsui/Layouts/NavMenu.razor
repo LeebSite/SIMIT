@@ -1,5 +1,6 @@
 ﻿<MudNavMenu>
     <MudNavLink Icon="@Icons.Material.Filled.Home" Match="NavLinkMatch.All" Href="@CommonRouteFor.Index">@CommonDisplayTextFor.Home</MudNavLink>
+<<<<<<< HEAD
     @* <AuthorizeView> *@
     @*     <Authorized> *@
     @*         <!-- #region Business Menus --> *@
@@ -18,5 +19,16 @@
 					 Title="@Pertamina.SIMIT.Shared.Mahasiswas.Constants.DisplayTextFor.Mahasiswas">
 			<MudNavLink Icon="@Icons.Material.Filled.List" Href="@Features.Mahasiswas.Constants.RouteFor.Index">@Pertamina.SIMIT.Shared.Mahasiswas.Constants.DisplayTextFor.Mahasiswa</MudNavLink>
 		</MudNavGroup>
+=======
+            <!-- #region Business Menus -->
+            <!-- #endregion Business Menus -->
+	<MudNavGroup Icon="@Icons.Material.Filled.AdminPanelSettings"
+				 ExpandIcon="@Icons.Material.Filled.ExpandMore"
+				 Expanded="true"
+				 Title="@Pertamina.SIMIT.Shared.Pembimbings.Constants.DisplayTextFor.Pembimbings">
+		<MudNavLink Icon="@Icons.Material.Filled.List" Href="@Features.Pembimbings.Constants.RouteFor.Index">@Pertamina.SIMIT.Shared.Pembimbings.Constants.DisplayTextFor.Pembimbing</MudNavLink>
+	</MudNavGroup>
+    <MudNavLink Icon="@Icons.Material.Filled.EventNote" Href="@Features.Audits.Constants.RouteFor.Index">@SIMIT.Shared.Audits.Constants.DisplayTextFor.Audits</MudNavLink>
+>>>>>>> 6e05457117d4ac72df6581e6b5ade23aae2a00b2
     <MudNavLink Icon="@Icons.Material.Filled.Countertops" Href="@CommonRouteFor.About">@CommonDisplayTextFor.About</MudNavLink>
 </MudNavMenu>
