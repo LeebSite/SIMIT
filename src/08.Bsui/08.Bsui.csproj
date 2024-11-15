@@ -28,6 +28,5 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Features\Pembimbings\Components\" />
-    <Folder Include="Features\Pembimbings\Constants\" />
   </ItemGroup>
 </Project>

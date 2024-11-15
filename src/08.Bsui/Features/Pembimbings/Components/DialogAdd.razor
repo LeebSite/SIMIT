@@ -1,0 +1,35 @@
+﻿@using Pertamina.SIMIT.Shared.Pembimbings.Constants
+<MudDialog>
+	<DialogContent>
+		<LoadingLinear IsVisible="_isLoading" />
+		<ErrorViewer Error="_error" />
+		<EditForm Model="Request" OnInvalidSubmit="OnInvalidSubmit" OnValidSubmit="OnValidSubmit">
+			<FluentValidationValidator />
+			<MudFocusTrap>
+				<MudGrid>
+					<MudItem xs="12">
+						<MudTextField Label="@DisplayTextFor.Nama"
+									  Required="true"
+									  Placeholder="@($"{DisplayTextFor.Pembimbing} {DisplayTextFor.Nama}")"
+									  @bind-Value="Request.Nama" />
+						<MudTextField Label="@DisplayTextFor.Nip"
+									  Required="true"
+									  Placeholder="@($"{DisplayTextFor.Nip} {DisplayTextFor.Nip}")"
+									  @bind-Value="Request.Nip" />
+						<MudTextField Label="@DisplayTextFor.Jabatan"
+									  Required="true"
+									  Placeholder="@($"{DisplayTextFor.Pembimbing} {DisplayTextFor.Jabatan}")"
+									  @bind-Value="Request.Jabatan" />
+					</MudItem>
+				</MudGrid>
+				<BottomButtonPanel>
+					<MudButton Variant="Variant.Filled" Color="Color.Default" OnClick="Cancel">@CommonDisplayTextFor.Cancel</MudButton>
+					<MudButton Variant="Variant.Filled" Color="Color.Primary" ButtonType="ButtonType.Submit">@CommonDisplayTextFor.Add</MudButton>
+				</BottomButtonPanel>
+			</MudFocusTrap>
+		</EditForm>
+	</DialogContent>
+</MudDialog>
+
+
+

@@ -1,15 +1,13 @@
 ﻿<MudNavMenu>
     <MudNavLink Icon="@Icons.Material.Filled.Home" Match="NavLinkMatch.All" Href="@CommonRouteFor.Index">@CommonDisplayTextFor.Home</MudNavLink>
-    <AuthorizeView>
-        <Authorized>
             <!-- #region Business Menus -->
             <!-- #endregion Business Menus -->
-
-            @if (context.User.HasPermission(Permissions.SolTem_Audit_Index))
-            {
-                <MudNavLink Icon="@Icons.Material.Filled.EventNote" Href="@Features.Audits.Constants.RouteFor.Index">@SIMIT.Shared.Audits.Constants.DisplayTextFor.Audits</MudNavLink>
-            }
-        </Authorized>
-    </AuthorizeView>
+	<MudNavGroup Icon="@Icons.Material.Filled.AdminPanelSettings"
+				 ExpandIcon="@Icons.Material.Filled.ExpandMore"
+				 Expanded="true"
+				 Title="@Pertamina.SIMIT.Shared.Pembimbings.Constants.DisplayTextFor.Pembimbings">
+		<MudNavLink Icon="@Icons.Material.Filled.List" Href="@Features.Pembimbings.Constants.RouteFor.Index">@Pertamina.SIMIT.Shared.Pembimbings.Constants.DisplayTextFor.Pembimbing</MudNavLink>
+	</MudNavGroup>
+    <MudNavLink Icon="@Icons.Material.Filled.EventNote" Href="@Features.Audits.Constants.RouteFor.Index">@SIMIT.Shared.Audits.Constants.DisplayTextFor.Audits</MudNavLink>
     <MudNavLink Icon="@Icons.Material.Filled.Countertops" Href="@CommonRouteFor.About">@CommonDisplayTextFor.About</MudNavLink>
 </MudNavMenu>

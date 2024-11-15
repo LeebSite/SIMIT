@@ -50,6 +50,16 @@ public class PembimbingService
         return restResponse.ToResponseResult<ListResponse<GetPembimbingsList>>();
     }
 
+    public async Task<ResponseResult<PaginatedListResponse<GetPembimbingsPembimbing>>> GetPembimbingsAsync(PaginatedListRequest request)
+    {
+        var restRequest = new RestRequest(string.Empty, Method.Get);
+        restRequest.AddQueryParameters(request);
+
+        var restResponse = await _restClient.ExecuteAsync(restRequest);
+
+        return restResponse.ToResponseResult<PaginatedListResponse<GetPembimbingsPembimbing>>();
+    }
+
     public async Task<ResponseResult<GetPembimbingResponse>> GetPembimbingAsync(Guid pembimbingId)
     {
         var restRequest = new RestRequest(pembimbingId.ToString(), Method.Get);
