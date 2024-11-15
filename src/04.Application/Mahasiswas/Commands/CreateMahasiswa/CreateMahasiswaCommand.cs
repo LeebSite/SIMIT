@@ -39,11 +39,11 @@ public class CreateMahasiswaCommandHandler : IRequestHandler<CreateMahasiswaComm
 
         var pembimbing = await _context.Pembimbings
             .AsNoTracking()
-            .SingleOrDefaultAsync(p => p.Nip == request.PembimbingNip, cancellationToken);
+            .SingleOrDefaultAsync(p => p.PembimbingId == request.PembimbingId, cancellationToken);
 
         if (pembimbing == null)
         {
-            throw new NotFoundException($"Pembimbing with Nip '{request.PembimbingNip}' was not found.");
+            throw new NotFoundException($"Pembimbing with Nip '{request.PembimbingId}' was not found.");
         }
 
         var mahasiswa = new Mahasiswa

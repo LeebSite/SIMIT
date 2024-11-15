@@ -1,0 +1,29 @@
+﻿<MudDialog>
+    <DialogContent>
+        <MudProgressLinear Indeterminate="true" Visible="_isLoading" />
+
+        <EditForm Model="Request" OnValidSubmit="HandleValidSubmit">
+            <FluentValidationValidator />
+            <MudGrid>
+                <MudItem xs="12">
+                    <MudTextField Label="Nama" @bind-Value="Request.Nama" Required="true" />
+                    <MudTextField Label="NIM" @bind-Value="Request.Nim" Required="true" />
+                    <MudTextField Label="Kampus" @bind-Value="Request.Kampus" Required="true" />
+                    <MudDatePicker Label="Mulai Magang" @bind-Value="Request.MulaiMagang" Required="true" MaxDate="DateTime.Now" />
+                    <MudDatePicker Label="Selesai Magang" @bind-Value="Request.SelesaiMagang" Required="true" MinDate="Request.SelesaiMagang"  />
+                    <MudTextField Label="Bagian" @bind-Value="Request.Bagian" Required="true" />
+                    <MudSelect Label="Pembimbing" T="Guid" @bind-Value="Request.PembimbingId" Required="true">
+                        @foreach (var pembimbing in _pembimbingList)
+                        {
+                            <MudSelectItem Value="@pembimbing.PembimbingId">@pembimbing.Nama</MudSelectItem>
+                        }
+                    </MudSelect>
+                </MudItem>
+            </MudGrid>
+            <BottomButtonPanel>
+                <MudButton Variant="Variant.Filled" Color="Color.Default" OnClick="Cancel">@CommonDisplayTextFor.Cancel</MudButton>
+                <MudButton Variant="Variant.Filled" Color="Color.Primary" ButtonType="ButtonType.Submit">@CommonDisplayTextFor.Add</MudButton>
+            </BottomButtonPanel>
+        </EditForm>
+    </DialogContent>
+</MudDialog>
