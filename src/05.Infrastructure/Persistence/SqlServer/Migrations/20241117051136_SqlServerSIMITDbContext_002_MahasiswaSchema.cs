@@ -14,14 +14,16 @@ namespace Pertamina.SIMIT.Infrastructure.Persistence.SqlServer.Migrations
                 schema: "SIMIT",
                 columns: table => new
                 {
-                    PembimbingId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     Nama = table.Column<string>(type: "nvarchar(100)", nullable: false),
                     Nip = table.Column<string>(type: "nvarchar(100)", nullable: false),
-                    Jabatan = table.Column<string>(type: "nvarchar(100)", nullable: false)
+                    Jabatan = table.Column<string>(type: "nvarchar(100)", nullable: false),
+                    Created = table.Column<DateTimeOffset>(type: "datetimeoffset", nullable: false),
+                    CreatedBy = table.Column<string>(type: "nvarchar(max)", nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Pembimbings", x => x.PembimbingId);
+                    table.PrimaryKey("PK_Pembimbings", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
@@ -51,7 +53,7 @@ namespace Pertamina.SIMIT.Infrastructure.Persistence.SqlServer.Migrations
                         column: x => x.PembimbingId,
                         principalSchema: "SIMIT",
                         principalTable: "Pembimbings",
-                        principalColumn: "PembimbingId",
+                        principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                 });
 

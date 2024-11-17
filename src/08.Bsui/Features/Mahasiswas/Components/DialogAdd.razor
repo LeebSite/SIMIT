@@ -15,7 +15,7 @@
                     <MudSelect Label="Pembimbing" T="Guid" @bind-Value="Request.PembimbingId" Required="true">
                         @foreach (var pembimbing in _pembimbingList)
                         {
-                            <MudSelectItem Value="@pembimbing.PembimbingId">@pembimbing.Nama</MudSelectItem>
+                            <MudSelectItem Value="@pembimbing.Id">@pembimbing.Nama</MudSelectItem>
                         }
                     </MudSelect>
                 </MudItem>

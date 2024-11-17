@@ -3,7 +3,7 @@
 namespace Pertamina.SIMIT.Shared.Pembimbings.Queries.GetPembimbing;
 public class GetPembimbingResponse : Response
 {
-    public Guid PembimbingId { get; set; }
+    public Guid Id { get; set; }
 
     public string Nama { get; set; } = default!;
     public string Nip { get; set; } = default!;

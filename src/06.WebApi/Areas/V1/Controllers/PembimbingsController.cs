@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Pertamina.SIMIT.Application.Pembimbings.Commands.CreatePembimbing;
+using Pertamina.SIMIT.Application.Pembimbings.Queries.GetPembimbing;
 using Pertamina.SIMIT.Application.Pembimbings.Queries.GetPembimbingList;
 using Pertamina.SIMIT.Application.Pembimbings.Queries.GetPembimbings;
 using Pertamina.SIMIT.Shared.Common.Constants;
@@ -30,7 +31,7 @@ public class PembimbingsController : ApiControllerBase
     //[ProducesResponseType(StatusCodes.Status404NotFound)]
     public async Task<ActionResult<GetPembimbingResponse>> GetPembimbing([FromRoute] Guid pembimbingId)
     {
-        return await Mediator.Send(new GetPembimbingsQuery { PembimbingId = pembimbingId });
+        return await Mediator.Send(new GetPembimbingQuery { PembimbingId = pembimbingId });
     }
 
     [HttpGet]

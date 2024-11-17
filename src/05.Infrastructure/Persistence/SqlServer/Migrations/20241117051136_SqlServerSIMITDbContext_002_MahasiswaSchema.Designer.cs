@@ -12,7 +12,7 @@ using Pertamina.SIMIT.Infrastructure.Persistence.SqlServer;
 namespace Pertamina.SIMIT.Infrastructure.Persistence.SqlServer.Migrations
 {
     [DbContext(typeof(SqlServerSIMITDbContext))]
-    [Migration("20241112211229_SqlServerSIMITDbContext_002_MahasiswaSchema")]
+    [Migration("20241117051136_SqlServerSIMITDbContext_002_MahasiswaSchema")]
     partial class SqlServerSIMITDbContext_002_MahasiswaSchema
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -216,9 +216,16 @@ namespace Pertamina.SIMIT.Infrastructure.Persistence.SqlServer.Migrations
 
             modelBuilder.Entity("Pertamina.SIMIT.Domain.Entities.Pembimbing", b =>
                 {
-                    b.Property<Guid>("PembimbingId")
+                    b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier");
+
+                    b.Property<DateTimeOffset>("Created")
+                        .HasColumnType("datetimeoffset");
+
+                    b.Property<string>("CreatedBy")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Jabatan")
                         .IsRequired()
@@ -232,7 +239,7 @@ namespace Pertamina.SIMIT.Infrastructure.Persistence.SqlServer.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(100)");
 
-                    b.HasKey("PembimbingId");
+                    b.HasKey("Id");
 
                     b.ToTable("Pembimbings", "SIMIT");
                 });
