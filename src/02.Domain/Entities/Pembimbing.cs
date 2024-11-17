@@ -1,7 +1,8 @@
-﻿namespace Pertamina.SIMIT.Domain.Entities;
-public class Pembimbing
+﻿using Pertamina.SIMIT.Domain.Abstracts;
+
+namespace Pertamina.SIMIT.Domain.Entities;
+public class Pembimbing : Entity
 {
-    public Guid PembimbingId { get; set; }
     public string Nama { get; set; } = default!;
     public string Nip { get; set; } = default!;
     public string Jabatan { get; set; } = default!;

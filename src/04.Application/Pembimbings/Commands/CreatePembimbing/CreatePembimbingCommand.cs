@@ -32,11 +32,11 @@ public class CreatePembimbingCommandHandler : IRequestHandler<CreatePembimbingCo
     {
         var pembimbingWithTheSameName = await _context.Pembimbings
             .AsNoTracking()
-            .SingleOrDefaultAsync(cancellationToken);
+            .SingleOrDefaultAsync(x => x.Nama == request.Nama, cancellationToken);
 
         var pembimbing = new Pembimbing
         {
-            PembimbingId = Guid.NewGuid(),
+            Id = Guid.NewGuid(),
             Nama = request.Nama,
             Nip = request.Nip,
             Jabatan = request.Jabatan,
@@ -47,7 +47,7 @@ public class CreatePembimbingCommandHandler : IRequestHandler<CreatePembimbingCo
 
         return new CreatePembimbingResponse
         {
-            PembimbingId = pembimbing.PembimbingId
+            PembimbingId = pembimbing.Id
         };
     }
 }

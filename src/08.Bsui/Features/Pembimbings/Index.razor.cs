@@ -3,8 +3,10 @@ using Pertamina.SIMIT.Bsui.Common.Constants;
 using Pertamina.SIMIT.Bsui.Common.Extensions;
 using Pertamina.SIMIT.Bsui.Features.Pembimbings.Components;
 using Pertamina.SIMIT.Bsui.Features.Pembimbings.Constants;
+using Pertamina.SIMIT.Client.Services.BackEnd;
 using Pertamina.SIMIT.Shared.Common.Constants;
 using Pertamina.SIMIT.Shared.Common.Responses;
+using Pertamina.SIMIT.Shared.Mahasiswas.Queries.GetMahasiswas;
 using Pertamina.SIMIT.Shared.Pembimbings.Commands.CreatePembimbing;
 using Pertamina.SIMIT.Shared.Pembimbings.Constants;
 using Pertamina.SIMIT.Shared.Pembimbings.Queries.GetPembimbings;
@@ -45,7 +47,7 @@ public partial class Index
 
         var tableData = new TableData<GetPembimbingsPembimbing>();
         var request = state.ToPaginatedListRequest(_searchKeyword);
-        var response = await _pembimbingService.GetPembimbingAsync(request);
+        var response = await _pembimbingService.GetPembimbingsAsync(request);
 
         _error = response.Error;
 
@@ -70,10 +72,13 @@ public partial class Index
     {
         var request = new CreatePembimbingRequest();
 
+        // Debugging nilai awal request
+        Console.WriteLine($"Request: {request.Nama}, {request.Nip}, {request.Jabatan}");
+
         var parameters = new DialogParameters
-        {
-            { nameof(DialogAdd.Request), request }
-        };
+    {
+        { nameof(DialogAdd.Request), request }
+    };
 
         var dialog = _dialogService.Show<DialogAdd>($"{CommonDisplayTextFor.Add} {DisplayTextFor.Pembimbing}", parameters);
         var result = await dialog.Result;
@@ -86,4 +91,5 @@ public partial class Index
             _navigationManager.NavigateTo(RouteFor.Details(id));
         }
     }
+
 }

@@ -1,12 +1,14 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Pertamina.SIMIT.Application.Pembimbings.Commands.CreatePembimbing;
-using Pertamina.SIMIT.Application.Pembimbings.Queries.GetPembimbing;
 using Pertamina.SIMIT.Application.Pembimbings.Queries.GetPembimbingList;
+using Pertamina.SIMIT.Application.Pembimbings.Queries.GetPembimbings;
 using Pertamina.SIMIT.Shared.Common.Constants;
 using Pertamina.SIMIT.Shared.Common.Responses;
 using Pertamina.SIMIT.Shared.Pembimbings.Commands.CreatePembimbing;
 using Pertamina.SIMIT.Shared.Pembimbings.Constants;
+//using Pertamina.SIMIT.Shared.Pembimbings.Constants;
 using Pertamina.SIMIT.Shared.Pembimbings.Queries.GetPembimbing;
+using Pertamina.SIMIT.Shared.Pembimbings.Queries.GetPembimbings;
 using Pertamina.SIMIT.Shared.Pembimbings.Queries.GetPembimbingsList;
 
 namespace Pertamina.SIMIT.WebApi.Areas.V1.Controllers;
@@ -23,12 +25,19 @@ public class PembimbingsController : ApiControllerBase
         return CreatedAtAction(nameof(CreatePembimbing), await Mediator.Send(command));
     }
 
-    [HttpGet]
+    [HttpGet(ApiEndPoint.V1.Pembimbings.RouteTemplateFor.PembimbingId)]
     [Produces(typeof(GetPembimbingResponse))]
     //[ProducesResponseType(StatusCodes.Status404NotFound)]
     public async Task<ActionResult<GetPembimbingResponse>> GetPembimbing([FromRoute] Guid pembimbingId)
     {
-        return await Mediator.Send(new GetPembimbingQuery { PembimbingId = pembimbingId });
+        return await Mediator.Send(new GetPembimbingsQuery { PembimbingId = pembimbingId });
+    }
+
+    [HttpGet]
+    [Produces(typeof(PaginatedListResponse<GetPembimbingsPembimbing>))]
+    public async Task<ActionResult<PaginatedListResponse<GetPembimbingsPembimbing>>> GetPembimbings([FromQuery] GetPembimbingsQuery query)
+    {
+        return await Mediator.Send(query);
     }
 
     [HttpGet(ApiEndPoint.V1.Pembimbings.RouteTemplateFor.List)]

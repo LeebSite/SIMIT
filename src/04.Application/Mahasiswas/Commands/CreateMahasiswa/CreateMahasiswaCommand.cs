@@ -39,7 +39,7 @@ public class CreateMahasiswaCommandHandler : IRequestHandler<CreateMahasiswaComm
 
         var pembimbing = await _context.Pembimbings
             .AsNoTracking()
-            .SingleOrDefaultAsync(p => p.PembimbingId == request.PembimbingId, cancellationToken);
+            .SingleOrDefaultAsync(p => p.Id == request.PembimbingId, cancellationToken);
 
         if (pembimbing == null)
         {
@@ -55,7 +55,7 @@ public class CreateMahasiswaCommandHandler : IRequestHandler<CreateMahasiswaComm
             MulaiMagang = request.MulaiMagang,
             SelesaiMagang = request.SelesaiMagang,
             Bagian = request.Bagian,
-            PembimbingId = pembimbing.PembimbingId, // Set the foreign key
+            PembimbingId = pembimbing.Id, // Set the foreign key
         };
 
         _context.Mahasiswas.Add(mahasiswa);

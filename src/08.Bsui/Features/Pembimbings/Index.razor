@@ -13,7 +13,7 @@
 			  FixedHeader="true" Height="@HeightFor.ScrollableTable"
 			  @ref="_tablePembimbings"
 			  ServerData="@(new Func<TableState, Task<TableData<GetPembimbingsPembimbing>>>(ReloadTablePembimbings))">
-		<ToolBarContent>	
+		<ToolBarContent>
 				<MudButton Variant="Variant.Filled" Color="Color.Primary" StartIcon="@Icons.Material.Filled.Add" OnClick="ShowDialogAdd">@CommonDisplayTextFor.Add @DisplayTextFor.Pembimbing</MudButton>		
 			<MudSpacer />
 			<MudTextField Adornment="Adornment.Start" AdornmentIcon="@Icons.Material.Filled.Search" Placeholder="@CommonDisplayTextFor.Search" T="string" ValueChanged="@(async(keyword) => await OnSearch(keyword))"></MudTextField>

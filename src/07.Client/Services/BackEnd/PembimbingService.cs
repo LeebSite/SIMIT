@@ -22,7 +22,18 @@ public class PembimbingService
         _restClient.AddUserInfo(userInfo);
     }
 
+    //public async Task<ResponseResult<CreatePembimbingResponse>> CreatePembimbingAsync(CreatePembimbingRequest request)
+    //{
+    //    var restRequest = new RestRequest(string.Empty, Method.Post);
+    //    restRequest.AddParameters(request);
+
+    //    var restResponse = await _restClient.ExecuteAsync(restRequest);
+
+    //    return restResponse.ToResponseResult<CreatePembimbingResponse>();
+    //}
+
     public async Task<ResponseResult<CreatePembimbingResponse>> CreatePembimbingAsync(CreatePembimbingRequest request)
+
     {
         var restRequest = new RestRequest(string.Empty, Method.Post);
         restRequest.AddParameters(request);

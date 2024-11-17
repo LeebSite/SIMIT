@@ -11,7 +11,7 @@ public class ApiEndPoint
             public static class RouteTemplateFor
             {
                 public const string PembimbingId = "{pembimbingId:guid}";
-                public const string UpdatePembimbings = nameof(UpdatePembimbings);
+                //public const string UpdatePembimbings = nameof(UpdatePembimbings);
                 public const string List = nameof(List);
             }
         }
