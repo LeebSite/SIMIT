@@ -17,10 +17,10 @@ public class CreateMahasiswaRequest
     public string Kampus { get; set; } = default!;
 
     [OpenApiContentType(ContentTypes.TextPlain)]
-    public DateTime MulaiMagang { get; set; } = default!;
+    public DateTime MulaiMagang { get; set; } = DateTime.MinValue;
 
     [OpenApiContentType(ContentTypes.TextPlain)]
-    public DateTime SelesaiMagang { get; set; } = default!;
+    public DateTime SelesaiMagang { get; set; } = DateTime.MinValue;
 
     [OpenApiContentType(ContentTypes.TextPlain)]
     public string Bagian { get; set; } = default!;
@@ -47,10 +47,14 @@ public class CreateMahasiswaRequestValidator : AbstractValidator<CreateMahasiswa
           .MaximumLength(MaximumLengthFor.Kampus);
 
         RuleFor(v => v.MulaiMagang)
-          .NotEmpty();
+         .NotEmpty()
+         .Must(date => date != DateTime.MinValue)
+         .WithMessage("Tanggal mulai magang harus diisi.");
 
         RuleFor(v => v.SelesaiMagang)
-          .NotEmpty();
+          .NotEmpty()
+          .Must(date => date != DateTime.MinValue)
+          .WithMessage("Tanggal selesai magang harus diisi.");
 
         RuleFor(v => v.Bagian)
           .NotEmpty()

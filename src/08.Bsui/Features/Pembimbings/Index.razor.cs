@@ -83,7 +83,7 @@ public partial class Index
             var id = (Guid)result.Data;
 
             _snackbar.AddSuccess(SuccessMessageFor.Action(DisplayTextFor.Pembimbing, CommonDisplayTextFor.Created));
-            _navigationManager.NavigateTo(RouteFor.Details(id));
+            _navigationManager.NavigateTo(RouteFor.Index, forceLoad: true);
         }
     }
 
