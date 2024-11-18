@@ -4,7 +4,6 @@ using Microsoft.EntityFrameworkCore;
 using Pertamina.SIMIT.Application.Common.Mappings;
 using Pertamina.SIMIT.Application.Services.Persistence;
 using Pertamina.SIMIT.Domain.Entities;
-using Pertamina.SIMIT.Shared.Mahasiswas.Queries.GetMahasiswa;
 using Pertamina.SIMIT.Shared.Pembimbings.Queries.GetPembimbing;
 
 namespace Pertamina.SIMIT.Application.Pembimbings.Queries.GetPembimbing;

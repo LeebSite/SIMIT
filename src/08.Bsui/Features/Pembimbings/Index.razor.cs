@@ -70,9 +70,6 @@ public partial class Index
     {
         var request = new CreatePembimbingRequest();
 
-        // Debugging nilai awal request
-        Console.WriteLine($"Request: {request.Nama}, {request.Nip}, {request.Jabatan}");
-
         var parameters = new DialogParameters
     {
         { nameof(DialogAdd.Request), request }
