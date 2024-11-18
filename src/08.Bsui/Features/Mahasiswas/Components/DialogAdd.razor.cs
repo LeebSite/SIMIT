@@ -1,5 +1,7 @@
 using Microsoft.AspNetCore.Components;
+using Microsoft.AspNetCore.Components.Forms;
 using MudBlazor;
+using Pertamina.SIMIT.Bsui.Common.Extensions;
 using Pertamina.SIMIT.Shared.Common.Responses;
 using Pertamina.SIMIT.Shared.Mahasiswas.Commands.CreateMahasiswa;
 using Pertamina.SIMIT.Shared.Pembimbings.Queries.GetPembimbingsList;
@@ -26,8 +28,10 @@ public partial class DialogAdd
         }
     }
 
-    private async Task HandleValidSubmit()
+    private async Task OnValidSubmit()
     {
+        _error = null;
+
         _isLoading = true;
         var response = await _mahasiswaService.CreateMahasiswaAsync(Request);
         _isLoading = false;
@@ -35,6 +39,7 @@ public partial class DialogAdd
         if (response.Error is not null)
         {
             _error = response.Error;
+
             return;
         }
 
@@ -44,5 +49,9 @@ public partial class DialogAdd
     private void Cancel()
     {
         MudDialog.Cancel();
+    }
+    private void OnInvalidSubmit(EditContext editContext)
+    {
+        _snackbar.AddErrors(editContext.GetValidationMessages());
     }
 }
