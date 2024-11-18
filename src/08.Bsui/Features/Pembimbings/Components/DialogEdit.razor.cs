@@ -30,7 +30,7 @@ public partial class DialogEdit
 
         var response = await _pembimbingService.UpdatePembimbingAsync(Request);
 
-       _isLoading = false;
+        _isLoading = false;
 
         if (response.Error is not null)
         {
@@ -39,6 +39,7 @@ public partial class DialogEdit
             return;
 
         }
+
         MudDialog.Close(DialogResult.Ok(true));
     }
 
