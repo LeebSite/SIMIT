@@ -6,6 +6,7 @@ using Pertamina.SIMIT.Application.Common.Exceptions;
 using Pertamina.SIMIT.Application.Services.Persistence;
 using Pertamina.SIMIT.Domain.Entities;
 using Pertamina.SIMIT.Shared.Mahasiswas.Commands.CreateMahasiswa;
+using Pertamina.SIMIT.Shared.Mahasiswas.Constants;
 
 namespace Pertamina.SIMIT.Application.Mahasiswas.Commands.CreateMahasiswa;
 public class CreateMahasiswaCommand : CreateMahasiswaRequest, IRequest<CreateMahasiswaResponse>
@@ -32,7 +33,7 @@ public class CreateMahasiswaCommandHandler : IRequestHandler<CreateMahasiswaComm
 
     public async Task<CreateMahasiswaResponse> Handle(CreateMahasiswaCommand request, CancellationToken cancellationToken)
     {
-        var appWithTheSameNim = await _context.Mahasiswas
+        var mahasiswaWithTheSameNim = await _context.Mahasiswas
             .AsNoTracking()
             .Where(x => !x.IsDeleted && x.Nim == request.Nim)
             .SingleOrDefaultAsync(cancellationToken);
@@ -46,14 +47,19 @@ public class CreateMahasiswaCommandHandler : IRequestHandler<CreateMahasiswaComm
             throw new NotFoundException($"Pembimbing with Nip '{request.PembimbingId}' was not found.");
         }
 
+        if (mahasiswaWithTheSameNim is not null)
+        {
+            throw new AlreadyExistsExceptions(DisplayTextFor.Mahasiswa, DisplayTextFor.Nama, request.Nama);
+        }
+
         var mahasiswa = new Mahasiswa
         {
             Id = Guid.NewGuid(),
             Nama = request.Nama,
             Nim = request.Nim,
             Kampus = request.Kampus,
-            MulaiMagang = request.MulaiMagang,
-            SelesaiMagang = request.SelesaiMagang,
+            MulaiMagang = (DateTime)request.MulaiMagang,
+            SelesaiMagang = (DateTime)request.SelesaiMagang,
             Bagian = request.Bagian,
             PembimbingId = pembimbing.Id, // Set the foreign key
         };

@@ -29,8 +29,8 @@ public class GetMahasiswasMahasiswaMapping : IMapFrom<Mahasiswa, GetMahasiswasMa
 {
     public void Mapping(Profile profile)
     {
-        profile.CreateMap<Mahasiswa, GetMahasiswasMahasiswa>()
-        .ForMember(dest => dest.Pembimbing, opt => opt.MapFrom(src => src.Pembimbing.Nama)); // Maps Pembimbing's Nama to Pembimbing property in GetMahasiswasMahasiswa
+        profile.CreateMap<Mahasiswa, GetMahasiswasMahasiswa>();
+
     }
 }
 

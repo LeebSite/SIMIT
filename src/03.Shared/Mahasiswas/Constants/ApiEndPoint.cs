@@ -10,7 +10,7 @@ public class ApiEndpoint
             public static class RouteTemplateFor
             {
                 public const string MahasiswaId = "{MahasiswaId:guid}";
-                //public const string UpdateApps = nameof(UpdateApps);
+                public const string UpdateMahasiswas = nameof(UpdateMahasiswas);
                 public const string List = nameof(List);
             }
         }

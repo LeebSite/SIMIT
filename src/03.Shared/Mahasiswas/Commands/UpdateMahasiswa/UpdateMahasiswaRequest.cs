@@ -4,9 +4,12 @@ using Pertamina.SIMIT.Shared.Common.Attributes;
 using Pertamina.SIMIT.Shared.Common.Constants;
 using Pertamina.SIMIT.Shared.Mahasiswas.Constants;
 
-namespace Pertamina.SIMIT.Shared.Mahasiswas.Commands.CreateMahasiswa;
-public class CreateMahasiswaRequest
+namespace Pertamina.SIMIT.Shared.Mahasiswas.Commands.UpdateMahasiswa;
+public class UpdateMahasiswaRequest
 {
+    [OpenApiContentType(ContentTypes.TextPlain)]
+    public Guid MahasiswaId { get; set; }
+
     [OpenApiContentType(ContentTypes.TextPlain)]
     public string Nama { get; set; } = default!;
 
@@ -30,9 +33,9 @@ public class CreateMahasiswaRequest
 
 }
 
-public class CreateMahasiswaRequestValidator : AbstractValidator<CreateMahasiswaRequest>
+public class UpdateMahasiswaRequestValidator : AbstractValidator<UpdateMahasiswaRequest>
 {
-    public CreateMahasiswaRequestValidator()
+    public UpdateMahasiswaRequestValidator()
     {
         RuleFor(v => v.Nama)
           .NotEmpty()

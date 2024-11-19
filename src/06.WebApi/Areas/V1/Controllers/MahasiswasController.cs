@@ -1,10 +1,15 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using Pertamina.SIMIT.Application.Common.Exceptions;
 using Pertamina.SIMIT.Application.Mahasiswas.Commands.CreateMahasiswa;
+using Pertamina.SIMIT.Application.Mahasiswas.Commands.DeleteMahasiswa;
+using Pertamina.SIMIT.Application.Mahasiswas.Commands.UpdateMahasiswa;
+using Pertamina.SIMIT.Application.Mahasiswas.Commands.UpdateMahasiswas;
 using Pertamina.SIMIT.Application.Mahasiswas.Queries.GetMahasiswa;
 using Pertamina.SIMIT.Application.Mahasiswas.Queries.GetMahasiswasListQuery;
 using Pertamina.SIMIT.Application.Mahasiswas.Queries.GetMahasiswasQuery;
 using Pertamina.SIMIT.Shared.Common.Responses;
 using Pertamina.SIMIT.Shared.Mahasiswas.Commands.CreateMahasiswa;
+using Pertamina.SIMIT.Shared.Mahasiswas.Commands.UpdateMahasiswas;
 using Pertamina.SIMIT.Shared.Mahasiswas.Constants;
 using Pertamina.SIMIT.Shared.Mahasiswas.Queries.GetMahasiswa;
 using Pertamina.SIMIT.Shared.Mahasiswas.Queries.GetMahasiswas;
@@ -38,6 +43,33 @@ public class MahasiswasController : ApiControllerBase
     public async Task<ActionResult<ListResponse<GetMahasiswasList>>> GetMahasiswasList()
     {
         return await Mediator.Send(new GetMahasiswasListQuery());
+    }
+
+    [HttpPut(ApiEndpoint.V1.Mahasiswas.RouteTemplateFor.MahasiswaId)]
+    public async Task<ActionResult> UpdateMahasiswa([FromRoute] Guid mahasiswaId, [FromForm] UpdateMahasiswaCommand command)
+    {
+        if (mahasiswaId != command.MahasiswaId)
+        {
+            throw new MismatchException(nameof(UpdateMahasiswaCommand.MahasiswaId), mahasiswaId, command.MahasiswaId);
+        }
+
+        await Mediator.Send(command);
+
+        return NoContent();
+    }
+
+    [HttpPost(ApiEndpoint.V1.Mahasiswas.RouteTemplateFor.UpdateMahasiswas)]
+    public async Task<ActionResult<UpdateMahasiswasResponse>> UpdateMahasiswas([FromForm] UpdateMahasiswasCommand command)
+    {
+        return await Mediator.Send(command);
+    }
+
+    [HttpDelete(ApiEndpoint.V1.Mahasiswas.RouteTemplateFor.MahasiswaId)]
+    public async Task<ActionResult> DeleteMahasiswa([FromRoute] Guid mahasiswaId)
+    {
+        await Mediator.Send(new DeleteMahasiswaCommand { MahasiswaId = mahasiswaId });
+
+        return NoContent();
     }
 
 }

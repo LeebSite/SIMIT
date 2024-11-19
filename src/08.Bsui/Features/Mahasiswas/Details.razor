@@ -1,0 +1,56 @@
+﻿@page "/Mahasiswas/Details/{MahasiswaId:guid}"
+
+<BrowserTabTitle>@DisplayTextFor.Mahasiswa</BrowserTabTitle>
+<MudBreadcrumbs Items="_breadcrumbItems"></MudBreadcrumbs>
+<Loading IsVisible="_isLoading" />
+<ErrorViewer Error="_error" />
+<PageHeader Title="@_mahasiswa.Nama" />
+
+	<TopButtonPanel>
+		<MudMenu Color="Color.Dark" Icon="@Icons.Material.Filled.MoreVert" AnchorOrigin="Origin.TopLeft" Class="ml-2">
+			<MudMenuItem OnClick="ShowDialogDelete">@CommonDisplayTextFor.Delete</MudMenuItem>
+		</MudMenu>
+
+	</TopButtonPanel>
+    <MudTabs Color="Color.Dark" PanelClass="pa-6">
+        <MudTabPanel Text="@CommonDisplayTextFor.GeneralInfo">
+                <TopButtonPanel>
+                    <MudButton Variant="Variant.Filled" Color="Color.Secondary" StartIcon="@Icons.Material.Filled.Edit" OnClick="ShowDialogEdit">
+                        @CommonDisplayTextFor.Edit
+                    </MudButton>
+                </TopButtonPanel>
+			<MudGrid>
+                <MudItem xs="12">
+                    <MudField Label="@DisplayTextFor.Nama">@_mahasiswa.Nama</MudField>
+                </MudItem>
+                <MudItem xs="12">
+                     <MudField Label="@DisplayTextFor.Nim">@_mahasiswa.Nim</MudField>
+                </MudItem>
+				<MudItem xs="12">
+                     <MudField Label="@DisplayTextFor.Kampus">@_mahasiswa.Nim</MudField>
+                </MudItem>
+				<MudItem xs="12">
+                     <MudField Label="@DisplayTextFor.MulaiMagang">@_mahasiswa.MulaiMagang</MudField>
+                </MudItem>
+				<MudItem xs="12">
+                     <MudField Label="@DisplayTextFor.SelesaiMagang">@_mahasiswa.SelesaiMagang</MudField>
+                </MudItem>
+				<MudItem xs="12">
+                     <MudField Label="@DisplayTextFor.Bagian">@_mahasiswa.Bagian</MudField>
+                </MudItem>
+				<MudItem xs="12">
+                     <MudField Label="@DisplayTextFor.Pembimbing">@_mahasiswa.PembimbingId</MudField>
+                </MudItem>
+
+                <MudItem xs="12" sm="6">
+                    <MudField Label="@CommonDisplayTextFor.Created" HelperText="@($"{CommonDisplayTextFor.By} {_mahasiswa.CreatedBy}")">@_mahasiswa.Created.ToLongDateTimeDisplayText()</MudField>
+                </MudItem>
+                <MudItem xs="12" sm="6">
+                    <MudField Label="@CommonDisplayTextFor.Modified" HelperText="@($"{CommonDisplayTextFor.By} {_mahasiswa.ModifiedBy.ToSafeDisplayText()}")">@_mahasiswa.Modified.ToLongDateTimeDisplayText()</MudField>
+                </MudItem>
+            </MudGrid>
+        </MudTabPanel>
+        @* <MudTabPanel Text="@Pertamina.SIMIT.Shared.Mahasiswas.Constants.DisplayTextFor.Mahasiswas"> *@
+        @*     <TableTicketsByAppId MahasiswaId="MahasiswaId" /> *@
+        @* </MudTabPanel> *@
+    </MudTabs>

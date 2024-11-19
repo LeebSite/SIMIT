@@ -1,9 +1,11 @@
 ﻿using AutoMapper;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
+using Pertamina.SIMIT.Application.Common.Exceptions;
 using Pertamina.SIMIT.Application.Common.Mappings;
 using Pertamina.SIMIT.Application.Services.Persistence;
 using Pertamina.SIMIT.Domain.Entities;
+using Pertamina.SIMIT.Shared.Mahasiswas.Constants;
 using Pertamina.SIMIT.Shared.Mahasiswas.Queries.GetMahasiswa;
 
 namespace Pertamina.SIMIT.Application.Mahasiswas.Queries.GetMahasiswa;
@@ -35,8 +37,10 @@ public class GetMahasiswaQueryHandler : IRequestHandler<GetMahasiswaQuery, GetMa
            .Where(x => !x.IsDeleted && x.Id == request.MahasiswaId)
            .SingleOrDefaultAsync(cancellationToken);
 
-        //var response = _mapper.Map<GetMahasiswaResponse>(mahasiswa);
-        //response.PembimbingNama = mahasiswa.Pembimbing?.Nama ?? "No Pembimbing";
+        if (mahasiswa is null)
+        {
+            throw new NotFoundException(DisplayTextFor.Mahasiswa, request.MahasiswaId);
+        }
 
         return _mapper.Map<GetMahasiswaResponse>(mahasiswa);
     }

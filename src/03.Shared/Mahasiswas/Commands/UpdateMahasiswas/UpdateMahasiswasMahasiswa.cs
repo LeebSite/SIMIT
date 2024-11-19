@@ -1,12 +1,14 @@
-﻿
-using FluentValidation;
+﻿using FluentValidation;
 using Pertamina.SIMIT.Shared.Common.Attributes;
 using Pertamina.SIMIT.Shared.Common.Constants;
 using Pertamina.SIMIT.Shared.Mahasiswas.Constants;
 
-namespace Pertamina.SIMIT.Shared.Mahasiswas.Commands.CreateMahasiswa;
-public class CreateMahasiswaRequest
+namespace Pertamina.SIMIT.Shared.Mahasiswas.Commands.UpdateMahasiswas;
+public class UpdateMahasiswasMahasiswa
 {
+    [OpenApiContentType(ContentTypes.TextPlain)]
+    public Guid MahasiswaId { get; set; }
+
     [OpenApiContentType(ContentTypes.TextPlain)]
     public string Nama { get; set; } = default!;
 
@@ -26,13 +28,13 @@ public class CreateMahasiswaRequest
     public string Bagian { get; set; } = default!;
 
     [OpenApiContentType(ContentTypes.TextPlain)]
-    public Guid PembimbingId { get; set; } = default!;
+    public Guid PembimbingId { get; set; }
 
 }
 
-public class CreateMahasiswaRequestValidator : AbstractValidator<CreateMahasiswaRequest>
+public class UpdateMahasiswasMahasiswaValidator : AbstractValidator<UpdateMahasiswasMahasiswa>
 {
-    public CreateMahasiswaRequestValidator()
+    public UpdateMahasiswasMahasiswaValidator()
     {
         RuleFor(v => v.Nama)
           .NotEmpty()

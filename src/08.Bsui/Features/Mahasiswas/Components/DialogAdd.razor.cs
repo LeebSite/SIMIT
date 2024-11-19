@@ -14,7 +14,7 @@ public partial class DialogAdd
     private MudDialogInstance MudDialog { get; set; } = default!;
 
     [Parameter]
-    public CreateMahasiswaRequest Request { get; set; } = new();
+    public CreateMahasiswaRequest Request { get; set; } = default!;
     private List<GetPembimbingsList> _pembimbingList = new();
     private bool _isLoading;
     private ErrorResponse? _error;
@@ -26,6 +26,7 @@ public partial class DialogAdd
         {
             _pembimbingList = response.Result!.Items.ToList();
         }
+
     }
 
     private async Task OnValidSubmit()
@@ -43,7 +44,7 @@ public partial class DialogAdd
             return;
         }
 
-        MudDialog.Close(DialogResult.Ok(response.Result?.MahasiswaId));
+        MudDialog.Close(DialogResult.Ok(response.Result!.MahasiswaId));
     }
 
     private void Cancel()

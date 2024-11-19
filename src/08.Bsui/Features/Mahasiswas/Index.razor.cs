@@ -6,6 +6,7 @@ using Pertamina.SIMIT.Bsui.Features.Mahasiswas.Constants;
 using Pertamina.SIMIT.Shared.Common.Constants;
 using Pertamina.SIMIT.Shared.Common.Responses;
 using Pertamina.SIMIT.Shared.Mahasiswas.Commands.CreateMahasiswa;
+using Pertamina.SIMIT.Shared.Mahasiswas.Commands.UpdateMahasiswas;
 using Pertamina.SIMIT.Shared.Mahasiswas.Constants;
 using Pertamina.SIMIT.Shared.Mahasiswas.Queries.GetMahasiswas;
 
@@ -16,13 +17,20 @@ public partial class Index
     private MudTable<GetMahasiswasMahasiswa> _tableMahasiswas = new();
     private string? _searchKeyword;
     private ErrorResponse? _error;
+    private List<UpdateMahasiswasMahasiswa> _editedMahasiswas = new();
+    private GetMahasiswasMahasiswa _mahasiswaBeforeEdited = new();
+
+    protected override async Task OnInitializedAsync()
+    {
+        SetupBreadcrumb();
+    }
 
     private void SetupBreadcrumb()
     {
-        _breadcrumbItems = new List<BreadcrumbItem>
+        _breadcrumbItems = new()
         {
             CommonBreadcrumbFor.Home,
-            CommonBreadcrumbFor.Active(DisplayTextFor.Mahasiswas ?? "Mahasiswas")
+            CommonBreadcrumbFor.Active(DisplayTextFor.Mahasiswas)
         };
 
     }
@@ -71,7 +79,81 @@ public partial class Index
             var id = (Guid)result.Data;
 
             _snackbar.AddSuccess(SuccessMessageFor.Action(DisplayTextFor.Mahasiswa, CommonDisplayTextFor.Created));
-            _navigationManager.NavigateTo(RouteFor.Details(id));
+            _navigationManager.NavigateTo(RouteFor.Index, forceLoad: true);
+        }
+    }
+    private void EditCommit(object row)
+    {
+        var mahasiswa = (GetMahasiswasMahasiswa)row;
+
+        _editedMahasiswas.Add(new UpdateMahasiswasMahasiswa
+        {
+            MahasiswaId = mahasiswa.Id,
+            Nama = mahasiswa.Nama,
+            Nim = mahasiswa.Nim,
+            Kampus = mahasiswa.Kampus,
+            MulaiMagang = mahasiswa.MulaiMagang,
+            SelesaiMagang = mahasiswa.SelesaiMagang,
+            Bagian = mahasiswa.Bagian,
+            PembimbingId = mahasiswa.PembimbingId
+        });
+
+        StateHasChanged();
+    }
+
+    private void EditPreview(object row)
+    {
+        var mahasiswa = (GetMahasiswasMahasiswa)row;
+
+        _mahasiswaBeforeEdited = new()
+        {
+            Nama = mahasiswa.Nama,
+            Nim = mahasiswa.Nim,
+            Kampus = mahasiswa.Kampus,
+            MulaiMagang = mahasiswa.MulaiMagang,
+            SelesaiMagang = mahasiswa.SelesaiMagang,
+            Bagian = mahasiswa.Bagian,
+            PembimbingId = mahasiswa.PembimbingId
+        };
+    }
+
+    private void EditCancel(object row)
+    {
+        var mahasiswa = (GetMahasiswasMahasiswa)row;
+        mahasiswa.Nama = _mahasiswaBeforeEdited.Nama;
+        mahasiswa.Nim = _mahasiswaBeforeEdited.Nim;
+        mahasiswa.Kampus = _mahasiswaBeforeEdited.Kampus;
+        mahasiswa.SelesaiMagang = _mahasiswaBeforeEdited.SelesaiMagang;
+        mahasiswa.MulaiMagang = _mahasiswaBeforeEdited.MulaiMagang;
+        mahasiswa.Bagian = _mahasiswaBeforeEdited.Bagian;
+        mahasiswa.PembimbingId = _mahasiswaBeforeEdited.PembimbingId;
+
+    }
+
+    private async Task UpdateEditedMahasiswas()
+    {
+        if (_editedMahasiswas.Any())
+        {
+            var request = new UpdateMahasiswasRequest
+            {
+                Mahasiswas = _editedMahasiswas
+            };
+
+            var response = await _mahasiswaService.UpdateMahasiswasAsync(request);
+
+            if (response.Error is not null)
+            {
+                _snackbar.AddErrors(response.Error.Details);
+
+                return;
+            }
+
+            _snackbar.AddSuccess(SuccessMessageFor.Action($"{response.Result!.MahasiswasUpdated} {DisplayTextFor.Mahasiswas}", CommonDisplayTextFor.Updated));
+
+            _editedMahasiswas = new List<UpdateMahasiswasMahasiswa>();
+
+            await _tableMahasiswas.ReloadServerData();
         }
     }
 }
+
