@@ -14,7 +14,7 @@ using Pertamina.SIMIT.Shared.Pembimbings.Queries.GetPembimbing;
 namespace Pertamina.SIMIT.Bsui.Features.Pembimbings;
 public partial class Details
 {
-    [CascadingParameter]
+    //[CascadingParameter]
     [Parameter]
     public Guid PembimbingId { get; set; }
     private bool _isLoading;
