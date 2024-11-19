@@ -125,7 +125,7 @@ public partial class Index
         pembimbing.Jabatan = _pembimbingBeforeEdited.Jabatan;
     }
 
-    private async Task UpdateEditedApps()
+    private async Task UpdateEditedPembimbings()
     {
         if (_editedPembimbings.Any())
         {
@@ -143,11 +143,11 @@ public partial class Index
                 return;
             }
 
-            _snackbar.AddSuccess(SuccessMessageFor.Action($"{response.Result!.AppsUpdated} {DisplayTextFor.Apps}", CommonDisplayTextFor.Updated));
+            _snackbar.AddSuccess(SuccessMessageFor.Action($"{response.Result!.PembimbingsUpdated} {DisplayTextFor.Pembimbings}", CommonDisplayTextFor.Updated));
 
-            _editedApps = new List<UpdateAppsApp>();
+            _editedPembimbings = new List<UpdatePembimbingsPembimbing>();
 
-            await _tableApps.ReloadServerData();
+            await _tablePembimbings.ReloadServerData();
         }
     }
 
