@@ -4,6 +4,8 @@ using Pertamina.SIMIT.Client.Services.UserInfo;
 using Pertamina.SIMIT.Shared.Common.Requests;
 using Pertamina.SIMIT.Shared.Common.Responses;
 using Pertamina.SIMIT.Shared.Pembimbings.Commands.CreatePembimbing;
+using Pertamina.SIMIT.Shared.Pembimbings.Commands.UpdatePembimbing;
+using Pertamina.SIMIT.Shared.Pembimbings.Commands.UpdatePembimbings;
 using Pertamina.SIMIT.Shared.Pembimbings.Queries.GetPembimbing;
 using Pertamina.SIMIT.Shared.Pembimbings.Queries.GetPembimbings;
 using Pertamina.SIMIT.Shared.Pembimbings.Queries.GetPembimbingsList;
@@ -43,14 +45,32 @@ public class PembimbingService
         return restResponse.ToResponseResult<CreatePembimbingResponse>();
     }
 
-    public async Task<ResponseResult<PaginatedListResponse<GetPembimbingsPembimbing>>> GetPembimbingAsync(PaginatedListRequest request)
+    public async Task<ResponseResult<SuccessResponse>> UpdatePembimbingAsync(UpdatePembimbingRequest request)
     {
-        var restRequest = new RestRequest(string.Empty, Method.Get);
-        restRequest.AddQueryParameters(request);
+        var restRequest = new RestRequest(request.PembimbingId.ToString(), Method.Put);
+        restRequest.AddParameters(request);
 
         var restResponse = await _restClient.ExecuteAsync(restRequest);
 
-        return restResponse.ToResponseResult<PaginatedListResponse<GetPembimbingsPembimbing>>();
+        return restResponse.ToResponseResult<SuccessResponse>();
+    }
+
+    public async Task<ResponseResult<UpdatePembimbingsResponse>> UpdatePembimbingsAsync(UpdatePembimbingsRequest request)
+    {
+        var restRequest = new RestRequest(nameof(Pembimbings.RouteTemplateFor.UpdatePembimbings), Method.Post);
+        restRequest.AddParameters(request);
+
+        var restResponse = await _restClient.ExecuteAsync(restRequest);
+
+        return restResponse.ToResponseResult<UpdatePembimbingsResponse>();
+    }
+
+    public async Task<ResponseResult<SuccessResponse>> DeletePembimbingAsync(Guid pembimbingId)
+    {
+        var restRequest = new RestRequest(pembimbingId.ToString(), Method.Delete);
+        var restResponse = await _restClient.ExecuteAsync(restRequest);
+
+        return restResponse.ToResponseResult<SuccessResponse>();
     }
 
     public async Task<ResponseResult<ListResponse<GetPembimbingsList>>> GetPembimbingsListAsync()
@@ -78,5 +98,5 @@ public class PembimbingService
 
         return restResponse.ToResponseResult<GetPembimbingResponse>();
     }
-    //public async Task<ResponseResult<SuccessResponse>>
+
 }

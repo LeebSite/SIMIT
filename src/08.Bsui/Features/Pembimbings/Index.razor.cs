@@ -6,6 +6,7 @@ using Pertamina.SIMIT.Bsui.Features.Pembimbings.Constants;
 using Pertamina.SIMIT.Shared.Common.Constants;
 using Pertamina.SIMIT.Shared.Common.Responses;
 using Pertamina.SIMIT.Shared.Pembimbings.Commands.CreatePembimbing;
+using Pertamina.SIMIT.Shared.Pembimbings.Commands.UpdatePembimbings;
 using Pertamina.SIMIT.Shared.Pembimbings.Constants;
 using Pertamina.SIMIT.Shared.Pembimbings.Queries.GetPembimbings;
 
@@ -16,6 +17,8 @@ public partial class Index
     private List<BreadcrumbItem> _breadcrumbItems = new();
     private MudTable<GetPembimbingsPembimbing> _tablePembimbings = new();
     private string? _searchKeyword;
+    private GetPembimbingsPembimbing _pembimbingBeforeEdited = new();
+    private List<UpdatePembimbingsPembimbing> _editedPembimbings = new();
     //private List<Update>
 
     protected override async Task OnInitializedAsync()
@@ -84,6 +87,67 @@ public partial class Index
 
             _snackbar.AddSuccess(SuccessMessageFor.Action(DisplayTextFor.Pembimbing, CommonDisplayTextFor.Created));
             _navigationManager.NavigateTo(RouteFor.Index, forceLoad: true);
+        }
+    }
+
+    private void EditCommit(object row)
+    {
+        var pembimbing = (GetPembimbingsPembimbing)row;
+
+        _editedPembimbings.Add(new UpdatePembimbingsPembimbing
+        {
+            PembimbingId = pembimbing.Id,
+            Nama = pembimbing.Nama,
+            Nip = pembimbing.Nip,
+            Jabatan = pembimbing.Jabatan,
+        });
+
+        StateHasChanged();
+    }
+
+    private void EditPreview(object row)
+    {
+        var pembimbing = (GetPembimbingsPembimbing)row;
+
+        _pembimbingBeforeEdited = new()
+        {
+            Nama = pembimbing.Nama,
+            Nip = pembimbing.Nip,
+            Jabatan = pembimbing.Jabatan,
+        };
+    }
+
+    private void EditCancel(object row)
+    {
+        var pembimbing = (GetPembimbingsPembimbing)row;
+        pembimbing.Nama = _pembimbingBeforeEdited.Nama;
+        pembimbing.Nip = _pembimbingBeforeEdited.Nip;
+        pembimbing.Jabatan = _pembimbingBeforeEdited.Jabatan;
+    }
+
+    private async Task UpdateEditedPembimbings()
+    {
+        if (_editedPembimbings.Any())
+        {
+            var request = new UpdatePembimbingsRequest
+            {
+                Pembimbings = _editedPembimbings
+            };
+
+            var response = await _pembimbingService.UpdatePembimbingsAsync(request);
+
+            if (response.Error is not null)
+            {
+                _snackbar.AddErrors(response.Error.Details);
+
+                return;
+            }
+
+            _snackbar.AddSuccess(SuccessMessageFor.Action($"{response.Result!.PembimbingsUpdated} {DisplayTextFor.Pembimbings}", CommonDisplayTextFor.Updated));
+
+            _editedPembimbings = new List<UpdatePembimbingsPembimbing>();
+
+            await _tablePembimbings.ReloadServerData();
         }
     }
 

@@ -1,0 +1,48 @@
+﻿@page "/Pembimbings/Details/{PembimbingId:guid}"
+
+
+<BrowserTabTitle>@DisplayTextFor.Pembimbing</BrowserTabTitle>
+<MudBreadcrumbs Items="_breadcrumbItems"></MudBreadcrumbs>
+<Loading IsVisible="_isLoading" />
+<ErrorViewer Error="_error" />
+
+@if (_pembimbing is not null)
+{
+	<PageHeader Title="@_pembimbing.Nama" />
+
+
+	<TopButtonPanel>
+		<MudMenu Color="Color.Dark" Icon="@Icons.Material.Filled.MoreVert"
+				 AnchorOrigin="Origin.TopRight" TransformOrigin="Origin.TopRight"
+				 Class="ml-2">
+			<MudMenuItem OnClick="ShowDialogDelete">@CommonDisplayTextFor.Delete</MudMenuItem>
+		</MudMenu>
+	</TopButtonPanel>
+
+	<MudTabs Color="Color.Dark" PanelClass="pa-6">
+		<MudTabPanel Text="@CommonDisplayTextFor.GeneralInfo">
+			<TopButtonPanel>
+				<MudButton Variant="Variant.Filled" Color="Color.Secondary" StartIcon="@Icons.Material.Filled.Edit" OnClick="ShowDialogEdit">
+					@CommonDisplayTextFor.Edit
+				</MudButton>
+			</TopButtonPanel>
+			<MudGrid>
+				<MudItem xs="12">
+					<MudField Label="@DisplayTextFor.Nama">@_pembimbing.Nama</MudField>
+				</MudItem>
+				<MudItem xs="12">
+					<MudField Label="@DisplayTextFor.Nip">@_pembimbing.Nip</MudField>
+				</MudItem>
+				<MudItem xs="12">
+					<MudField Label="@DisplayTextFor.Jabatan">@_pembimbing.Jabatan</MudField>
+				</MudItem>
+				<MudItem xs="12" sm="6">
+					<MudField Label="@CommonDisplayTextFor.Created" HelperText="@($"{CommonDisplayTextFor.By} {_pembimbing.CreatedBy}")">@_pembimbing.Created.ToLongDateTimeDisplayText()</MudField>
+				</MudItem>
+			</MudGrid>
+		</MudTabPanel>
+		<MudTabPanel Text="@Pertamina.SIMIT.Shared.Pembimbings.Constants.DisplayTextFor.Pembimbings">
+			<TableTicketsByPembimbingId PembimbingId="PembimbingId" />
+		</MudTabPanel>
+	</MudTabs>
+}

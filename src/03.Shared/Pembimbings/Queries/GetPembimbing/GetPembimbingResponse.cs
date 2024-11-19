@@ -9,4 +9,7 @@ public class GetPembimbingResponse : Response
     public string Nip { get; set; } = default!;
     public string Jabatan { get; set; } = default!;
 
+    public DateTimeOffset Created { get; set; }
+    public string CreatedBy { get; set; } = default!;
+
 }

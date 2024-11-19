@@ -4,7 +4,7 @@ using Pertamina.SIMIT.Shared.Logbooks.Commands.CreateLogbook;
 
 namespace Pertamina.SIMIT.WebApi.Areas.V1.Controllers;
 
-public class LogbookController : ApiControllerBase
+public class LogbooksController : ApiControllerBase
 {
     [HttpPost]
     public async Task<ActionResult<CreateLogbookResponse>> CreateLogbook([FromForm] CreateLogbookCommand command)

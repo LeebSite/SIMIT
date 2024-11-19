@@ -32,7 +32,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "02.IntegrationTests", "test
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "03.ApiTests", "tests\03.ApiTests\03.ApiTests.csproj", "{C8ACC16E-5643-402D-AEA4-10761065724C}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "08.Bsui", "src\08.Bsui\08.Bsui.csproj", "{0E25B127-4227-4DEB-8F84-649AABF2854B}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "08.Bsui", "src\08.Bsui\08.Bsui.csproj", "{0E25B127-4227-4DEB-8F84-649AABF2854B}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
