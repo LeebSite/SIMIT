@@ -35,6 +35,8 @@ public class DeletePembimbingCommandHandler : IRequestHandler<DeletePembimbingCo
         //    throw new InvalidOperationException($"Cannot {CommonDisplayTextFor.Delete.ToLower()} {DisplayTextFor.App} {app.Name} because it has one or more {Shared.Tickets.Constants.DisplayTextFor.Tickets}.");
         //}
 
+        _context.Pembimbings.Remove(pembimbing);
+
         await _context.SaveChangesAsync(this, cancellationToken);
 
         return Unit.Value;
