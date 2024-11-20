@@ -31,6 +31,9 @@ public class UpdateMahasiswaRequest
     [OpenApiContentType(ContentTypes.TextPlain)]
     public Guid PembimbingId { get; set; } = default!;
 
+    [OpenApiContentType(ContentTypes.TextPlain)]
+    public string? PembimbingNama { get; set; } = default!;
+
 }
 
 public class UpdateMahasiswaRequestValidator : AbstractValidator<UpdateMahasiswaRequest>

@@ -13,8 +13,4 @@ public static class SuccessMessageFor
         return $"{entityType} {entityFieldValue} has been successfully {actionName.ToLower()}.";
     }
 
-    internal static string Action(string mahasiswa, string nama)
-    {
-        throw new NotImplementedException();
-    }
 }
