@@ -27,4 +27,8 @@
   <ItemGroup>
     <ProjectReference Include="..\07.Client\07.Client.csproj" />
   </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Features\Logbooks\Components\" />
+    <Folder Include="Features\Logbooks\Constants\" />
+  </ItemGroup>
 </Project>
