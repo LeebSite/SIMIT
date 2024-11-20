@@ -11,4 +11,5 @@ public static class SuccessMessageFor
     {
         return $"{entityType} {entityFieldValue} has been successfully {actionName.ToLower()}.";
     }
+
 }

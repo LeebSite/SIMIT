@@ -10,6 +10,8 @@ public class GetMahasiswasMahasiswa
     public string Bagian { get; set; } = default!;
     public Guid PembimbingId { get; set; }
 
+    public string? PembimbingNama { get; set; }
+
     public DateTimeOffset Created { get; set; }
     public string CreatedBy { get; set; } = default!;
     public DateTimeOffset? Modified { get; set; }

@@ -72,7 +72,6 @@ public partial class Details
         catch (Exception ex)
         {
             _isLoading = false;
-            ;
         }
     }
 
