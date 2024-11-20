@@ -1,5 +1,5 @@
 ﻿@page "/Pembimbings/Details/{PembimbingId:guid}"
-
+	
 
 <BrowserTabTitle>@DisplayTextFor.Pembimbing</BrowserTabTitle>
 <MudBreadcrumbs Items="_breadcrumbItems"></MudBreadcrumbs>
@@ -40,9 +40,6 @@
 					<MudField Label="@CommonDisplayTextFor.Created" HelperText="@($"{CommonDisplayTextFor.By} {_pembimbing.CreatedBy}")">@_pembimbing.Created.ToLongDateTimeDisplayText()</MudField>
 				</MudItem>
 			</MudGrid>
-		</MudTabPanel>
-		<MudTabPanel Text="@Pertamina.SIMIT.Shared.Pembimbings.Constants.DisplayTextFor.Pembimbings">
-			<TableTicketsByPembimbingId PembimbingId="PembimbingId" />
 		</MudTabPanel>
 	</MudTabs>
 }
