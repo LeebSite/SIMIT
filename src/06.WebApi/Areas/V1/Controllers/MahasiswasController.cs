@@ -26,9 +26,12 @@ public class MahasiswasController : ApiControllerBase
 
     [HttpGet(ApiEndpoint.V1.Mahasiswas.RouteTemplateFor.MahasiswaId)]
     [Produces(typeof(GetMahasiswaResponse))]
+    [ProducesResponseType(StatusCodes.Status404NotFound)]
     public async Task<ActionResult<GetMahasiswaResponse>> GetMahasiswa([FromRoute] Guid mahasiswaId)
     {
-        return await Mediator.Send(new GetMahasiswaQuery { MahasiswaId = mahasiswaId });
+        var response = await Mediator.Send(new GetMahasiswaQuery { MahasiswaId = mahasiswaId });
+
+        return Ok(response);
     }
 
     [HttpGet]

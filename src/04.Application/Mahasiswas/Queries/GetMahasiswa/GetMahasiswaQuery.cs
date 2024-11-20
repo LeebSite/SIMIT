@@ -16,7 +16,6 @@ public class GetMahasiswaQuery : IRequest<GetMahasiswaResponse>
 
 public class GetMahasiswaResponseMapping : IMapFrom<Mahasiswa, GetMahasiswaResponse>
 {
-
 }
 public class GetMahasiswaQueryHandler : IRequestHandler<GetMahasiswaQuery, GetMahasiswaResponse>
 {
@@ -32,16 +31,18 @@ public class GetMahasiswaQueryHandler : IRequestHandler<GetMahasiswaQuery, GetMa
     public async Task<GetMahasiswaResponse> Handle(GetMahasiswaQuery request, CancellationToken cancellationToken)
     {
         var mahasiswa = await _context.Mahasiswas
-           .AsNoTracking()
-           .Include(m => m.Pembimbing)
-           .Where(x => !x.IsDeleted && x.Id == request.MahasiswaId)
-           .SingleOrDefaultAsync(cancellationToken);
+            .AsNoTracking()
+            .Include(m => m.Pembimbing)
+            .Where(x => !x.IsDeleted && x.Id == request.MahasiswaId)
+            .SingleOrDefaultAsync(cancellationToken);
 
         if (mahasiswa is null)
         {
             throw new NotFoundException(DisplayTextFor.Mahasiswa, request.MahasiswaId);
         }
 
-        return _mapper.Map<GetMahasiswaResponse>(mahasiswa);
+        var response = _mapper.Map<GetMahasiswaResponse>(mahasiswa);
+
+        return response;
     }
 }

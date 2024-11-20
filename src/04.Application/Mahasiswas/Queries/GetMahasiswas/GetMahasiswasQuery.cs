@@ -49,7 +49,8 @@ public class GetMahasiswasQueryHandler : IRequestHandler<GetMahasiswasQuery, Pag
 
         var query = _context.Mahasiswas
             .Include(m => m.Pembimbing)
-            .AsNoTracking();
+            .AsNoTracking()
+            .Where(m => !m.IsDeleted);
 
         // Apply search if any
         if (!string.IsNullOrEmpty(request.SearchText))

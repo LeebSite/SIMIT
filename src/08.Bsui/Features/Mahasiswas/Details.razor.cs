@@ -18,6 +18,7 @@ public partial class Details
     public Guid MahasiswaId { get; set; }
 
     private bool _isLoading;
+    private bool _isDeleted;
     private ErrorResponse? _error;
     private List<BreadcrumbItem> _breadcrumbItems = new();
     private GetMahasiswaResponse _mahasiswa = default!;
@@ -54,19 +55,26 @@ public partial class Details
     private async Task GetMahasiswa()
     {
         _isLoading = true;
+        _error = null;
 
-        var response = await _mahasiswaService.GetMahasiswaAsync(MahasiswaId);
-
-        _isLoading = false;
-
-        if (response.Error is not null)
+        try
         {
-            _error = response.Error;
+            var response = await _mahasiswaService.GetMahasiswaAsync(MahasiswaId);
+            _isLoading = false;
 
-            return;
+            if (response.Error != null)
+            {
+                _error = response.Error;
+                return;
+            }
+
+            _mahasiswa = response.Result ?? new GetMahasiswaResponse(); // Menghindari null
         }
-
-        _mahasiswa = response.Result!;
+        catch (Exception ex)
+        {
+            _isLoading = false;
+            ;
+        }
     }
 
     private async Task ShowDialogEdit()

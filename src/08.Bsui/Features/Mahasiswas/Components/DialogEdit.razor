@@ -11,9 +11,41 @@
                                   Placeholder="@($"{DisplayTextFor.Mahasiswa} {DisplayTextFor.Nama}")"
                                   @bind-Value="Request.Nama" />
                 </MudItem>
-                <MudItem xs="12">
-
-                </MudItem>
+				<MudItem xs="12">
+					<MudTextField Label="@DisplayTextFor.Kampus"
+								  Required="true"
+								  Placeholder="@($"{DisplayTextFor.Mahasiswa} {DisplayTextFor.Kampus}")"
+								  @bind-Value="Request.Kampus" />
+				</MudItem>
+				<MudItem xs="12">
+					<MudTextField Label="@DisplayTextFor.Nim"
+								  Required="true"
+								  Placeholder="@($"{DisplayTextFor.Mahasiswa} {DisplayTextFor.Nim}")"
+								  @bind-Value="Request.Nim" />
+				</MudItem>
+				<MudItem xs="12">
+					<MudDatePicker Label="@DisplayTextFor.MulaiMagang"
+								  Required="true"
+								  Placeholder="@($"{DisplayTextFor.Mahasiswa} {DisplayTextFor.MulaiMagang}")"
+								   @bind-Date="Request.MulaiMagang" 
+								   ShowToolbar="false" PickerVariant="PickerVariant.Dialog" />
+				</MudItem>
+				<MudItem xs="12">
+					<MudDatePicker Label="@DisplayTextFor.SelesaiMagang"
+								  Required="true"
+								  Placeholder="@($"{DisplayTextFor.Mahasiswa} {DisplayTextFor.SelesaiMagang}")"
+								   @bind-Date="Request.SelesaiMagang" 
+								   MinDate="Request.MulaiMagang" ShowToolbar="false" PickerVariant="PickerVariant.Dialog" />
+				</MudItem>
+				<MudItem xs="12">
+					<MudSelect Label="@DisplayTextFor.Pembimbing" T="Guid" @bind-Value="Request.PembimbingId" Required="true" Placeholder="Pilih Pembimbing">
+						<MudSelectItem Value="default(Guid)">Pilih Pembimbing</MudSelectItem>
+						@foreach (var pembimbing in _pembimbingList)
+						{
+							<MudSelectItem Value="@pembimbing.Id">@pembimbing.Nama</MudSelectItem>
+						}
+					</MudSelect>
+				</MudItem>
             </MudGrid>
             <BottomButtonPanel>
                 <MudButton Variant="Variant.Filled" Color="Color.Default" OnClick="Cancel">@CommonDisplayTextFor.Cancel</MudButton>

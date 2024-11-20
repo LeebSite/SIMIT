@@ -4,8 +4,6 @@ namespace Pertamina.SIMIT.Shared.Common.Responses;
 
 public abstract class ErrorResponse
 {
-    public string Message;
-
     public Exception Exception { get; set; } = default!;
     public string Type { get; set; } = default!;
     public string Title { get; set; } = default!;

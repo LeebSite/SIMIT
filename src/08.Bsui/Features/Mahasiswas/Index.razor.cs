@@ -34,7 +34,7 @@ public partial class Index
         };
 
     }
-    private async Task<TableData<GetMahasiswasMahasiswa>> ReloadTableApps(TableState state)
+    private async Task<TableData<GetMahasiswasMahasiswa>> ReloadTableMahasiswas(TableState state)
     {
         _error = null;
 

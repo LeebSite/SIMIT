@@ -8,12 +8,12 @@ public static class SuccessMessageFor
         return $"{entityType} {(isPlural ? "have" : "has")} been successfully {actionName.ToLower()}.";
     }
 
-    public static string Action(string entityType, string entityFieldValue, string actionName, string deleted)
+    public static string Action(string entityType, string entityFieldValue, string actionName)
     {
         return $"{entityType} {entityFieldValue} has been successfully {actionName.ToLower()}.";
     }
 
-    internal static string Action(string mahasiswa, string nama, string deleted)
+    internal static string Action(string mahasiswa, string nama)
     {
         throw new NotImplementedException();
     }

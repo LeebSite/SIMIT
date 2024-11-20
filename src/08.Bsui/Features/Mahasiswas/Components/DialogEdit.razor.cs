@@ -4,6 +4,7 @@ using MudBlazor;
 using Pertamina.SIMIT.Bsui.Common.Extensions;
 using Pertamina.SIMIT.Shared.Common.Responses;
 using Pertamina.SIMIT.Shared.Mahasiswas.Commands.UpdateMahasiswa;
+using Pertamina.SIMIT.Shared.Pembimbings.Queries.GetPembimbingsList;
 
 namespace Pertamina.SIMIT.Bsui.Features.Mahasiswas.Components;
 
@@ -17,12 +18,21 @@ public partial class DialogEdit
 
     private bool _isLoading;
     private ErrorResponse? _error;
+    private List<GetPembimbingsList> _pembimbingList = new();
 
     private void Cancel()
     {
         MudDialog.Cancel();
     }
+    protected override async Task OnInitializedAsync()
+    {
+        var response = await _pembimbingService.GetPembimbingsListAsync();
+        if (response.Error is null)
+        {
+            _pembimbingList = response.Result!.Items.ToList();
+        }
 
+    }
     private async Task OnValidSubmit()
     {
         _error = null;
