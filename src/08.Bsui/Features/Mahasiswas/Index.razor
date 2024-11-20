@@ -10,8 +10,9 @@
  <MudTable Elevation="0" Hover="true" Breakpoint="Breakpoint.Sm"
               FixedHeader="true" Height="@HeightFor.ScrollableTable"
               @ref="_tableMahasiswas"
-              ServerData="@(new Func<TableState, Task<TableData<GetMahasiswasMahasiswa>>>(ReloadTableApps))"
-              CommitEditTooltip="@($"{CommonDisplayTextFor.Commit} {CommonDisplayTextFor.Edit}")">
+              ServerData="@(new Func<TableState, Task<TableData<GetMahasiswasMahasiswa>>>(ReloadTableMahasiswas))"
+              CommitEditTooltip="@($"{CommonDisplayTextFor.Commit} {CommonDisplayTextFor.Edit}")"
+			RowEditCommit="EditCommit" RowEditPreview="EditPreview" RowEditCancel="EditCancel">
 
 	<ToolBarContent>
 			<MudButton Variant="Variant.Filled" Color="Color.Primary" StartIcon="@Icons.Material.Filled.Add" OnClick="ShowDialogAdd">@CommonDisplayTextFor.Add @DisplayTextFor.Mahasiswa</MudButton>
@@ -26,7 +27,7 @@
 		<MudTh><MudTableSortLabel SortLabel="@nameof(GetMahasiswasMahasiswa.MulaiMagang)" T="GetMahasiswasMahasiswa">@DisplayTextFor.MulaiMagang</MudTableSortLabel></MudTh>
 		<MudTh><MudTableSortLabel SortLabel="@nameof(GetMahasiswasMahasiswa.SelesaiMagang)" T="GetMahasiswasMahasiswa">@DisplayTextFor.SelesaiMagang</MudTableSortLabel></MudTh>
 		<MudTh><MudTableSortLabel SortLabel="@nameof(GetMahasiswasMahasiswa.Bagian)" T="GetMahasiswasMahasiswa">@DisplayTextFor.Bagian</MudTableSortLabel></MudTh>
-		<MudTh><MudTableSortLabel SortLabel="@nameof(GetMahasiswasMahasiswa.Pembimbing)" T="GetMahasiswasMahasiswa">@DisplayTextFor.Pembimbing</MudTableSortLabel></MudTh>
+		<MudTh><MudTableSortLabel SortLabel="@nameof(GetMahasiswasMahasiswa.PembimbingId)" T="GetMahasiswasMahasiswa">@DisplayTextFor.Pembimbing</MudTableSortLabel></MudTh>
 	</HeaderContent>
 
 	<RowTemplate>
@@ -51,7 +52,7 @@
 			<MudHighlighter Text="@context.Bagian.ToString()" HighlightedText="@_searchKeyword" />
 		</MudTd>
 		<MudTd DataLabel="@DisplayTextFor.Pembimbing">
-			<MudHighlighter Text="@context.Pembimbing.ToString()" HighlightedText="@_searchKeyword" />
+			<MudHighlighter Text="@context.PembimbingId.ToString()" HighlightedText="@_searchKeyword" />
 		</MudTd>
 	</RowTemplate>
 	<PagerContent>

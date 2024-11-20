@@ -1,17 +1,16 @@
 ﻿<MudDialog>
     <DialogContent>
-        <MudProgressLinear Indeterminate="true" Visible="_isLoading" />
-
-		<EditForm Model="Request" OnInvalidSubmit="OnInvalidSubmit" OnValidSubmit="OnValidSubmit">
+		<EditForm Model="Request" OnValidSubmit="OnValidSubmit" OnInvalidSubmit="OnInvalidSubmit">   
             <FluentValidationValidator />
             <MudGrid>
                 <MudItem xs="12">
                     <MudTextField Label="Nama" @bind-Value="Request.Nama" Required="true" />
                     <MudTextField Label="NIM" @bind-Value="Request.Nim" Required="true" />
                     <MudTextField Label="Kampus" @bind-Value="Request.Kampus" Required="true" />
-                    <MudDatePicker Label="Mulai Magang" @bind-Value="Request.MulaiMagang" Required="true" MaxDate="DateTime.Now" />
-                    <MudDatePicker Label="Selesai Magang" @bind-Value="Request.SelesaiMagang" Required="true" MinDate="Request.SelesaiMagang"  />
-                    <MudTextField Label="Bagian" @bind-Value="Request.Bagian" Required="true" />
+					<MudDatePicker Label="Mulai Magang" @bind-Date="Request.MulaiMagang" Required="true" MinDate="DateTime.Now" ShowToolbar="false"  PickerVariant="PickerVariant.Dialog" />
+					<MudDatePicker Label="Selesai Magang" @bind-Date="Request.SelesaiMagang" Required="true" MinDate="Request.MulaiMagang" ShowToolbar="false"  PickerVariant="PickerVariant.Dialog" />
+					<MudTextField Label="Bagian" @bind-Value="Request.Bagian" Required="true" />
+
 					<MudSelect Label="Pembimbing" T="Guid" @bind-Value="Request.PembimbingId" Required="true" Placeholder="Pilih Pembimbing">
 						<MudSelectItem Value="default(Guid)">Pilih Pembimbing</MudSelectItem>
 						@foreach (var pembimbing in _pembimbingList)
@@ -19,6 +18,7 @@
 							<MudSelectItem Value="@pembimbing.Id">@pembimbing.Nama</MudSelectItem>
 						}
 					</MudSelect>
+
                 </MudItem>
             </MudGrid>
             <BottomButtonPanel>

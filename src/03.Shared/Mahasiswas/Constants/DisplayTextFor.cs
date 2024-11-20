@@ -16,4 +16,5 @@ public class DisplayTextFor
     public static readonly string SelesaiMagang = nameof(SelesaiMagang).SplitWords();
     public const string Bagian = nameof(Bagian);
     public const string Pembimbing = nameof(Pembimbing);
+    public const string PembimbingId = nameof(PembimbingId);
 }
