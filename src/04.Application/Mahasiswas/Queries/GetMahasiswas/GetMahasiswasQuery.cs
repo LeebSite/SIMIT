@@ -29,8 +29,8 @@ public class GetMahasiswasMahasiswaMapping : IMapFrom<Mahasiswa, GetMahasiswasMa
 {
     public void Mapping(Profile profile)
     {
-        profile.CreateMap<Mahasiswa, GetMahasiswasMahasiswa>()
-        .ForMember(dest => dest.Pembimbing, opt => opt.MapFrom(src => src.Pembimbing.Nama)); // Maps Pembimbing's Nama to Pembimbing property in GetMahasiswasMahasiswa
+        profile.CreateMap<Mahasiswa, GetMahasiswasMahasiswa>();
+
     }
 }
 
@@ -49,7 +49,8 @@ public class GetMahasiswasQueryHandler : IRequestHandler<GetMahasiswasQuery, Pag
 
         var query = _context.Mahasiswas
             .Include(m => m.Pembimbing)
-            .AsNoTracking();
+            .AsNoTracking()
+            .Where(m => !m.IsDeleted);
 
         // Apply search if any
         if (!string.IsNullOrEmpty(request.SearchText))

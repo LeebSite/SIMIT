@@ -4,6 +4,8 @@ using Pertamina.SIMIT.Client.Services.UserInfo;
 using Pertamina.SIMIT.Shared.Common.Requests;
 using Pertamina.SIMIT.Shared.Common.Responses;
 using Pertamina.SIMIT.Shared.Mahasiswas.Commands.CreateMahasiswa;
+using Pertamina.SIMIT.Shared.Mahasiswas.Commands.UpdateMahasiswa;
+using Pertamina.SIMIT.Shared.Mahasiswas.Commands.UpdateMahasiswas;
 using Pertamina.SIMIT.Shared.Mahasiswas.Queries.GetMahasiswa;
 using Pertamina.SIMIT.Shared.Mahasiswas.Queries.GetMahasiswas;
 using Pertamina.SIMIT.Shared.Mahasiswas.Queries.GetMahasiswasList;
@@ -56,6 +58,34 @@ public class MahasiswaService
         var restResponse = await _restClient.ExecuteAsync(restRequest);
 
         return restResponse.ToResponseResult<GetMahasiswaResponse>();
+    }
+
+    public async Task<ResponseResult<SuccessResponse>> UpdateMahasiswaAsync(UpdateMahasiswaRequest request)
+    {
+        var restRequest = new RestRequest(request.MahasiswaId.ToString(), Method.Put);
+        restRequest.AddParameters(request);
+
+        var restResponse = await _restClient.ExecuteAsync(restRequest);
+
+        return restResponse.ToResponseResult<SuccessResponse>();
+    }
+
+    public async Task<ResponseResult<UpdateMahasiswasResponse>> UpdateMahasiswasAsync(UpdateMahasiswasRequest request)
+    {
+        var restRequest = new RestRequest(nameof(Mahasiswas.RouteTemplateFor.UpdateMahasiswas), Method.Post);
+        restRequest.AddParameters(request);
+
+        var restResponse = await _restClient.ExecuteAsync(restRequest);
+
+        return restResponse.ToResponseResult<UpdateMahasiswasResponse>();
+    }
+
+    public async Task<ResponseResult<SuccessResponse>> DeleteMahasiswaAsync(Guid mahasiswaId)
+    {
+        var restRequest = new RestRequest(mahasiswaId.ToString(), Method.Delete);
+        var restResponse = await _restClient.ExecuteAsync(restRequest);
+
+        return restResponse.ToResponseResult<SuccessResponse>();
     }
 
 }

@@ -4,9 +4,12 @@ using Pertamina.SIMIT.Shared.Common.Attributes;
 using Pertamina.SIMIT.Shared.Common.Constants;
 using Pertamina.SIMIT.Shared.Mahasiswas.Constants;
 
-namespace Pertamina.SIMIT.Shared.Mahasiswas.Commands.CreateMahasiswa;
-public class CreateMahasiswaRequest
+namespace Pertamina.SIMIT.Shared.Mahasiswas.Commands.UpdateMahasiswa;
+public class UpdateMahasiswaRequest
 {
+    [OpenApiContentType(ContentTypes.TextPlain)]
+    public Guid MahasiswaId { get; set; }
+
     [OpenApiContentType(ContentTypes.TextPlain)]
     public string Nama { get; set; } = default!;
 
@@ -17,7 +20,6 @@ public class CreateMahasiswaRequest
     public string Kampus { get; set; } = default!;
 
     [OpenApiContentType(ContentTypes.TextPlain)]
-
     public DateTime? MulaiMagang { get; set; } = default!;
 
     [OpenApiContentType(ContentTypes.TextPlain)]
@@ -31,9 +33,9 @@ public class CreateMahasiswaRequest
 
 }
 
-public class CreateMahasiswaRequestValidator : AbstractValidator<CreateMahasiswaRequest>
+public class UpdateMahasiswaRequestValidator : AbstractValidator<UpdateMahasiswaRequest>
 {
-    public CreateMahasiswaRequestValidator()
+    public UpdateMahasiswaRequestValidator()
     {
         RuleFor(v => v.Nama)
           .NotEmpty()
@@ -43,19 +45,15 @@ public class CreateMahasiswaRequestValidator : AbstractValidator<CreateMahasiswa
           .NotEmpty()
           .MaximumLength(MaximumLengthFor.Nim);
 
+        RuleFor(v => v.MulaiMagang)
+         .NotEmpty();
+
+        RuleFor(v => v.SelesaiMagang)
+         .NotEmpty();
+
         RuleFor(v => v.Kampus)
           .NotEmpty()
           .MaximumLength(MaximumLengthFor.Kampus);
-
-        RuleFor(v => v.MulaiMagang)
-         .NotEmpty()
-         .Must(date => date != DateTime.MinValue)
-         .WithMessage("Tanggal mulai magang harus diisi.");
-
-        RuleFor(v => v.SelesaiMagang)
-          .NotEmpty()
-          .Must(date => date != DateTime.MinValue)
-          .WithMessage("Tanggal selesai magang harus diisi.");
 
         RuleFor(v => v.Bagian)
           .NotEmpty()
