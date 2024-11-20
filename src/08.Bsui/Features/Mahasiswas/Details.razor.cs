@@ -18,7 +18,6 @@ public partial class Details
     public Guid MahasiswaId { get; set; }
 
     private bool _isLoading;
-    private bool _isDeleted;
     private ErrorResponse? _error;
     private List<BreadcrumbItem> _breadcrumbItems = new();
     private GetMahasiswaResponse _mahasiswa = default!;

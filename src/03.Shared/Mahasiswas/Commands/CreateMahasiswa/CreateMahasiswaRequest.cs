@@ -43,17 +43,10 @@ public class CreateMahasiswaRequestValidator : AbstractValidator<CreateMahasiswa
           .NotEmpty()
           .MaximumLength(MaximumLengthFor.Nim);
 
-        RuleFor(v => v.MulaiMagang)
-         .NotEmpty();
-
-        RuleFor(v => v.SelesaiMagang)
-         .NotEmpty();
-
         RuleFor(v => v.Kampus)
           .NotEmpty()
           .MaximumLength(MaximumLengthFor.Kampus);
 
-<<<<<<< HEAD
         RuleFor(v => v.MulaiMagang)
          .NotEmpty()
          .Must(date => date != DateTime.MinValue)
@@ -64,8 +57,6 @@ public class CreateMahasiswaRequestValidator : AbstractValidator<CreateMahasiswa
           .Must(date => date != DateTime.MinValue)
           .WithMessage("Tanggal selesai magang harus diisi.");
 
-=======
->>>>>>> Varrent
         RuleFor(v => v.Bagian)
           .NotEmpty()
           .MaximumLength(MaximumLengthFor.Bagian);
