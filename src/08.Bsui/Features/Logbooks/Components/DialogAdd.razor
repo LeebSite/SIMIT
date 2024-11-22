@@ -1,0 +1,19 @@
+﻿<MudDialog>
+	<DialogContent>
+		<EditForm Model="Request" OnValidSubmit="OnValidSubmit" OnInvalidSubmit="OnInvalidSubmit">
+			<FluentValidationValidator />
+			<MudGrid>
+				<MudItem xs="12">
+					<MudTextField Label="NoBadge" @bind-Value="Request.MahasiswaId" Required="true" />
+					<MudDatePicker Label="Tanggal" @bind-Date="Request.LogbookDate" Required="true" MinDate="DateTime.Now" ShowToolbar="false" PickerVariant="PickerVariant.Dialog" />
+					<MudTextField Label="Aktifitas" @bind-Value="Request.Aktifitas" Required="true" />
+
+				</MudItem>
+			</MudGrid>
+			<BottomButtonPanel>
+				<MudButton Variant="Variant.Filled" Color="Color.Default" OnClick="Cancel">@CommonDisplayTextFor.Cancel</MudButton>
+				<MudButton Variant="Variant.Filled" Color="Color.Primary" ButtonType="ButtonType.Submit">@CommonDisplayTextFor.Add</MudButton>
+			</BottomButtonPanel>
+		</EditForm>
+	</DialogContent>
+</MudDialog>

@@ -9,6 +9,7 @@ using Pertamina.SIMIT.Shared.Logbooks.Commands.CreateLogbook;
 namespace Pertamina.SIMIT.Application.Logbooks.Commands.CreateLogbook;
 public class CreateLogbookCommand : CreateLogbookRequest, IRequest<CreateLogbookResponse>
 {
+
 }
 
 public class CreateLogbookCommandValidator : AbstractValidator<CreateLogbookCommand>
@@ -27,32 +28,46 @@ public class CreateLogbookCommandHandler : IRequestHandler<CreateLogbookCommand,
     {
         _context = context;
     }
+
     public async Task<CreateLogbookResponse> Handle(CreateLogbookCommand request, CancellationToken cancellationToken)
     {
+        //var mahasiswaWithTheSameNim = await _context.Mahasiswas
+        //    .AsNoTracking()
+        //    //.Where(x => !x.IsDeleted && x.Nim == request.Nim)
+        //    .SingleOrDefaultAsync(cancellationToken);
 
         var mahasiswa = await _context.Mahasiswas
             .AsNoTracking()
-            .SingleOrDefaultAsync(p => p.Nim == request.MahasiswaNim, cancellationToken);
+            .SingleOrDefaultAsync(p => p.Id == request.MahasiswaId, cancellationToken);
 
         if (mahasiswa == null)
         {
-            throw new NotFoundException($"mahasiswa with Nim '{request.MahasiswaNim}' was not found.");
+            throw new NotFoundException($"Logbook with Nim '{request.MahasiswaId}' was not found.");
         }
 
-        var logbookExists = await _context.Logbooks
-           .AsNoTracking()
-           .AnyAsync(l => l.MahasiswaId == mahasiswa.Id && l.LogbookDate.Date == DateTime.UtcNow.Date, cancellationToken);
+        //if (mahasiswaWithTheSameNim is not null)
+        //{
+        //    throw new AlreadyExistsExceptions(DisplayTextFor.Mahasiswa, DisplayTextFor.Nama, request.Nama);
+        //}
 
         var logbook = new Logbook
         {
             Id = Guid.NewGuid(),
+            LogbookDate = (DateTime)request.LogbookDate,
             Aktifitas = request.Aktifitas,
-            LogbookDate = DateTime.UtcNow.Date,
-            MahasiswaId = mahasiswa.Id // Set the foreign key
+            MahasiswaId = mahasiswa.Id, // Set the foreign key
         };
 
         _context.Logbooks.Add(logbook);
-        await _context.SaveChangesAsync(this, cancellationToken);
+        try
+        {
+            await _context.SaveChangesAsync(this, cancellationToken);
+        }
+        catch (DbUpdateException ex)
+        {
+            Console.WriteLine($"Error: {ex.InnerException?.Message}");
+            throw;
+        }
 
         return new CreateLogbookResponse
         {

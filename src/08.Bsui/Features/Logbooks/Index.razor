@@ -1,0 +1,39 @@
+﻿@page "/Logbooks"
+
+@using Pertamina.SIMIT.Shared.Logbooks.Constants
+@using Pertamina.SIMIT.Shared.Logbooks.Queries.GetLogbooks
+
+<BrowserTabTitle>@DisplayTextFor.Logbooks</BrowserTabTitle>
+<MudBreadcrumbs Items="_breadcrumbItems"></MudBreadcrumbs>
+<PageHeader Title="@DisplayTextFor.ListLogbook" />
+<ErrorViewer Error="_error" />
+
+<MudTable Elevation="0" Hover="true" Breakpoint="Breakpoint.Sm"
+		  FixedHeader="true" Height="@HeightFor.ScrollableTable"
+		  @ref="_tableLogbooks"
+		  ServerData="@(new Func<TableState, Task<TableData<GetLogbooksLogbook>>>(ReloadTableLogbooks))">
+	<ToolBarContent>
+		<MudButton Variant="Variant.Filled" Color="Color.Primary" StartIcon="@Icons.Material.Filled.Add" OnClick="ShowDialogAdd">@CommonDisplayTextFor.Add @DisplayTextFor.Logbook</MudButton>
+		<MudSpacer />
+		<MudTextField Adornment="Adornment.Start" AdornmentIcon="@Icons.Material.Filled.Search" Placeholder="@CommonDisplayTextFor.Search" T="string" ValueChanged="@(async(keyword) => await OnSearch(keyword))"></MudTextField>
+	</ToolBarContent>
+	<HeaderContent>
+		<MudTh><MudTableSortLabel SortLabel="@nameof(GetLogbooksLogbook.MahasiswaId)" T="GetLogbooksLogbook">@DisplayTextFor.NoBadgeMahasiswa</MudTableSortLabel></MudTh>
+		<MudTh><MudTableSortLabel SortLabel="@nameof(GetLogbooksLogbook.LogbookDate)" T="GetLogbooksLogbook">@DisplayTextFor.Tanggal</MudTableSortLabel></MudTh>
+		<MudTh><MudTableSortLabel SortLabel="@nameof(GetLogbooksLogbook.Aktifitas)" T="GetLogbooksLogbook">@DisplayTextFor.Aktifitas</MudTableSortLabel></MudTh>
+	</HeaderContent>
+	<RowTemplate>
+		<MudTd DataLabel="@DisplayTextFor.NoBadgeMahasiswa">
+			<MudHighlighter Text="@context.MahasiswaNama.ToString()" HighlightedText="@_searchKeyword"/> 
+		</MudTd>
+		<MudTd DataLabel="@DisplayTextFor.Logbook">
+			<MudHighlighter Text="@context.LogbookDate.ToString()" HighlightedText="@_searchKeyword"/> 
+		</MudTd>
+		<MudTd DataLabel="@DisplayTextFor.Aktifitas">
+			<MudHighlighter Text="@context.Aktifitas.ToString()" HighlightedText="@_searchKeyword"/> 
+		</MudTd>
+	</RowTemplate>
+	<PagerContent>
+		<MudTablePager />
+	</PagerContent>
+</MudTable>

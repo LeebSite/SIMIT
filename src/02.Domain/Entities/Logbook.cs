@@ -9,4 +9,5 @@ public class Logbook : AuditableEntity
     // Foreign key ke Mahasiswa
     public Guid MahasiswaId { get; set; }
     public Mahasiswa Mahasiswa { get; set; } = default!;
+
 }
