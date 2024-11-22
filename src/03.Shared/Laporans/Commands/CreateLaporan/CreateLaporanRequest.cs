@@ -17,7 +17,7 @@ public class CreateLaporanRequest
     public string Deskripsi { get; set; } = default!;
 
     [OpenApiContentType(ContentTypes.TextPlain)]
-    public string MahasiswaNim { get; set; } = default!;
+    public Guid MahasiswaId { get; set; }
 }
 
 public class CreateLaporanRequestValidator : AbstractValidator<CreateLaporanRequest>

@@ -33,11 +33,11 @@ public class CreateLaporanCommandHandler : IRequestHandler<CreateLaporanCommand,
 
         var mahasiswa = await _context.Mahasiswas
             .AsNoTracking()
-            .SingleOrDefaultAsync(p => p.Nim == request.MahasiswaNim, cancellationToken);
+            .SingleOrDefaultAsync(p => p.Id == request.MahasiswaId, cancellationToken);
 
         if (mahasiswa == null)
         {
-            throw new NotFoundException($"mahasiswa with Nim '{request.MahasiswaNim}' was not found.");
+            throw new NotFoundException($"mahasiswa with Nim '{request.MahasiswaId}' was not found.");
         }
 
         var laporanExists = await _context.Laporans

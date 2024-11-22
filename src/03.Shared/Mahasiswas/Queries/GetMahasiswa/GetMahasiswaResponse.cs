@@ -5,7 +5,7 @@ namespace Pertamina.SIMIT.Shared.Mahasiswas.Queries.GetMahasiswa;
 public class GetMahasiswaResponse : Response
 {
     public Guid Id { get; set; }
-    public string Nama { get; set; }
+    public string Nama { get; set; } = default!;
     public string Nim { get; set; } = default!;
     public string Kampus { get; set; } = default!;
     public DateTime MulaiMagang { get; set; } = default!;
