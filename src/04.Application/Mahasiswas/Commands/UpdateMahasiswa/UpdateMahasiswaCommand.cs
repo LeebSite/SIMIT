@@ -51,7 +51,7 @@ public class UpdateMahasiswaCommandHandler : IRequestHandler<UpdateMahasiswaComm
 
         if (mahasiswaWithTheSameNim is not null)
         {
-            throw new AlreadyExistsExceptions(DisplayTextFor.Mahasiswa, DisplayTextFor.Nama, request.Nama);
+            throw new AlreadyExistsExceptions(DisplayTextFor.Mahasiswa, DisplayTextFor.Nim, request.Nim);
         }
 
         mahasiswa.Nama = request.Nama;

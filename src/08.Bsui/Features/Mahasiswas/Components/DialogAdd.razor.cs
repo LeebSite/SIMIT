@@ -44,7 +44,8 @@ public partial class DialogAdd
             return;
         }
 
-        MudDialog.Close(DialogResult.Ok(response.Result!.MahasiswaId));
+        MudDialog.Close(DialogResult.Ok((object)response.Result!.MahasiswaId));
+
     }
 
     private void Cancel()
