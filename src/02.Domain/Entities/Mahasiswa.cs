@@ -18,4 +18,6 @@ public class Mahasiswa : AuditableEntity
 
     // Relasi one-to-one dengan Laporan
     public Laporan Laporan { get; set; } = default!;
+
+    public IList<MahasiswaAttachment> Attachments { get; set; } = new List<MahasiswaAttachment>();
 }
