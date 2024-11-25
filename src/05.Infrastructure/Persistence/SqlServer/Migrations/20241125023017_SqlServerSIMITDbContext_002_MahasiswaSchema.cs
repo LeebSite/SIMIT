@@ -112,6 +112,35 @@ namespace Pertamina.SIMIT.Infrastructure.Persistence.SqlServer.Migrations
                         onDelete: ReferentialAction.Cascade);
                 });
 
+            migrationBuilder.CreateTable(
+                name: "MahasiswaAttachments",
+                schema: "SIMIT",
+                columns: table => new
+                {
+                    Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    MahasiswaId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    Created = table.Column<DateTimeOffset>(type: "datetimeoffset", nullable: false),
+                    CreatedBy = table.Column<string>(type: "nvarchar(100)", nullable: false),
+                    IsDeleted = table.Column<bool>(type: "bit", nullable: false),
+                    Modified = table.Column<DateTimeOffset>(type: "datetimeoffset", nullable: true),
+                    ModifiedBy = table.Column<string>(type: "nvarchar(100)", nullable: true),
+                    FileName = table.Column<string>(type: "nvarchar(250)", nullable: false),
+                    FileContentType = table.Column<string>(type: "nvarchar(250)", nullable: false),
+                    FileSize = table.Column<long>(type: "bigint", nullable: false),
+                    StorageFileId = table.Column<string>(type: "nvarchar(250)", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_MahasiswaAttachments", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_MahasiswaAttachments_Mahasiswas_MahasiswaId",
+                        column: x => x.MahasiswaId,
+                        principalSchema: "SIMIT",
+                        principalTable: "Mahasiswas",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
+                });
+
             migrationBuilder.CreateIndex(
                 name: "IX_Laporans_MahasiswaId",
                 schema: "SIMIT",
@@ -123,6 +152,12 @@ namespace Pertamina.SIMIT.Infrastructure.Persistence.SqlServer.Migrations
                 name: "IX_Logbooks_MahasiswaId",
                 schema: "SIMIT",
                 table: "Logbooks",
+                column: "MahasiswaId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_MahasiswaAttachments_MahasiswaId",
+                schema: "SIMIT",
+                table: "MahasiswaAttachments",
                 column: "MahasiswaId");
 
             migrationBuilder.CreateIndex(
@@ -140,6 +175,10 @@ namespace Pertamina.SIMIT.Infrastructure.Persistence.SqlServer.Migrations
 
             migrationBuilder.DropTable(
                 name: "Logbooks",
+                schema: "SIMIT");
+
+            migrationBuilder.DropTable(
+                name: "MahasiswaAttachments",
                 schema: "SIMIT");
 
             migrationBuilder.DropTable(

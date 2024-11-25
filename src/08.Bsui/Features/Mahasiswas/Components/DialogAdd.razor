@@ -1,17 +1,41 @@
-﻿<MudDialog>
-    <DialogContent>
-		<EditForm Model="Request" OnValidSubmit="OnValidSubmit" OnInvalidSubmit="OnInvalidSubmit">   
-            <FluentValidationValidator />
-            <MudGrid>
-                <MudItem xs="12">
-                    <MudTextField Label="Nama" @bind-Value="Request.Nama" Required="true" />
-                    <MudTextField Label="NIM" @bind-Value="Request.Nim" Required="true" />
-                    <MudTextField Label="Kampus" @bind-Value="Request.Kampus" Required="true" />
-					<MudDatePicker Label="Mulai Magang" @bind-Date="Request.MulaiMagang" Required="true" MinDate="DateTime.Now" ShowToolbar="false"  PickerVariant="PickerVariant.Dialog" />
-					<MudDatePicker Label="Selesai Magang" @bind-Date="Request.SelesaiMagang" Required="true" MinDate="Request.MulaiMagang" ShowToolbar="false"  PickerVariant="PickerVariant.Dialog" />
-					<MudTextField Label="Bagian" @bind-Value="Request.Bagian" Required="true" />
+﻿@using Pertamina.SIMIT.Shared.MahasiswaAttachments.Constants
+<MudDialog>
+	<DialogContent>
+		<EditForm Model="FormModel" OnValidSubmit="OnValidSubmit" OnInvalidSubmit="OnInvalidSubmit">
+			<FluentValidationValidator />
+			<MudGrid>
+				<MudItem xs="12">
+					<MudItem xs="12">
+						<MudPaper Elevation="0" Class="d-flex align-baseline">
+							<MudPaper Elevation="0" Class="flex-grow-1">
+								@if (FormModel.Attachment.File is null)
+								{
+									<MudField Label="@CommonDisplayTextFor.File" HelperText="@CommonDisplayTextFor.Required">
+										Please @CommonDisplayTextFor.Select.ToLower() a @CommonDisplayTextFor.File.
+									</MudField>
+								}
+								else
+								{
+									<MudField Label="@CommonDisplayTextFor.File" HelperText="@CommonDisplayTextFor.Required">
+										@FormModel.Attachment.File.Name (@FormModel.Attachment.File.Size.ToReadableFileSize())
+									</MudField>
+								}
+							</MudPaper>
+							<MudPaper Elevation="0" Class="ml-4">
+								<InputFile id="inputFile" OnChange="OnAttachmentFileSelected" hidden accept="@ContentTypesFor.MahasiswaAttachmentFile.AllowedFileExtensions" />
+								<MudButton Variant="Variant.Filled" Color="Color.Secondary" StartIcon="@Icons.Filled.CloudUpload" Size="Size.Small" HtmlTag="label" for="inputFile">@CommonDisplayTextFor.Select</MudButton>
+							</MudPaper>
+						</MudPaper>
+					</MudItem>
+					 
+					<MudTextField Label="Nama" @bind-Value="FormModel.Request.Nama" Required="true" />
+					<MudTextField Label="NIM" @bind-Value="FormModel.Request.Nim" Required="true" />
+					<MudTextField Label="Kampus" @bind-Value="FormModel.Request.Kampus" Required="true" />
+					<MudDatePicker Label="Mulai Magang" @bind-Date="FormModel.Request.MulaiMagang" Required="true" MinDate="DateTime.Now" ShowToolbar="false" PickerVariant="PickerVariant.Dialog" />
+					<MudDatePicker Label="Selesai Magang" @bind-Date="FormModel.Request.SelesaiMagang" Required="true" MinDate="FormModel.Request.MulaiMagang" ShowToolbar="false" PickerVariant="PickerVariant.Dialog" />
+					<MudTextField Label="Bagian" @bind-Value="FormModel.Request.Bagian" Required="true" />
 
-					<MudSelect Label="Pembimbing" @bind-Value="Request.PembimbingId" Required="true" Placeholder="Pilih Pembimbing">
+					<MudSelect Label="Pembimbing" @bind-Value="FormModel.Request.PembimbingId" Required="true" Placeholder="Pilih Pembimbing">
 						<MudSelectItem Value="default(Guid)">Pilih Pembimbing</MudSelectItem>
 						@foreach (var pembimbing in _pembimbingList)
 						{
@@ -19,12 +43,12 @@
 						}
 					</MudSelect>
 
-                </MudItem>
-            </MudGrid>
-            <BottomButtonPanel>
-                <MudButton Variant="Variant.Filled" Color="Color.Default" OnClick="Cancel">@CommonDisplayTextFor.Cancel</MudButton>
-                <MudButton Variant="Variant.Filled" Color="Color.Primary" ButtonType="ButtonType.Submit">@CommonDisplayTextFor.Add</MudButton>
-            </BottomButtonPanel>
-        </EditForm>
-    </DialogContent>
+				</MudItem>
+			</MudGrid>
+			<BottomButtonPanel>
+				<MudButton Variant="Variant.Filled" Color="Color.Default" OnClick="Cancel">@CommonDisplayTextFor.Cancel</MudButton>
+				<MudButton Variant="Variant.Filled" Color="Color.Primary" ButtonType="ButtonType.Submit">@CommonDisplayTextFor.Add</MudButton>
+			</BottomButtonPanel>
+		</EditForm>
+	</DialogContent>
 </MudDialog>

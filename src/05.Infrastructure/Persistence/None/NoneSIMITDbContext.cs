@@ -24,6 +24,7 @@ public class NoneSIMITDbContext : DbContext, ISIMITDbContext
     public DbSet<Pembimbing> Pembimbings => Set<Pembimbing>();
     public DbSet<Logbook> Logbooks => Set<Logbook>();
     public DbSet<Laporan> Laporans => Set<Laporan>();
+    public DbSet<MahasiswaAttachment> MahasiswaAttachments => Set<MahasiswaAttachment>();
     #endregion Business Entities
 
     private void LogWarning()

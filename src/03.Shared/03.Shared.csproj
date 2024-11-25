@@ -17,4 +17,7 @@
   <ItemGroup>
     <ProjectReference Include="..\01.Base\01.Base.csproj" />
   </ItemGroup>
+  <ItemGroup>
+    <Folder Include="MahasiswaAttachments\Commands\UpdateMahasiswaAttachment\" />
+  </ItemGroup>
 </Project>

@@ -1,7 +1,6 @@
 ﻿using FluentValidation;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.Options;
 using Pertamina.SIMIT.Application.Common.Exceptions;
 using Pertamina.SIMIT.Application.Services.CurrentUser;
 using Pertamina.SIMIT.Application.Services.Persistence;
@@ -10,7 +9,6 @@ using Pertamina.SIMIT.Domain.Entities;
 using Pertamina.SIMIT.Shared.Common.Constants;
 using Pertamina.SIMIT.Shared.MahasiswaAttachments.Commands.CreateMahasiswaAttachment;
 //using Pertamina.SIMIT.Shared.MahasiswaAttachments.Constants;
-using Pertamina.SIMIT.Shared.MahasiswaAttachments.Options;
 using Pertamina.SIMIT.Shared.Mahasiswas.Constants;
 
 namespace Pertamina.SIMIT.Application.MahasiswaAttachments.Commands.CreateMahasiswaAttachment;
@@ -20,9 +18,9 @@ public class CreateMahasiswaAttachmentCommand : CreateMahasiswaAttachmentRequest
 
 public class CreateMahasiswaAttachmentCommandValidator : AbstractValidator<CreateMahasiswaAttachmentCommand>
 {
-    public CreateMahasiswaAttachmentCommandValidator(IOptions<MahasiswaAttachmentOptions> mahasiswaAttachmentOptions)
+    public CreateMahasiswaAttachmentCommandValidator()
     {
-        Include(new CreateMahasiswaAttachmentRequestValidator(mahasiswaAttachmentOptions));
+        Include(new CreateMahasiswaAttachmentRequestValidator());
     }
 }
 

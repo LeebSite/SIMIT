@@ -18,4 +18,8 @@
     <ProjectReference Include="..\02.Domain\02.Domain.csproj" />
     <ProjectReference Include="..\03.Shared\03.Shared.csproj" />
   </ItemGroup>
+  <ItemGroup>
+    <Folder Include="MahasiswaAttachments\EventHandlers\" />
+    <Folder Include="MahasiswaAttachments\Queries\" />
+  </ItemGroup>
 </Project>
