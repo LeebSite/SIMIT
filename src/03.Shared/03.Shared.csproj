@@ -16,6 +16,7 @@
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\01.Base\01.Base.csproj" />
+    <ProjectReference Include="..\02.Domain\02.Domain.csproj" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="MahasiswaAttachments\Commands\UpdateMahasiswaAttachment\" />

@@ -10,6 +10,9 @@ public class CreateMahasiswaAttachmentRequest
     [OpenApiContentType(ContentTypes.TextPlain)]
     public Guid MahasiswaId { get; set; }
 
+    //[OpenApiContentType(ContentTypes.TextPlain)]
+    //public Mahasiswa? Mahasiswas { get; set; }
+
     [OpenApiContentType(ContentTypesFor.MahasiswaAttachmentFile.Value)]
     public IFormFile File { get; set; } = default!;
 }
