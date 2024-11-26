@@ -63,15 +63,17 @@ namespace Pertamina.SIMIT.Infrastructure.Persistence.SqlServer.Migrations
                 columns: table => new
                 {
                     Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    FileLaporan = table.Column<string>(type: "nvarchar(100)", nullable: false),
-                    FileProject = table.Column<string>(type: "nvarchar(100)", nullable: false),
                     Deskripsi = table.Column<string>(type: "nvarchar(500)", nullable: false),
                     MahasiswaId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     Created = table.Column<DateTimeOffset>(type: "datetimeoffset", nullable: false),
                     CreatedBy = table.Column<string>(type: "nvarchar(100)", nullable: false),
                     IsDeleted = table.Column<bool>(type: "bit", nullable: false),
                     Modified = table.Column<DateTimeOffset>(type: "datetimeoffset", nullable: true),
-                    ModifiedBy = table.Column<string>(type: "nvarchar(100)", nullable: true)
+                    ModifiedBy = table.Column<string>(type: "nvarchar(100)", nullable: true),
+                    FileName = table.Column<string>(type: "nvarchar(250)", nullable: false),
+                    FileContentType = table.Column<string>(type: "nvarchar(250)", nullable: false),
+                    FileSize = table.Column<long>(type: "bigint", nullable: false),
+                    StorageFileId = table.Column<string>(type: "nvarchar(250)", nullable: false)
                 },
                 constraints: table =>
                 {

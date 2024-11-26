@@ -16,6 +16,14 @@ public class GetMahasiswaQuery : IRequest<GetMahasiswaResponse>
 
 public class GetMahasiswaResponseMapping : IMapFrom<Mahasiswa, GetMahasiswaResponse>
 {
+    public void Mapping(Profile profile)
+    {
+        profile.CreateMap<Mahasiswa, GetMahasiswaResponse>()
+            .ForMember(dest => dest.LaporanId, opt => opt.MapFrom(src =>
+                src.Laporans.FirstOrDefault() != null ? src.Laporans.FirstOrDefault().Id : (Guid?)null))
+            .ForMember(dest => dest.LaporanDeskripsi, opt => opt.MapFrom(src =>
+                src.Laporans.FirstOrDefault() != null ? src.Laporans.FirstOrDefault().Deskripsi : null));
+    }
 }
 public class GetMahasiswaQueryHandler : IRequestHandler<GetMahasiswaQuery, GetMahasiswaResponse>
 {
@@ -33,6 +41,7 @@ public class GetMahasiswaQueryHandler : IRequestHandler<GetMahasiswaQuery, GetMa
         var mahasiswa = await _context.Mahasiswas
             .AsNoTracking()
             .Include(m => m.Pembimbing)
+            .Include(m => m.Laporans)
             .Where(x => !x.IsDeleted && x.Id == request.MahasiswaId)
             .SingleOrDefaultAsync(cancellationToken);
 

@@ -4,6 +4,7 @@ using Pertamina.SIMIT.Client.Services.UserInfo;
 using Pertamina.SIMIT.Shared.Common.Requests;
 using Pertamina.SIMIT.Shared.Common.Responses;
 using Pertamina.SIMIT.Shared.Laporans.Commands.CreateLaporan;
+using Pertamina.SIMIT.Shared.Laporans.Commands.UpdateLaporan;
 using Pertamina.SIMIT.Shared.Laporans.Queries.GetLaporan;
 using Pertamina.SIMIT.Shared.Laporans.Queries.GetLaporans;
 using RestSharp;
@@ -23,12 +24,20 @@ public class LaporanService
 
     public async Task<ResponseResult<CreateLaporanResponse>> CreateLaporanAsync(CreateLaporanRequest request)
     {
-        var restRequest = new RestRequest(string.Empty, Method.Post);
+        var restRequest = new RestRequest(string.Empty, Method.Post) { AlwaysMultipartFormData = true };
         restRequest.AddParameters(request);
 
         var restResponse = await _restClient.ExecuteAsync(restRequest);
 
         return restResponse.ToResponseResult<CreateLaporanResponse>();
+    }
+
+    public async Task<ResponseResult<GetLaporanResponse>> GetLaporanAsync(Guid laporanId)
+    {
+        var restRequest = new RestRequest($"{nameof(Laporans.RouteTemplateFor.Download)}/{laporanId}", Method.Get);
+        var restResponse = await _restClient.ExecuteAsync(restRequest);
+
+        return restResponse.ToResponseResult<GetLaporanResponse>();
     }
 
     public async Task<ResponseResult<PaginatedListResponse<GetLaporansLaporan>>> GetLaporansAsync(PaginatedListRequest request)
@@ -41,12 +50,13 @@ public class LaporanService
         return restResponse.ToResponseResult<PaginatedListResponse<GetLaporansLaporan>>();
     }
 
-    public async Task<ResponseResult<GetLaporanResponse>> GetLaporanAsync(Guid laporanId)
+    public async Task<ResponseResult<SuccessResponse>> UpdateLaporanAsync(UpdateLaporanRequest request)
     {
-        var restRequest = new RestRequest(laporanId.ToString(), Method.Get);
+        var restRequest = new RestRequest(request.LaporanId.ToString(), Method.Put);
+        restRequest.AddParameters(request);
+
         var restResponse = await _restClient.ExecuteAsync(restRequest);
 
-        return restResponse.ToResponseResult<GetLaporanResponse>();
+        return restResponse.ToResponseResult<SuccessResponse>();
     }
-
 }

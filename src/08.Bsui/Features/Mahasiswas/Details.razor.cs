@@ -1,4 +1,6 @@
+
 using Microsoft.AspNetCore.Components;
+using Microsoft.JSInterop;
 using MudBlazor;
 using Pertamina.SIMIT.Bsui.Common.Components;
 using Pertamina.SIMIT.Bsui.Common.Constants;
@@ -49,6 +51,73 @@ public partial class Details
             CommonBreadcrumbFor.Home,
             BreadcrumbFor.Index
         };
+    }
+
+    private async Task Download()
+    {
+        Console.WriteLine($"LaporanId: {_mahasiswa.LaporanId}");
+
+        _isLoading = true;
+        if (_mahasiswa.LaporanId == null)
+        {
+            _snackbar.Add("Mahasiswa ini tidak memiliki laporan untuk diunduh.", Severity.Warning);
+            return;
+        }
+        // Panggil API untuk mendapatkan laporan
+        var response = await _laporanService.GetLaporanAsync(_mahasiswa.LaporanId);
+
+        _isLoading = false;
+
+        // Periksa apakah ada error dalam respons API
+        if (response.Error is not null)
+        {
+            _error = response.Error;
+            return;
+        }
+
+        // Jalankan fungsi JavaScript untuk mengunduh file
+        await _jsRuntime.InvokeVoidAsync(
+            JavaScriptIdentifierFor.DownloadFile,
+            response.Result!.FileName,
+            response.Result.ContentType,
+            response.Result.Content);
+
+        // Cek apakah mahasiswa memiliki laporan
+        //if (_mahasiswa.LaporanId != null)
+        //{
+        //    _snackbar.Add("Mahasiswa ini tidak memiliki laporan untuk diunduh.", Severity.Warning);
+        //    return;
+        //}
+
+        //try
+        //{
+        //    _isLoading = true;
+
+        //    // Panggil API untuk mendapatkan laporan
+        //    var response = await _laporanService.GetLaporanAsync(_mahasiswa.LaporanId.Value);
+
+        //    _isLoading = false;
+
+        //    // Periksa apakah ada error dalam respons API
+        //    if (response.Error is not null)
+        //    {
+        //        _error = response.Error;
+        //        _snackbar.Add($"Error: {response.Error.Status}", Severity.Error);
+        //        return;
+        //    }
+
+        //    // Jalankan fungsi JavaScript untuk mengunduh file
+        //    await _jsRuntime.InvokeVoidAsync(
+        //        JavaScriptIdentifierFor.DownloadFile,
+        //        response.Result!.FileName,
+        //        response.Result.ContentType,
+        //        response.Result.Content);
+        //}
+        //catch (Exception ex)
+        //{
+        //    _isLoading = false;
+        //    _snackbar.Add($"Terjadi kesalahan saat mengunduh laporan: {ex.Message}", Severity.Error);
+        //}
     }
 
     private async Task GetMahasiswa()

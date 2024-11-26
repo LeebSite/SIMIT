@@ -35,7 +35,7 @@ public class GetMahasiswasListQueryHandler : IRequestHandler<GetMahasiswasListQu
         var apps = await _context.Mahasiswas
             .AsNoTracking()
             .Where(x => !x.IsDeleted)
-            .OrderBy(x => x.Nama)
+            .OrderBy(x => x.Nim)
             .ProjectTo<GetMahasiswasList>(_mapper.ConfigurationProvider)
             .ToListAsync(cancellationToken);
 

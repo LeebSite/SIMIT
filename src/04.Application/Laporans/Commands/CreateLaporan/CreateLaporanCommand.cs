@@ -1,11 +1,12 @@
-﻿
-using FluentValidation;
+﻿using FluentValidation;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
 using Pertamina.SIMIT.Application.Common.Exceptions;
 using Pertamina.SIMIT.Application.Services.Persistence;
+using Pertamina.SIMIT.Application.Services.Storage;
 using Pertamina.SIMIT.Domain.Entities;
 using Pertamina.SIMIT.Shared.Laporans.Commands.CreateLaporan;
+using Pertamina.SIMIT.Shared.Laporans.Constants;
 
 namespace Pertamina.SIMIT.Application.Laporans.Commands.CreateLaporan;
 public class CreateLaporanCommand : CreateLaporanRequest, IRequest<CreateLaporanResponse>
@@ -16,6 +17,7 @@ public class CreateLaporanCommandValidator : AbstractValidator<CreateLaporanComm
 {
     public CreateLaporanCommandValidator()
     {
+        // Use CreateLaporanRequestValidator instead of including itself
         Include(new CreateLaporanRequestValidator());
     }
 }
@@ -23,42 +25,52 @@ public class CreateLaporanCommandValidator : AbstractValidator<CreateLaporanComm
 public class CreateLaporanCommandHandler : IRequestHandler<CreateLaporanCommand, CreateLaporanResponse>
 {
     private readonly ISIMITDbContext _context;
+    private readonly IStorageService _storageService;
 
-    public CreateLaporanCommandHandler(ISIMITDbContext context)
+    public CreateLaporanCommandHandler(ISIMITDbContext context, IStorageService storageService)
     {
         _context = context;
+        _storageService = storageService;
     }
+
     public async Task<CreateLaporanResponse> Handle(CreateLaporanCommand request, CancellationToken cancellationToken)
     {
-
+        // Validasi NIM Mahasiswa
         var mahasiswa = await _context.Mahasiswas
             .AsNoTracking()
-            .SingleOrDefaultAsync(p => p.Id == request.MahasiswaId, cancellationToken);
+            .Where(x => x.Nim == request.MahasiswaNim && !x.IsDeleted)
+            .SingleOrDefaultAsync(cancellationToken);
 
-        if (mahasiswa == null)
+        if (mahasiswa is null)
         {
-            throw new NotFoundException($"mahasiswa with Nim '{request.MahasiswaId}' was not found.");
+            throw new NotFoundException($"{DisplayTextFor.Mahasiswa} dengan NIM {request.MahasiswaNim}", request.MahasiswaNim);
         }
 
-        var laporanExists = await _context.Laporans
-           .AsNoTracking()
-           .AnyAsync(la => la.MahasiswaId == mahasiswa.Id, cancellationToken);
+        // File handling
+        using var memoryStream = new MemoryStream();
+        await request.File.CopyToAsync(memoryStream, cancellationToken);
+        memoryStream.Position = 0;
+
+        var file = memoryStream.ToArray();
 
         var laporan = new Laporan
         {
             Id = Guid.NewGuid(),
-            FileLaporan = request.FileLaporan,
-            FileProject = request.FileProject,
-            Deskripsi = request.Deskripsi,
-            MahasiswaId = mahasiswa.Id // Set the foreign key
+            MahasiswaId = mahasiswa.Id,
+            FileName = request.File.FileName,
+            FileSize = request.File.Length,
+            FileContentType = request.File.ContentType,
+            StorageFileId = await _storageService.CreateAsync(file),
+            Deskripsi = request.Deskripsi
         };
 
-        _context.Laporans.Add(laporan);
+        await _context.Laporans.AddAsync(laporan, cancellationToken);
         await _context.SaveChangesAsync(this, cancellationToken);
 
         return new CreateLaporanResponse
         {
-            LaporandId = laporan.Id,
+            LaporanId = laporan.Id
         };
     }
+
 }

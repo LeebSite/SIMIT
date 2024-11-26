@@ -3,60 +3,74 @@
 
 <BrowserTabTitle>@DisplayTextFor.DokumenMahasiswa</BrowserTabTitle>
 <MudBreadcrumbs Items="_breadcrumbItems"></MudBreadcrumbs>
-<PageHeader Title="@DisplayTextFor.RekapDokumenMahasiswa" />
+<PageHeader Title="@DisplayTextFor.TambahLaporanDanProyekMagang" />
 <ErrorViewer Error="_error" />
 
- <MudTable Elevation="0" Hover="true" Breakpoint="Breakpoint.Sm"
-              FixedHeader="true" Height="@HeightFor.ScrollableTable"
-              @ref="_tableLaporans"
-              ServerData="@(new Func<TableState, Task<TableData<GetLaporansLaporan>>>(ReloadTableLaporans))">
-   @*            CommitEditTooltip="@($"{CommonDisplayTextFor.Commit} {CommonDisplayTextFor.Edit}")" *@
-			@* RowEditCommit="EditCommit" RowEditPreview="EditPreview" RowEditCancel="EditCancel"> *@
+<!-- Form Section -->
+<MudLayout Align="center" Class="mt-4">
+	<MudGrid JustifyCenter>
+		<MudItem xl="12" sm="8" md="6">
+			<MudCard Outlined="true" Class="pa-4">
+				<MudCardContent>
+					<EditForm Model="_model" OnValidSubmit="OnValidSubmit" OnInvalidSubmit="OnInvalidSubmit">
+						<FluentValidationValidator />
+						<MudGrid>
+							<MudItem>
+								<MudButton Variant="Variant.Filled"
+										   Color="Color.Primary"
+										   ButtonType="ButtonType.Submit"
+										   StartIcon="@Icons.Material.Filled.Save">
+									@DisplayTextFor.Simpan
+								</MudButton>
+							</MudItem>
+						</MudGrid>
 
-	<ToolBarContent>
-		<MudTextField Adornment="Adornment.Start" AdornmentIcon="@Icons.Material.Filled.Search" Placeholder="@DisplayTextFor.CariNamaMahasiswa" T="string" ValueChanged="@(async(keyword) => await OnSearch(keyword))"></MudTextField>
-	</ToolBarContent>
+						<MudDivider Class="my-4" />
 
-	<HeaderContent>
-		<MudTh><MudTableSortLabel SortLabel="@nameof(GetLaporansLaporan.MahasiswaNama)" T="GetLaporansLaporan">@DisplayTextFor.Nama</MudTableSortLabel></MudTh>
-		<MudTh><MudTableSortLabel SortLabel="@nameof(GetLaporansLaporan.MahasiswaKampus)" T="GetLaporansLaporan">@DisplayTextFor.Kampus</MudTableSortLabel></MudTh>
-		<MudTh><MudTableSortLabel SortLabel="@nameof(GetLaporansLaporan.FileLaporan)" T="GetLaporansLaporan">@DisplayTextFor.StatusLaporan</MudTableSortLabel></MudTh>
-		<MudTh><MudTableSortLabel SortLabel="@nameof(GetLaporansLaporan.FileProject)" T="GetLaporansLaporan">@DisplayTextFor.StatusProject</MudTableSortLabel></MudTh>
-	</HeaderContent>
+						<!-- Input Fields -->
+						<MudGrid Spacing="2">
+							<MudItem xs="12">
+								<MudTextField Label="NIM Mahasiswa"
+											  @bind-Value="_model.MahasiswaNim"
+											  Required="true"
+											  Placeholder="Masukkan NIM Mahasiswa"
+											  HelperText="Contoh: 12345678"
+											  Adornment="Adornment.Start"
+											  AdornmentIcon="@Icons.Material.Filled.Person" />
+							</MudItem>
+							<MudItem xs="12">
+								<MudTextField Label="Deskripsi"
+											  @bind-Value="_model.Deskripsi"
+											  Required="true"
+											  Placeholder="Masukkan deskripsi laporan"
+											  HelperText="Projecr."
+											  Adornment="Adornment.Start"
+											  AdornmentIcon="@Icons.Material.Filled.Edit" />
+							</MudItem>
+							<MudItem xs="12">
+								<MudPaper Elevation="0" Class="d-flex align-baseline mt-2">
+									<MudButton Variant="Variant.Filled"
+											   Color="Color.Secondary"
+											   StartIcon="@Icons.Material.Filled.CloudUpload"
+											   HtmlTag="label"
+											   for="inputFile">
+										Pilih File
+									</MudButton>
+									<InputFile id="inputFile"
+											   OnChange="OnAttachmentFileSelected"
+											   hidden
+											   accept="@ContentTypesFor.LaporanFile.AllowedFileExtensions" />
+								</MudPaper>
+								@if (_model.File == null)
+								{
+									<MudText Typo="Typo.caption" Color="Color.Error">File belum dipilih.</MudText>
+								}
+							</MudItem>
+						</MudGrid>
+					</EditForm>
+				</MudCardContent>
+			</MudCard>
+		</MudItem>
+	</MudGrid>
+</MudLayout>
 
-	<RowTemplate>
-		<MudTd DataLabel="@DisplayTextFor.Nama">
-			<MudHighlighter Text="@context.MahasiswaNama" HighlightedText="@_searchKeyword" />
-		</MudTd>
-
-		<MudTd DataLabel="@DisplayTextFor.Kampus">
-			<MudHighlighter Text="@context.MahasiswaKampus" HighlightedText="@_searchKeyword" />
-		</MudTd>
-
-		<MudTd DataLabel="@DisplayTextFor.StatusLaporan">
-			@if (!string.IsNullOrEmpty(context.FileLaporan))
-			{
-				<MudIcon Icon="@Icons.Material.Filled.CheckCircle" Color="Color.Success" />
-			}
-			else
-			{
-				<MudIcon Icon="@Icons.Material.Filled.Cancel" Color="Color.Error" />
-			}
-		</MudTd>
-
-		<MudTd DataLabel="@DisplayTextFor.StatusProject">
-			@if (!string.IsNullOrEmpty(context.FileProject))
-			{
-				<MudIcon Icon="@Icons.Material.Filled.CheckCircle" Color="Color.Success" />
-			}
-			else
-			{
-				<MudIcon Icon="@Icons.Material.Filled.Cancel" Color="Color.Error" />
-			}
-		</MudTd>
-	</RowTemplate>
-
-	<PagerContent>
-		<MudTablePager />
-	</PagerContent>
-</MudTable>

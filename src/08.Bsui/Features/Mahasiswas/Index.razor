@@ -28,6 +28,7 @@
 		<MudTh><MudTableSortLabel SortLabel="@nameof(GetMahasiswasMahasiswa.SelesaiMagang)" T="GetMahasiswasMahasiswa">@DisplayTextFor.SelesaiMagang</MudTableSortLabel></MudTh>
 		<MudTh><MudTableSortLabel SortLabel="@nameof(GetMahasiswasMahasiswa.Bagian)" T="GetMahasiswasMahasiswa">@DisplayTextFor.Bagian</MudTableSortLabel></MudTh>
 		<MudTh><MudTableSortLabel SortLabel="@nameof(GetMahasiswasMahasiswa.PembimbingNama)" T="GetMahasiswasMahasiswa">@DisplayTextFor.Pembimbing</MudTableSortLabel></MudTh>
+		<MudTh><MudTableSortLabel SortLabel="@nameof(GetMahasiswasMahasiswa.LaporanId)" T="GetMahasiswasMahasiswa">@DisplayTextFor.StatusDokumen</MudTableSortLabel></MudTh>
 	</HeaderContent>
 
 	<RowTemplate>
@@ -54,6 +55,18 @@
 		<MudTd DataLabel="@DisplayTextFor.Pembimbing">
 			<MudHighlighter Text="@context.PembimbingNama.ToString()" HighlightedText="@_searchKeyword" />
 		</MudTd>
+
+		<MudTd DataLabel="@DisplayTextFor.StatusDokumen">
+		@if (context.LaporanId != null)
+		{
+			<MudIcon Icon="@Icons.Material.Filled.CheckCircle" Color="Color.Success" />
+		}
+		else
+		{
+			<MudIcon Icon="@Icons.Material.Filled.Cancel" Color="Color.Error" />
+		}
+		</MudTd>
+
 	</RowTemplate>
 	<PagerContent>
 		<MudTablePager />

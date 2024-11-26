@@ -91,13 +91,16 @@ namespace Pertamina.SIMIT.Infrastructure.Persistence.SqlServer.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(500)");
 
-                    b.Property<string>("FileLaporan")
+                    b.Property<string>("FileContentType")
                         .IsRequired()
-                        .HasColumnType("nvarchar(100)");
+                        .HasColumnType("nvarchar(250)");
 
-                    b.Property<string>("FileProject")
+                    b.Property<string>("FileName")
                         .IsRequired()
-                        .HasColumnType("nvarchar(100)");
+                        .HasColumnType("nvarchar(250)");
+
+                    b.Property<long>("FileSize")
+                        .HasColumnType("bigint");
 
                     b.Property<bool>("IsDeleted")
                         .HasColumnType("bit");
@@ -110,6 +113,10 @@ namespace Pertamina.SIMIT.Infrastructure.Persistence.SqlServer.Migrations
 
                     b.Property<string>("ModifiedBy")
                         .HasColumnType("nvarchar(100)");
+
+                    b.Property<string>("StorageFileId")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(250)");
 
                     b.HasKey("Id");
 

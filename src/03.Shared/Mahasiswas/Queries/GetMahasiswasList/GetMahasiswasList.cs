@@ -2,5 +2,5 @@
 public class GetMahasiswasList
 {
     public Guid Id { get; set; }
-    public string Nama { get; set; }
+    public string Nim { get; set; }
 }

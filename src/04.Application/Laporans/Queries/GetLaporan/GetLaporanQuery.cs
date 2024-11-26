@@ -1,14 +1,10 @@
-﻿
-using AutoMapper;
-using MediatR;
+﻿using MediatR;
 using Microsoft.EntityFrameworkCore;
 using Pertamina.SIMIT.Application.Common.Exceptions;
-using Pertamina.SIMIT.Application.Common.Mappings;
 using Pertamina.SIMIT.Application.Services.Persistence;
-using Pertamina.SIMIT.Domain.Entities;
+using Pertamina.SIMIT.Application.Services.Storage;
 using Pertamina.SIMIT.Shared.Laporans.Constants;
 using Pertamina.SIMIT.Shared.Laporans.Queries.GetLaporan;
-using Pertamina.SIMIT.Shared.Mahasiswas.Queries.GetMahasiswa;
 
 namespace Pertamina.SIMIT.Application.Laporans.Queries.GetLaporan;
 public class GetLaporanQuery : IRequest<GetLaporanResponse>
@@ -16,25 +12,20 @@ public class GetLaporanQuery : IRequest<GetLaporanResponse>
     public Guid LaporanId { get; set; }
 }
 
-public class GetLaporanResponseMapping : IMapFrom<Laporan, GetLaporanResponse>
-{
-}
-public class GetLaporanQueryHandler : IRequestHandler<GetLaporanQuery, GetLaporanResponse>
+public class GetLaporanHandler : IRequestHandler<GetLaporanQuery, GetLaporanResponse>
 {
     private readonly ISIMITDbContext _context;
-    private readonly IMapper _mapper;
+    private readonly IStorageService _storageService;
 
-    public GetLaporanQueryHandler(ISIMITDbContext context, IMapper mapper)
+    public GetLaporanHandler(ISIMITDbContext context, IStorageService storageService)
     {
         _context = context;
-        _mapper = mapper;
+        _storageService = storageService;
     }
 
     public async Task<GetLaporanResponse> Handle(GetLaporanQuery request, CancellationToken cancellationToken)
     {
         var laporan = await _context.Laporans
-            .AsNoTracking()
-            .Include(m => m.Mahasiswa)
             .Where(x => !x.IsDeleted && x.Id == request.LaporanId)
             .SingleOrDefaultAsync(cancellationToken);
 
@@ -43,7 +34,12 @@ public class GetLaporanQueryHandler : IRequestHandler<GetLaporanQuery, GetLapora
             throw new NotFoundException(DisplayTextFor.Laporan, request.LaporanId);
         }
 
-        var response = _mapper.Map<GetLaporanResponse>(laporan);
+        var response = new GetLaporanResponse
+        {
+            FileName = $"{laporan.FileName}",
+            ContentType = laporan.FileContentType,
+            Content = await _storageService.ReadAsync(laporan.StorageFileId)
+        };
 
         return response;
     }
