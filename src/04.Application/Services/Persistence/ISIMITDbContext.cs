@@ -13,6 +13,7 @@ public interface ISIMITDbContext
     DbSet<Laporan> Laporans { get; }
     DbSet<Mahasiswa> Mahasiswas { get; }
     DbSet<Logbook> Logbooks { get; }
+    DbSet<LogbookAttachment> LogbookAttachments { get; }
     DbSet<Pembimbing> Pembimbings { get; }
     #endregion Business Entities
 

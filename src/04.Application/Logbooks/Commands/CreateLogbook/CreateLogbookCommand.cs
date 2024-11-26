@@ -38,11 +38,11 @@ public class CreateLogbookCommandHandler : IRequestHandler<CreateLogbookCommand,
 
         var mahasiswa = await _context.Mahasiswas
             .AsNoTracking()
-            .SingleOrDefaultAsync(p => p.Id == request.MahasiswaId, cancellationToken);
+            .SingleOrDefaultAsync(p => p.Nim == request.MahasiswaNim, cancellationToken);
 
         if (mahasiswa == null)
         {
-            throw new NotFoundException($"Logbook with Nim '{request.MahasiswaId}' was not found.");
+            throw new NotFoundException($"Logbook with Nim '{request.MahasiswaNim}' was not found.");
         }
 
         //if (mahasiswaWithTheSameNim is not null)

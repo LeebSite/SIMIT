@@ -4,8 +4,7 @@
 			<FluentValidationValidator />
 			<MudGrid>
 				<MudItem xs="12">
-					<MudTextField Label="NoBadge" @bind-Value="Request.MahasiswaId" Required="true" />
-					<MudDatePicker Label="Tanggal" @bind-Date="Request.LogbookDate" Required="true" MinDate="DateTime.Now" ShowToolbar="false" PickerVariant="PickerVariant.Dialog" />
+					<MudTextField Label="NoBadge" @bind-Value="Request.MahasiswaNim" Required="true" />
 					<MudTextField Label="Aktifitas" @bind-Value="Request.Aktifitas" Required="true" />
 
 				</MudItem>

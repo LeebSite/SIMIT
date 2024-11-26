@@ -7,15 +7,18 @@ using Pertamina.SIMIT.Shared.Logbooks.Constants;
 namespace Pertamina.SIMIT.Shared.Logbooks.Commands.CreateLogbook;
 public class CreateLogbookRequest
 {
-    //[OpenApiContentType(ContentTypes.TextPlain)]
-    //public string MahasiswaNim { get; set; } = default!;
 
     [OpenApiContentType(ContentTypes.TextPlain)]
-    public DateTime? LogbookDate { get; set; } = default!;
+    public DateTime? LogbookDate { get; set; } = DateTime.Now;
 
     [OpenApiContentType(ContentTypes.TextPlain)]
     public string Aktifitas { get; set; } = default!;
-    public Guid MahasiswaId { get; set; } = default!;
+
+    //[OpenApiContentType(ContentTypes.TextPlain)]
+    //public Guid MahasiswaId { get; set; } = default!;
+
+    [OpenApiContentType(ContentTypes.TextPlain)]
+    public string? MahasiswaNim { get; set; } = default!;
 
 }
 
@@ -27,7 +30,7 @@ public class CreateLogbookRequestValidator : AbstractValidator<CreateLogbookRequ
           .NotEmpty()
           .MaximumLength(MaximumLengthFor.Aktifitas);
 
-        //RuleFor(v => v.MahasiswaNim)
-        // .NotEmpty();
+        RuleFor(v => v.MahasiswaNim)
+         .NotEmpty();
     }
 }

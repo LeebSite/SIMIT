@@ -8,7 +8,10 @@ public class DisplayTextFor
 
     public static readonly string LogbookHarianMahasiswa = nameof(LogbookHarianMahasiswa).SplitWords();
     public static readonly string NoBadgeMahasiswa = nameof(NoBadgeMahasiswa).SplitWords();
+    public static readonly string StatusLogbookPagi = nameof(StatusLogbookPagi).SplitWords();
+    public static readonly string StatusLogbookSiang = nameof(StatusLogbookSiang).SplitWords();
     public const string Tanggal = nameof(Tanggal);
+    public const string Detail = nameof(Detail);
     public const string Aktifitas = nameof(Aktifitas);
     public const string Nim = nameof(Nim);
     public static readonly string MahasiswaNama = nameof(MahasiswaNama).SplitWords();

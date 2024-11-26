@@ -9,7 +9,7 @@ public class GetLogbookResponse : Response
     public string Aktifitas { get; set; } = default!;
 
     public Guid MahasiswaId { get; set; }
-    public string? MahasiswaNama { get; set; }
+    public string? MahasiswaNim { get; set; }
 
     public DateTimeOffset Created { get; set; }
     public string CreatedBy { get; set; } = default!;

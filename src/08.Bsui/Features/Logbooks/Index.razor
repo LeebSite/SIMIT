@@ -3,37 +3,118 @@
 @using Pertamina.SIMIT.Shared.Logbooks.Constants
 @using Pertamina.SIMIT.Shared.Logbooks.Queries.GetLogbooks
 
-<BrowserTabTitle>@DisplayTextFor.Logbooks</BrowserTabTitle>
-<MudBreadcrumbs Items="_breadcrumbItems"></MudBreadcrumbs>
-<PageHeader Title="@DisplayTextFor.ListLogbook" />
-<ErrorViewer Error="_error" />
 
-<MudTable Elevation="0" Hover="true" Breakpoint="Breakpoint.Sm"
-		  FixedHeader="true" Height="@HeightFor.ScrollableTable"
-		  @ref="_tableLogbooks"
-		  ServerData="@(new Func<TableState, Task<TableData<GetLogbooksLogbook>>>(ReloadTableLogbooks))">
-	<ToolBarContent>
-		<MudButton Variant="Variant.Filled" Color="Color.Primary" StartIcon="@Icons.Material.Filled.Add" OnClick="ShowDialogAdd">@CommonDisplayTextFor.Add @DisplayTextFor.Logbook</MudButton>
-		<MudSpacer />
-		<MudTextField Adornment="Adornment.Start" AdornmentIcon="@Icons.Material.Filled.Search" Placeholder="@CommonDisplayTextFor.Search" T="string" ValueChanged="@(async(keyword) => await OnSearch(keyword))"></MudTextField>
-	</ToolBarContent>
-	<HeaderContent>
-		<MudTh><MudTableSortLabel SortLabel="@nameof(GetLogbooksLogbook.MahasiswaId)" T="GetLogbooksLogbook">@DisplayTextFor.NoBadgeMahasiswa</MudTableSortLabel></MudTh>
-		<MudTh><MudTableSortLabel SortLabel="@nameof(GetLogbooksLogbook.LogbookDate)" T="GetLogbooksLogbook">@DisplayTextFor.Tanggal</MudTableSortLabel></MudTh>
-		<MudTh><MudTableSortLabel SortLabel="@nameof(GetLogbooksLogbook.Aktifitas)" T="GetLogbooksLogbook">@DisplayTextFor.Aktifitas</MudTableSortLabel></MudTh>
-	</HeaderContent>
-	<RowTemplate>
-		<MudTd DataLabel="@DisplayTextFor.NoBadgeMahasiswa">
-			<MudHighlighter Text="@context.MahasiswaNama.ToString()" HighlightedText="@_searchKeyword"/> 
-		</MudTd>
-		<MudTd DataLabel="@DisplayTextFor.Logbook">
-			<MudHighlighter Text="@context.LogbookDate.ToString()" HighlightedText="@_searchKeyword"/> 
-		</MudTd>
-		<MudTd DataLabel="@DisplayTextFor.Aktifitas">
-			<MudHighlighter Text="@context.Aktifitas.ToString()" HighlightedText="@_searchKeyword"/> 
-		</MudTd>
-	</RowTemplate>
-	<PagerContent>
-		<MudTablePager />
-	</PagerContent>
-</MudTable>
+
+<div style="display: flex; justify-content: center; align-items: center;">
+	<MudText Typo="Typo.h5"><b>Tambahkan Logbook Harian</b></MudText>
+</div>
+
+
+<div style="display: flex; justify-content: center; align-items: center;">
+	<MudCard Outlined="true" Style="width: 1000px; text-align: center; height: max-content">
+		<MudCardContent>
+			<MudText Typo="Typo.button" HtmlTag="h3"><b>Logbook Sesi Pagi 07.00 - 12.00</b></MudText>
+
+			<EditForm Model="LogbookRequest" OnValidSubmit="OnValidSubmit" OnInvalidSubmit="OnInvalidSubmit">
+				<FluentValidationValidator />
+				<MudGrid>
+					<MudItem xs="12">
+						<MudText Style="text-align: left">No.Badge Mahasiswa</MudText>
+						<MudTextField @bind-Value="LogbookRequest.MahasiswaNim" Label="No Badge" Variant="Variant.Outlined" Required="true" />
+					</MudItem>
+					<MudItem xs="12">
+						<MudText Style="text-align: left">Tanggal</MudText>
+						<!-- Tanggal otomatis diatur ke hari ini dan tidak dapat diedit -->
+						<MudTextField Value="@LogbookRequest.LogbookDate.ToString("yyyy-MM-dd")" Label="Tanggal" Variant="Variant.Outlined" Disabled="true" />
+					</MudItem>
+					<MudItem xs="12">
+						<MudText Style="text-align: left">Aktifitas</MudText>
+						<MudTextField @bind-Value="LogbookRequest.Aktifitas" Label="Aktifitas" Variant="Variant.Outlined" Required="true" Style="height: 250px;" />
+					</MudItem>
+				</MudGrid>
+
+				<MudCardContent>
+					<BottomButtonPanel>
+						<MudButton Variant="Variant.Filled" Color="Color.Default" OnClick="Cancel">@CommonDisplayTextFor.Cancel</MudButton>
+						<MudButton Variant="Variant.Filled" Color="Color.Primary" ButtonType="ButtonType.Submit">@CommonDisplayTextFor.Add</MudButton>
+					</BottomButtonPanel>
+				</MudCardContent>
+			</EditForm>
+		</MudCardContent>
+	</MudCard>
+</div>
+
+@code {
+	// Model untuk logbook request
+	public LogbookRequestModel LogbookRequest { get; set; } = new LogbookRequestModel();
+
+	// Fungsi untuk mengunggah data
+	private async Task OnValidSubmit()
+	{
+		Console.WriteLine($"Data Submitted: {LogbookRequest.MahasiswaNim}, {LogbookRequest.LogbookDate}, {LogbookRequest.Aktifitas}");
+		await Task.CompletedTask; // Ganti dengan logika pengiriman data ke server
+	}
+
+	private void OnInvalidSubmit()
+	{
+		Console.WriteLine("Form tidak valid");
+	}
+
+	private void Cancel()
+	{
+		LogbookRequest = new LogbookRequestModel(); // Reset form
+	}
+
+	public class LogbookRequestModel
+	{
+		public string MahasiswaNim { get; set; }
+		public DateTime LogbookDate { get; set; } = DateTime.Now; // Inisialisasi dengan tanggal saat ini
+		public string Aktifitas { get; set; }
+	}
+}
+
+
+
+
+<div style="display: flex; justify-content: center; align-items: center;">
+	<MudText Typo="Typo.h5"><b>Tambahkan Logbook Harian</b></MudText>
+</div>
+
+
+<div style="display: flex; justify-content: center; align-items: center;">
+	<MudCard Outlined="true" Style="width: 1000px; text-align: center; height: max-content">
+		<MudCardContent>
+			<MudText Typo="Typo.button" HtmlTag="h3"><b>Logbook Sesi Siang 13.00 - 16.00</b></MudText>
+
+			<EditForm Model="LogbookRequest" OnValidSubmit="OnValidSubmit" OnInvalidSubmit="OnInvalidSubmit">
+				<FluentValidationValidator />
+				<MudGrid>
+					<MudItem xs="12">
+						<MudText Style="text-align: left">No.Badge Mahasiswa</MudText>
+						<MudTextField @bind-Value="LogbookRequest.MahasiswaNim" Label="No Badge" Variant="Variant.Outlined" Required="true" />
+					</MudItem>
+					<MudItem xs="12">
+						<MudText Style="text-align: left">Tanggal</MudText>
+						<!-- Tanggal otomatis diatur ke hari ini dan tidak dapat diedit -->
+						<MudTextField Value="@LogbookRequest.LogbookDate.ToString("yyyy-MM-dd")" Label="Tanggal" Variant="Variant.Outlined" Disabled="true" />
+					</MudItem>
+					<MudItem xs="12">
+						<MudText Style="text-align: left">Aktifitas</MudText>
+						<MudTextField @bind-Value="LogbookRequest.Aktifitas" Label="Aktifitas" Variant="Variant.Outlined" Required="true" Style="height: 250px;" />
+					</MudItem>
+				</MudGrid>
+
+				<MudCardContent>
+					<BottomButtonPanel>
+						<MudButton Variant="Variant.Filled" Color="Color.Default" OnClick="Cancel">@CommonDisplayTextFor.Cancel</MudButton>
+						<MudButton Variant="Variant.Filled" Color="Color.Primary" ButtonType="ButtonType.Submit">@CommonDisplayTextFor.Add</MudButton>
+					</BottomButtonPanel>
+				</MudCardContent>
+			</EditForm>
+		</MudCardContent>
+	</MudCard>
+</div>
+
+
+
+

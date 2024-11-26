@@ -38,6 +38,7 @@ public partial class Index
     {
         _error = null;
 
+        // Memulai proses render ulang
         StateHasChanged();
 
         var tableData = new TableData<GetLogbooksLogbook>();
@@ -51,9 +52,24 @@ public partial class Index
             return tableData;
         }
 
+        // Ambil tanggal hari ini
+        var today = DateTime.Today;
+
+        // Filter data hanya untuk hari ini
+        var filteredItems = response.Result.Items
+            .Where(logbook => logbook.LogbookDate.Date == today)
+            .ToList();
+
+        // Buat kembali TableData dengan data yang difilter
+        tableData = new TableData<GetLogbooksLogbook>
+        {
+            Items = filteredItems,
+            TotalItems = filteredItems.Count
+        };
+
         StateHasChanged();
 
-        return response.Result.ToTableData();
+        return tableData;
     }
 
     private async Task OnSearch(string keyword)
