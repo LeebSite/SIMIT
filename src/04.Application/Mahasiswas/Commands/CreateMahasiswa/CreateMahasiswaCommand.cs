@@ -46,14 +46,14 @@ public class CreateMahasiswaCommandHandler : IRequestHandler<CreateMahasiswaComm
             .AsNoTracking()
             .SingleOrDefaultAsync(p => p.Id == request.PembimbingId, cancellationToken);
 
-        var mahasiswaAttachmentWithTheSameFileName = mahasiswaWithTheSameNim.Attachments
-            .Where(x => x.FileName == request.File.FileName)
-            .SingleOrDefault();
+        //var mahasiswaAttachmentWithTheSameFileName = mahasiswaWithTheSameNim.Attachments
+        //    .Where(x => x.FileName == request.File.FileName)
+        //    .SingleOrDefault();
 
-        if (mahasiswaAttachmentWithTheSameFileName is not null)
-        {
-            throw new AlreadyExistsExceptions(Shared.MahasiswaAttachments.Constants.DisplayTextFor.Attachment, CommonDisplayTextFor.FileName, request.File.FileName);
-        }
+        //if (mahasiswaAttachmentWithTheSameFileName is not null)
+        //{
+        //    throw new AlreadyExistsExceptions(Shared.MahasiswaAttachments.Constants.DisplayTextFor.Attachment, CommonDisplayTextFor.FileName, request.File.FileName);
+        //}
 
         if (pembimbing == null)
         {

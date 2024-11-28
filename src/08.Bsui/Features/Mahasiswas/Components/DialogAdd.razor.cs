@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.Components.Forms;
 using MudBlazor;
 using Pertamina.SIMIT.Bsui.Common.Extensions;
+using Pertamina.SIMIT.Bsui.Features.Mahasiswas.Constants;
 using Pertamina.SIMIT.Shared.Common.Responses;
 using Pertamina.SIMIT.Shared.MahasiswaAttachments.Commands.CreateMahasiswaAttachment;
 using Pertamina.SIMIT.Shared.Mahasiswas.Commands.CreateMahasiswa;
@@ -71,7 +72,9 @@ public partial class DialogAdd
             }
 
             // Tutup dialog jika berhasil
+
             MudDialog.Close(DialogResult.Ok(mahasiswaId));
+            //_navigationManager.NavigateTo(RouteFor.Index, forceLoad: true);
         }
         catch (Exception ex)
         {
@@ -79,6 +82,7 @@ public partial class DialogAdd
         }
         finally
         {
+            _navigationManager.NavigateTo(RouteFor.Index, forceLoad: true);
             _isLoading = false;
         }
     }
