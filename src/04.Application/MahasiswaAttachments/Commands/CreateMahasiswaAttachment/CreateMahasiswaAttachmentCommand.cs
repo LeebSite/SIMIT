@@ -6,6 +6,7 @@ using Pertamina.SIMIT.Application.Services.CurrentUser;
 using Pertamina.SIMIT.Application.Services.Persistence;
 using Pertamina.SIMIT.Application.Services.Storage;
 using Pertamina.SIMIT.Domain.Entities;
+using Pertamina.SIMIT.Shared.Common.Constants;
 using Pertamina.SIMIT.Shared.MahasiswaAttachments.Commands.CreateMahasiswaAttachment;
 //using Pertamina.SIMIT.Shared.MahasiswaAttachments.Constants;
 using Pertamina.SIMIT.Shared.Mahasiswas.Constants;
@@ -49,14 +50,14 @@ public class CreateMahasiswaAttachmentCommandHandler : IRequestHandler<CreateMah
             throw new NotFoundException(DisplayTextFor.Mahasiswa, request.MahasiswaId);
         }
 
-        //var mahasiswaAttachmentWithTheSameFileName = mahasiswa.Attachments
-        //    .Where(x => x.FileName == request.File.FileName)
-        //    .SingleOrDefault();
+        var mahasiswaAttachmentWithTheSameFileName = mahasiswa.Attachments
+            .Where(x => x.FileName == request.File.FileName)
+            .SingleOrDefault();
 
-        //if (mahasiswaAttachmentWithTheSameFileName is not null)
-        //{
-        //    throw new AlreadyExistsExceptions(Shared.MahasiswaAttachments.Constants.DisplayTextFor.Attachment, CommonDisplayTextFor.FileName, request.File.FileName);
-        //}
+        if (mahasiswaAttachmentWithTheSameFileName is not null)
+        {
+            throw new AlreadyExistsExceptions(Shared.MahasiswaAttachments.Constants.DisplayTextFor.Attachment, CommonDisplayTextFor.FileName, request.File.FileName);
+        }
 
         using var memoryStream = new MemoryStream();
         await request.File.CopyToAsync(memoryStream, cancellationToken);

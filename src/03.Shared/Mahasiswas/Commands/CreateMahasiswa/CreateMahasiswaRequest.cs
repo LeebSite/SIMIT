@@ -72,7 +72,7 @@ public class CreateMahasiswaRequestValidator : AbstractValidator<CreateMahasiswa
         //RuleFor(v => v.MahasiswaId)
         // .NotEmpty();
 
-        //RuleFor(v => v.File)
-        // .NotEmpty();
+        RuleFor(v => v.File)
+         .NotEmpty();
     }
 }

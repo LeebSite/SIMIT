@@ -6,6 +6,7 @@ using Pertamina.SIMIT.Application.Common.Exceptions;
 using Pertamina.SIMIT.Application.Services.Persistence;
 using Pertamina.SIMIT.Application.Services.Storage;
 using Pertamina.SIMIT.Domain.Entities;
+using Pertamina.SIMIT.Shared.Common.Constants;
 using Pertamina.SIMIT.Shared.Mahasiswas.Commands.CreateMahasiswa;
 using Pertamina.SIMIT.Shared.Mahasiswas.Constants;
 
@@ -44,6 +45,15 @@ public class CreateMahasiswaCommandHandler : IRequestHandler<CreateMahasiswaComm
         var pembimbing = await _context.Pembimbings
             .AsNoTracking()
             .SingleOrDefaultAsync(p => p.Id == request.PembimbingId, cancellationToken);
+
+        var mahasiswaAttachmentWithTheSameFileName = mahasiswaWithTheSameNim.Attachments
+            .Where(x => x.FileName == request.File.FileName)
+            .SingleOrDefault();
+
+        if (mahasiswaAttachmentWithTheSameFileName is not null)
+        {
+            throw new AlreadyExistsExceptions(Shared.MahasiswaAttachments.Constants.DisplayTextFor.Attachment, CommonDisplayTextFor.FileName, request.File.FileName);
+        }
 
         if (pembimbing == null)
         {
