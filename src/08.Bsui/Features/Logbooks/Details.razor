@@ -1,0 +1,29 @@
+﻿@page "/Logbooks/Details/{mahasiswaId:guid}"
+@using Pertamina.SIMIT.Shared.Logbooks.Constants
+
+<BrowserTabTitle>@DisplayTextFor.Logbook</BrowserTabTitle>
+<MudBreadcrumbs Items="_breadcrumbItems"></MudBreadcrumbs>
+<Loading IsVisible="_isLoading" />
+<ErrorViewer Error="_error" />
+
+
+@if (_logbook != null)
+{
+	<MudGrid>
+		<MudItem xs="12">
+			<MudField Label="@DisplayTextFor.NamaMahasiswa">@_logbook.MahasiswaNama</MudField>
+		</MudItem>
+		<MudItem xs="12">
+			<MudField Label="@DisplayTextFor.Tanggal">@_logbook.LogbookDate</MudField>
+		</MudItem>
+		<MudItem xs="12">
+			<MudField Label="@DisplayTextFor.Aktifitas">@_logbook.Aktifitas</MudField>
+		</MudItem>
+
+		
+	</MudGrid>
+}
+else
+{
+	<p>Loading data...</p>
+}

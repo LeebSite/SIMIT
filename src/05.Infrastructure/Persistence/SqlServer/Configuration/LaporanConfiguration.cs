@@ -1,5 +1,4 @@
-﻿
-using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 using Pertamina.SIMIT.Application.Services.Persistence;
 using Pertamina.SIMIT.Domain.Entities;
@@ -15,9 +14,8 @@ public class LaporanConfiguration : IEntityTypeConfiguration<Laporan>
         builder.ToTable(nameof(ISIMITDbContext.Laporans), nameof(SIMIT));
         builder.ConfigureCreatableProperties();
         builder.ConfigureModifiableProperties();
+        builder.ConfigureFileProperties();
 
         builder.Property(e => e.Deskripsi).HasColumnType(CommonColumnTypes.Nvarchar(MaximumLengthFor.Deskripsi));
-        builder.Property(e => e.FileLaporan).HasColumnType(CommonColumnTypes.Nvarchar(MaximumLengthFor.FileLaporan));
-        builder.Property(e => e.FileProject).HasColumnType(CommonColumnTypes.Nvarchar(MaximumLengthFor.FileProject));
     }
 }

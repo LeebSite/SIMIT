@@ -12,6 +12,7 @@ public class GetLogbooksLogbook
     public string? MahasiswaNim { get; set; }
     public string? StatusLogbookPagi { get; set; }
     public string? StatusLogbookSiang { get; set; }
+    public string? Session { get; set; }
     public string? Detail { get; set; }
     public DateTimeOffset Created { get; set; }
     public string CreatedBy { get; set; } = default!;

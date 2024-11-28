@@ -29,8 +29,11 @@ public class GetMahasiswasMahasiswaMapping : IMapFrom<Mahasiswa, GetMahasiswasMa
 {
     public void Mapping(Profile profile)
     {
-        profile.CreateMap<Mahasiswa, GetMahasiswasMahasiswa>();
-
+        profile.CreateMap<Mahasiswa, GetMahasiswasMahasiswa>()
+            .ForMember(dest => dest.LaporanId, opt => opt.MapFrom(src =>
+                src.Laporans.FirstOrDefault() != null ? src.Laporans.FirstOrDefault().Id : (Guid?)null))
+            .ForMember(dest => dest.LaporanDeskripsi, opt => opt.MapFrom(src =>
+                src.Laporans.FirstOrDefault() != null ? src.Laporans.FirstOrDefault().Deskripsi : null));
     }
 }
 
@@ -49,6 +52,7 @@ public class GetMahasiswasQueryHandler : IRequestHandler<GetMahasiswasQuery, Pag
 
         var query = _context.Mahasiswas
             .Include(m => m.Pembimbing)
+            .Include(m => m.Laporans)
             .AsNoTracking()
             .Where(m => !m.IsDeleted);
 

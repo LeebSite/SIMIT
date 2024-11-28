@@ -31,10 +31,6 @@ public class CreateLogbookCommandHandler : IRequestHandler<CreateLogbookCommand,
 
     public async Task<CreateLogbookResponse> Handle(CreateLogbookCommand request, CancellationToken cancellationToken)
     {
-        //var mahasiswaWithTheSameNim = await _context.Mahasiswas
-        //    .AsNoTracking()
-        //    //.Where(x => !x.IsDeleted && x.Nim == request.Nim)
-        //    .SingleOrDefaultAsync(cancellationToken);
 
         var mahasiswa = await _context.Mahasiswas
             .AsNoTracking()
@@ -45,10 +41,22 @@ public class CreateLogbookCommandHandler : IRequestHandler<CreateLogbookCommand,
             throw new NotFoundException($"Logbook with Nim '{request.MahasiswaNim}' was not found.");
         }
 
-        //if (mahasiswaWithTheSameNim is not null)
-        //{
-        //    throw new AlreadyExistsExceptions(DisplayTextFor.Mahasiswa, DisplayTextFor.Nama, request.Nama);
-        //}
+        // Menentukan apakah logbook ini untuk sesi pagi atau siang
+        var logbookDate = (DateTime)request.LogbookDate;
+        var isMorningSession = logbookDate.Hour is >= 7 and <= 12;
+        var isAfternoonSession = logbookDate.Hour is >= 13 and <= 16;
+
+        // Memeriksa apakah mahasiswa sudah memiliki logbook untuk sesi yang sama pada hari yang sama
+        var existingLogbook = await _context.Logbooks
+            .AsNoTracking()
+            .FirstOrDefaultAsync(l => l.MahasiswaId == mahasiswa.Id && l.LogbookDate.Date == logbookDate.Date
+                                      && ((isMorningSession && l.LogbookDate.Hour >= 7 && l.LogbookDate.Hour <= 12)
+                                      || (isAfternoonSession && l.LogbookDate.Hour >= 13 && l.LogbookDate.Hour <= 16)), cancellationToken);
+
+        if (existingLogbook != null)
+        {
+            throw new InvalidOperationException($"Mahasiswa dengan No Badge '{request.MahasiswaNim}' sudah menginput logbook pada sesi ini.");
+        }
 
         var logbook = new Logbook
         {

@@ -12,7 +12,7 @@ using Pertamina.SIMIT.Infrastructure.Persistence.SqlServer;
 namespace Pertamina.SIMIT.Infrastructure.Persistence.SqlServer.Migrations
 {
     [DbContext(typeof(SqlServerSIMITDbContext))]
-    [Migration("20241117051136_SqlServerSIMITDbContext_002_MahasiswaSchema")]
+    [Migration("20241126071114_SqlServerSIMITDbContext_002_MahasiswaSchema")]
     partial class SqlServerSIMITDbContext_002_MahasiswaSchema
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -93,13 +93,16 @@ namespace Pertamina.SIMIT.Infrastructure.Persistence.SqlServer.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(500)");
 
-                    b.Property<string>("FileLaporan")
+                    b.Property<string>("FileContentType")
                         .IsRequired()
-                        .HasColumnType("nvarchar(100)");
+                        .HasColumnType("nvarchar(250)");
 
-                    b.Property<string>("FileProject")
+                    b.Property<string>("FileName")
                         .IsRequired()
-                        .HasColumnType("nvarchar(100)");
+                        .HasColumnType("nvarchar(250)");
+
+                    b.Property<long>("FileSize")
+                        .HasColumnType("bigint");
 
                     b.Property<bool>("IsDeleted")
                         .HasColumnType("bit");
@@ -113,10 +116,13 @@ namespace Pertamina.SIMIT.Infrastructure.Persistence.SqlServer.Migrations
                     b.Property<string>("ModifiedBy")
                         .HasColumnType("nvarchar(100)");
 
+                    b.Property<string>("StorageFileId")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(250)");
+
                     b.HasKey("Id");
 
-                    b.HasIndex("MahasiswaId")
-                        .IsUnique();
+                    b.HasIndex("MahasiswaId");
 
                     b.ToTable("Laporans", "SIMIT");
                 });
@@ -158,6 +164,53 @@ namespace Pertamina.SIMIT.Infrastructure.Persistence.SqlServer.Migrations
                     b.HasIndex("MahasiswaId");
 
                     b.ToTable("Logbooks", "SIMIT");
+                });
+
+            modelBuilder.Entity("Pertamina.SIMIT.Domain.Entities.LogbookAttachment", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<DateTimeOffset>("Created")
+                        .HasColumnType("datetimeoffset");
+
+                    b.Property<string>("CreatedBy")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("FileContentType")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("FileName")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<long>("FileSize")
+                        .HasColumnType("bigint");
+
+                    b.Property<bool>("IsDeleted")
+                        .HasColumnType("bit");
+
+                    b.Property<Guid>("LogbookId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<DateTimeOffset?>("Modified")
+                        .HasColumnType("datetimeoffset");
+
+                    b.Property<string>("ModifiedBy")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("StorageFileId")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("LogbookId");
+
+                    b.ToTable("LogbookAttachments");
                 });
 
             modelBuilder.Entity("Pertamina.SIMIT.Domain.Entities.Mahasiswa", b =>
@@ -277,8 +330,8 @@ namespace Pertamina.SIMIT.Infrastructure.Persistence.SqlServer.Migrations
             modelBuilder.Entity("Pertamina.SIMIT.Domain.Entities.Laporan", b =>
                 {
                     b.HasOne("Pertamina.SIMIT.Domain.Entities.Mahasiswa", "Mahasiswa")
-                        .WithOne("Laporan")
-                        .HasForeignKey("Pertamina.SIMIT.Domain.Entities.Laporan", "MahasiswaId")
+                        .WithMany("Laporans")
+                        .HasForeignKey("MahasiswaId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
@@ -296,6 +349,15 @@ namespace Pertamina.SIMIT.Infrastructure.Persistence.SqlServer.Migrations
                     b.Navigation("Mahasiswa");
                 });
 
+            modelBuilder.Entity("Pertamina.SIMIT.Domain.Entities.LogbookAttachment", b =>
+                {
+                    b.HasOne("Pertamina.SIMIT.Domain.Entities.Logbook", null)
+                        .WithMany("Attachments")
+                        .HasForeignKey("LogbookId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+                });
+
             modelBuilder.Entity("Pertamina.SIMIT.Domain.Entities.Mahasiswa", b =>
                 {
                     b.HasOne("Pertamina.SIMIT.Domain.Entities.Pembimbing", "Pembimbing")
@@ -307,10 +369,14 @@ namespace Pertamina.SIMIT.Infrastructure.Persistence.SqlServer.Migrations
                     b.Navigation("Pembimbing");
                 });
 
+            modelBuilder.Entity("Pertamina.SIMIT.Domain.Entities.Logbook", b =>
+                {
+                    b.Navigation("Attachments");
+                });
+
             modelBuilder.Entity("Pertamina.SIMIT.Domain.Entities.Mahasiswa", b =>
                 {
-                    b.Navigation("Laporan")
-                        .IsRequired();
+                    b.Navigation("Laporans");
 
                     b.Navigation("Logbooks");
                 });

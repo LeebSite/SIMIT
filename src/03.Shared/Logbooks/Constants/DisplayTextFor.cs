@@ -10,6 +10,7 @@ public class DisplayTextFor
     public static readonly string NoBadgeMahasiswa = nameof(NoBadgeMahasiswa).SplitWords();
     public static readonly string StatusLogbookPagi = nameof(StatusLogbookPagi).SplitWords();
     public static readonly string StatusLogbookSiang = nameof(StatusLogbookSiang).SplitWords();
+    public static readonly string NamaMahasiswa = nameof(NamaMahasiswa).SplitWords();
     public const string Tanggal = nameof(Tanggal);
     public const string Detail = nameof(Detail);
     public const string Aktifitas = nameof(Aktifitas);

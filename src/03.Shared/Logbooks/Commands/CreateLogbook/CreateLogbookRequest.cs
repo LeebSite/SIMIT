@@ -34,3 +34,4 @@ public class CreateLogbookRequestValidator : AbstractValidator<CreateLogbookRequ
          .NotEmpty();
     }
 }
+

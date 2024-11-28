@@ -10,6 +10,7 @@ public class DisplayTextFor
     public static readonly string ListMahasiswa = nameof(ListMahasiswa).SplitWords();
 
     public const string Nama = nameof(Nama);
+    public const string Deskripsi = nameof(Deskripsi);
     public const string Nim = nameof(Nim);
     public const string Kampus = nameof(Kampus);
     public static readonly string MulaiMagang = nameof(MulaiMagang).SplitWords();
@@ -17,4 +18,6 @@ public class DisplayTextFor
     public const string Bagian = nameof(Bagian);
     public const string Pembimbing = nameof(Pembimbing);
     public const string PembimbingId = nameof(PembimbingId);
+    public static readonly string StatusDokumen = nameof(StatusDokumen).SplitWords();
+    public static readonly string DeskripsiDokumen = nameof(DeskripsiDokumen).SplitWords();
 }

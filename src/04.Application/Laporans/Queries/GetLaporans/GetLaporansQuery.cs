@@ -29,7 +29,9 @@ public class GetLaporansLaporanMapping : IMapFrom<Laporan, GetLaporansLaporan>
     public void Mapping(Profile profile)
     {
         profile.CreateMap<Laporan, GetLaporansLaporan>();
-
+        //.ForMember(dest => dest.MahasiswaNama, opt => opt.MapFrom(src => src.Mahasiswa.Nama))
+        //.ForMember(dest => dest.MahasiswaNim, opt => opt.MapFrom(src => src.Mahasiswa.Nim))
+        //.ForMember(dest => dest.MahasiswaKampus, opt => opt.MapFrom(src => src.Mahasiswa.Kampus));
     }
 }
 
@@ -45,16 +47,15 @@ public class GetLaporansQueryHandler : IRequestHandler<GetLaporansQuery, Paginat
     }
     public async Task<PaginatedListResponse<GetLaporansLaporan>> Handle(GetLaporansQuery request, CancellationToken cancellationToken)
     {
-
         var query = _context.Laporans
             .Include(m => m.Mahasiswa)
             .AsNoTracking()
             .Where(m => !m.IsDeleted);
 
-        // Apply search if any
+        // Apply specific filters
         if (!string.IsNullOrEmpty(request.SearchText))
         {
-            query = query.ApplySearch(request.SearchText, typeof(GetLaporansLaporan), _mapper.ConfigurationProvider);
+            query = query.Where(x => x.Mahasiswa.Nim.Contains(request.SearchText));
         }
 
         // Apply sorting
@@ -63,7 +64,7 @@ public class GetLaporansQueryHandler : IRequestHandler<GetLaporansQuery, Paginat
             request.SortOrder,
             typeof(GetLaporansLaporan),
             _mapper.ConfigurationProvider,
-            nameof(GetLaporansLaporan.MahasiswaId),
+            nameof(GetLaporansLaporan.MahasiswaNim),
             SortOrder.Asc);
 
         // Paginate results

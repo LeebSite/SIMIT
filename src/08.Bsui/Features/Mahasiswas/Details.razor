@@ -38,6 +38,12 @@
 				<MudItem xs="12">
                      <MudField Label="@DisplayTextFor.Pembimbing">@_mahasiswa.PembimbingNama</MudField>
                 </MudItem>
+				<MudTooltip Placement="Placement.Top" Text="@($"{CommonDisplayTextFor.Download})")">
+					<MudIconButton Color="Color.Info" Icon="@Icons.Material.Filled.CloudDownload" OnClick="Download" />
+				</MudTooltip>
+				<MudItem xs="12">
+					<MudField Label="@DisplayTextFor.DeskripsiDokumen">@_mahasiswa.LaporanDeskripsi</MudField>
+				</MudItem>
             </MudGrid>
 		}
 		else

@@ -12,6 +12,9 @@ public class GetMahasiswasMahasiswa
 
     public string? PembimbingNama { get; set; }
 
+    public Guid? LaporanId { get; set; }
+    public string? LaporanDeskripsi { get; set; }
+
     public DateTimeOffset Created { get; set; }
     public string CreatedBy { get; set; } = default!;
     public DateTimeOffset? Modified { get; set; }

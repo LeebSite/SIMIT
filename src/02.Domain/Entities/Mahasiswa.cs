@@ -15,7 +15,5 @@ public class Mahasiswa : AuditableEntity
 
     // Relasi one-to-many dengan Logbook
     public List<Logbook> Logbooks { get; set; } = new List<Logbook>();
-
-    // Relasi one-to-one dengan Laporan
-    public Laporan Laporan { get; set; } = default!;
+    public List<Laporan> Laporans { get; set; } = new List<Laporan>();
 }

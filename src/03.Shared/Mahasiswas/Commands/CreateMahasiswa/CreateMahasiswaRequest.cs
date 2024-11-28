@@ -65,3 +65,4 @@ public class CreateMahasiswaRequestValidator : AbstractValidator<CreateMahasiswa
          .NotEmpty();
     }
 }
+

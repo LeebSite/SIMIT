@@ -10,4 +10,4 @@ dotnet ef database update --context SqlServerSIMITDbContext --project src/05.Inf
 
 dotnet ef database drop --force --context SqlServerSIMITDbContext --project src/05.Infrastructure --startup-project src/06.WebApi
 
-dotnet ef migrations add SqlServerSIMITDbContext_002_MahasiswaSchema --context SqlServerSIMITDbContext --project src/05.Infrastructure --startup-project src/06.WebApi --output-dir Persistence/SqlServer/Migrations
+dotnet ef migrations add SqlServerSIMITDbContext_002 _MahasiswaSchema --context SqlServerSIMITDbContext --project src/05.Infrastructure --startup-project src/06.WebApi --output-dir Persistence/SqlServer/Migrations
