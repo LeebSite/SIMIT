@@ -9,6 +9,7 @@ using Pertamina.SIMIT.Bsui.Features.Logbooks.Constants;
 using Pertamina.SIMIT.Shared.Common.Constants;
 using Pertamina.SIMIT.Shared.Common.Responses;
 using Pertamina.SIMIT.Shared.Logbooks.Commands.CreateLogbook;
+using Pertamina.SIMIT.Shared.LogbookAttachments.Commands.CreateLogbookAttachment;
 using Pertamina.SIMIT.Shared.Logbooks.Constants;
 using Pertamina.SIMIT.Shared.Logbooks.Queries.GetLogbooks;
 
@@ -31,6 +32,8 @@ public partial class Index
     private bool IsMorningSession => DateTime.Now.Hour is >= 7 and <= 12;
     private bool IsAfternoonSession => DateTime.Now.Hour is >= 13 and <= 16;
     private readonly List<GetLogbooksLogbook> _logbooks = new();
+
+    public CreateLogbookRequest Request { get; set; } = default!;
 
     //private List<UpdateMahasiswasMahasiswa> _editedMahasiswas = new();
     //private GetLogbooksLogbook _mahasiswaBeforeEdited = new();
@@ -135,6 +138,7 @@ public partial class Index
     private async Task OnValidSubmit()
     {
         _error = null;
+        _isLoading = true;
 
         var request = new CreateLogbookRequest
         {
@@ -143,20 +147,60 @@ public partial class Index
             Aktifitas = _model.Aktifitas,
         };
 
-        var response = await _logbookService.CreateLogbookAsync(request);
+        var createLogbookResponse = await _logbookService.CreateLogbookAsync(request);
 
-        _isLoading = false;
-
-        if (response.Error is not null)
+        if (createLogbookResponse.Error != null)
         {
-            _error = response.Error;
-
+            _error = createLogbookResponse.Error;
             return;
         }
 
+        var logbookId = createLogbookResponse.Result!.LogbookId;
+
+        // Jika file tersedia, buat request untuk attachment
+        if (Request.File != null)
+        {
+            var attachmentRequest = new CreateLogbookAttachmentRequest
+            {
+                LogbookId = logbookId,
+                File = Request.File
+            };
+
+            var createAttachmentResponse = await _logbookAttachmentService.CreateLogbookAttachmentAsync(attachmentRequest);
+
+            if (createAttachmentResponse.Error != null)
+            {
+                _error = createAttachmentResponse.Error;
+                return;
+            }
+        }
+
+        // Tampilkan notifikasi berhasil
         _snackbar.Add("Logbook Berhasil ditambahkan");
 
     }
+    private async Task OnAttachmentFileSelected(InputFileChangeEventArgs eventArgs)
+    {
+        var browserFile = eventArgs.File;
+
+        if (browserFile is not null)
+        {
+            // Simpan stream dari IBrowserFile
+            var stream = browserFile.OpenReadStream(browserFile.Size);
+
+            // Bungkus IBrowserFile ke IFormFile menggunakan MemoryStream
+            var memoryStream = new MemoryStream();
+            await stream.CopyToAsync(memoryStream);
+            memoryStream.Position = 0; // Reset posisi stream agar bisa dibaca ulang
+
+            Request.File = new FormFile(memoryStream, 0, memoryStream.Length, browserFile.Name, browserFile.Name)
+            {
+                Headers = new HeaderDictionary(), // Optional
+                ContentType = browserFile.ContentType
+            };
+        }
+    }
+
     private void OnInvalidSubmit(EditContext editContext)
     {
         _snackbar.AddErrors(editContext.GetValidationMessages());

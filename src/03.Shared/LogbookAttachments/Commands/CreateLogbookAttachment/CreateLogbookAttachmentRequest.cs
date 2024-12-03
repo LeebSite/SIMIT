@@ -1,13 +1,11 @@
 ﻿using FluentValidation;
 using Microsoft.AspNetCore.Http;
-using Microsoft.Extensions.Options;
 using Pertamina.SIMIT.Shared.Common.Attributes;
 using Pertamina.SIMIT.Shared.Common.Constants;
-using Pertamina.SIMIT.Shared.Common.Extensions;
 using Pertamina.SIMIT.Shared.LogbookAttachments.Constants;
-using Pertamina.SIMIT.Shared.LogbookAttachments.Options;
+using Pertamina.SIMIT.Shared.LogbookAttachments.Constants.DisplayTextFor;
 
-namespace Pertamina.SIMIT.Shared.LogbookAttachments.CreateLogbookAttachments;
+namespace Pertamina.SIMIT.Shared.LogbookAttachments.Commands.CreateLogbookAttachment;
 public class CreateLogbookAttachmentRequest
 {
     [OpenApiContentType(ContentTypes.TextPlain)]
@@ -21,16 +19,14 @@ public class CreateLogbookAttachmentRequestValidator : AbstractValidator<CreateL
 {
     private readonly long _maximumFileSize;
 
-    public CreateLogbookAttachmentRequestValidator(IOptions<LogbookAttachmentOptions> logbookAttachmentOptions)
+    public CreateLogbookAttachmentRequestValidator()
     {
-        _maximumFileSize = logbookAttachmentOptions.Value.MaximumFileSizeInBytes;
+        //_maximumFileSize = logbookAttachmentOptions.Value.MaximumFileSizeInBytes;
 
         RuleFor(v => v.LogbookId)
             .NotEmpty();
 
-        RuleFor(v => v.File.Length)
-            .ExclusiveBetween(0L, _maximumFileSize)
-            .WithMessage($"{DisplayTextFor.Attachment} file size should be greater than 0 KB and less than {_maximumFileSize.ToReadableFileSize()}.");
+        RuleFor(v => v.File.Length);
 
         RuleFor(v => v.File.ContentType)
             .Must(HaveSupportedContentType)

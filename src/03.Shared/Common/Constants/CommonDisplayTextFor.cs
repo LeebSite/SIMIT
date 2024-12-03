@@ -90,4 +90,6 @@ public static class CommonDisplayTextFor
     public const string Unsupported = nameof(Unsupported);
     public const string Service = nameof(Service);
     public const string Error = nameof(Error);
+    public const string Detail = nameof(Detail);
+
 }

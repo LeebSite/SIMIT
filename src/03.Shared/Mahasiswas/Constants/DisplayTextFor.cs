@@ -20,4 +20,5 @@ public class DisplayTextFor
     public const string PembimbingId = nameof(PembimbingId);
     public static readonly string StatusDokumen = nameof(StatusDokumen).SplitWords();
     public static readonly string DeskripsiDokumen = nameof(DeskripsiDokumen).SplitWords();
+    public static readonly string DetailLogbook = nameof(DetailLogbook).SplitWords();
 }

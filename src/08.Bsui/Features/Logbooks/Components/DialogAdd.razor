@@ -3,9 +3,9 @@
 		<EditForm Model="Request" OnValidSubmit="OnValidSubmit" OnInvalidSubmit="OnInvalidSubmit">
 			<FluentValidationValidator />
 			<MudGrid>
-				<MudItem xs="12">
-					<MudTextField Label="NoBadge" @bind-Value="Request.MahasiswaNim" Required="true" />
-					<MudTextField Label="Aktifitas" @bind-Value="Request.Aktifitas" Required="true" />
+				<MudItem xs="12" >
+					<MudTextField Label="NoBadge" @bind-Value="Request.MahasiswaNim" Required="true" Variant="Variant.Outlined" Style="margin-bottom: 16px;" />
+					<MudTextField Label="Aktifitas" @bind-Value="Request.Aktifitas" Required="true" Variant="Variant.Outlined" />
 
 				</MudItem>
 			</MudGrid>

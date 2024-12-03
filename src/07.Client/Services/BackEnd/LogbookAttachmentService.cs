@@ -2,6 +2,7 @@
 using Pertamina.SIMIT.Client.Common.Extensions;
 using Pertamina.SIMIT.Client.Services.UserInfo;
 using Pertamina.SIMIT.Shared.Common.Responses;
+using Pertamina.SIMIT.Shared.LogbookAttachments.Commands.CreateLogbookAttachment;
 using Pertamina.SIMIT.Shared.LogbookAttachments.CreateLogbookAttachments;
 using Pertamina.SIMIT.Shared.LogbookAttachments.Queries.GetLogbookAttachmentFile;
 using RestSharp;

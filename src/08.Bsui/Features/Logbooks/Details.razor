@@ -1,8 +1,9 @@
 ﻿@page "/Logbooks/Details/{mahasiswaId:guid}"
+
 @using Pertamina.SIMIT.Shared.Logbooks.Constants
 
 <BrowserTabTitle>@DisplayTextFor.Logbook</BrowserTabTitle>
-<MudBreadcrumbs Items="_breadcrumbItems"></MudBreadcrumbs>
+<MudBreadcrumbs Items="_breadcrumbItems" Separator=">"></MudBreadcrumbs>
 <Loading IsVisible="_isLoading" />
 <ErrorViewer Error="_error" />
 
@@ -11,7 +12,7 @@
 {
 	<MudGrid>
 		<MudItem xs="12">
-			<MudField Label="@DisplayTextFor.NamaMahasiswa">@_logbook.MahasiswaNama</MudField>
+			<MudField Label="@DisplayTextFor.NamaMahasiswa">@_logbook.MahasiswaId</MudField>
 		</MudItem>
 		<MudItem xs="12">
 			<MudField Label="@DisplayTextFor.Tanggal">@_logbook.LogbookDate</MudField>

@@ -3,6 +3,7 @@ using MediatR;
 using Microsoft.EntityFrameworkCore;
 using Pertamina.SIMIT.Application.Common.Exceptions;
 using Pertamina.SIMIT.Application.Services.Persistence;
+using Pertamina.SIMIT.Application.Services.Storage;
 using Pertamina.SIMIT.Domain.Entities;
 using Pertamina.SIMIT.Shared.Logbooks.Commands.CreateLogbook;
 
@@ -23,10 +24,12 @@ public class CreateLogbookCommandValidator : AbstractValidator<CreateLogbookComm
 public class CreateLogbookCommandHandler : IRequestHandler<CreateLogbookCommand, CreateLogbookResponse>
 {
     private readonly ISIMITDbContext _context;
+    private readonly IStorageService _storageService;
 
-    public CreateLogbookCommandHandler(ISIMITDbContext context)
+    public CreateLogbookCommandHandler(ISIMITDbContext context, IStorageService storageService)
     {
         _context = context;
+        _storageService = storageService;
     }
 
     public async Task<CreateLogbookResponse> Handle(CreateLogbookCommand request, CancellationToken cancellationToken)
@@ -67,6 +70,26 @@ public class CreateLogbookCommandHandler : IRequestHandler<CreateLogbookCommand,
         };
 
         _context.Logbooks.Add(logbook);
+
+        using var memoryStream = new MemoryStream();
+        await request.File.CopyToAsync(memoryStream, cancellationToken);
+        memoryStream.Position = 0;
+
+        var file = memoryStream.ToArray();
+
+        var logbookAttachment = new LogbookAttachment
+        {
+            Id = Guid.NewGuid(),
+            LogbookId = logbook.Id,
+            FileName = request.File.Name,
+            FileSize = request.File.Length,
+            FileContentType = request.File.ContentType,
+            StorageFileId = await _storageService.CreateAsync(file)
+        };
+
+        await _context.LogbookAttachments.AddAsync(logbookAttachment, cancellationToken);
+        await _context.SaveChangesAsync(this, cancellationToken);
+
         try
         {
             await _context.SaveChangesAsync(this, cancellationToken);

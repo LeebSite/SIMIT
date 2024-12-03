@@ -11,13 +11,14 @@ namespace Pertamina.SIMIT.Bsui.Features.Logbooks;
 public partial class Details
 {
     [Parameter]
-    public Guid MahasiswaId { get; set; }
     public Guid LogbookId { get; set; }
 
     private bool _isLoading;
-    private ErrorResponse? _error;
+    private readonly ErrorResponse? _error;
     private List<BreadcrumbItem> _breadcrumbItems = new();
+    private readonly List<GetLogbookResponse> _logbooks = new(); // Daftar logbook
     private GetLogbookResponse _logbook = default!;
+    private bool _isDisposed;
 
     protected override async Task OnParametersSetAsync()
     {
@@ -36,7 +37,18 @@ public partial class Details
             return;
         }
 
-        _breadcrumbItems.Add(CommonBreadcrumbFor.Active(_logbook.MahasiswaNim));
+        // Menyaring logbook berdasarkan id mahasiswa
+        var filteredLogbook = _logbooks.Where(l => l.MahasiswaNim == LogbookId.ToString()).ToList();
+
+        if (filteredLogbook.Any())
+        {
+            _logbook = filteredLogbook.First(); // Pilih logbook pertama jika ada yang cocok
+            _breadcrumbItems.Add(CommonBreadcrumbFor.Active(_logbook.MahasiswaNim));
+        }
+        else
+        {
+            _breadcrumbItems.Add(CommonBreadcrumbFor.Active(CommonDisplayTextFor.Error));
+        }
     }
 
     private void SetupBreadcrumb()
@@ -50,26 +62,37 @@ public partial class Details
 
     private async Task GetLogbook()
     {
-        _isLoading = true;
-        _error = null;
+        if (_isDisposed)
+        {
+            return; // Cek apakah komponen sudah di-dispose
+        }
 
+        _isLoading = true;
         try
         {
             var response = await _logbookService.GetLogbookAsync(LogbookId);
-            _isLoading = false;
-
-            if (response.Error != null)
+            if (_isDisposed)
             {
-                _error = response.Error;
-                return;
+                return; // Cek lagi setelah operasi selesai
             }
 
-            _logbook = response.Result ?? new GetLogbookResponse(); // Menghindari null
+            // Proses data jika masih valid
+            _logbook = response.Result ?? new GetLogbookResponse();
         }
         catch (Exception ex)
         {
+            // Tangani exception
+        }
+        finally
+        {
             _isLoading = false;
         }
+    }
+    // Metode untuk menandakan bahwa komponen telah di-dispose
+    public void Dispose()
+    {
+
+        _isDisposed = true;
     }
 
 }

@@ -17,6 +17,7 @@ public static class DependencyInjection
         services.AddTransient<MahasiswaService>();
         services.AddTransient<PembimbingService>();
         services.AddTransient<LogbookService>();
+        services.AddTransient<LogbookAttachmentService>();
         services.AddTransient<LaporanService>();
 
         #endregion Business Services

@@ -1,48 +1,49 @@
 ﻿@page "/Logbooks"
 
 @using Pertamina.SIMIT.Bsui.Features.Logbooks.Constants
-@using Pertamina.SIMIT.Shared.Logbooks.Constants
+@using Pertamina.SIMIT.Shared.LogbookAttachments.Constants
 @using Pertamina.SIMIT.Shared.Logbooks.Queries.GetLogbooks
+@using Pertamina.SIMIT.Shared.Logbooks.Constants
+
 
 
 <!-- Tampilan jika admin login dengan autorisasi -->
 <BrowserTabTitle>@DisplayTextFor.Logbooks</BrowserTabTitle>
-<MudBreadcrumbs Items="_breadcrumbItems"></MudBreadcrumbs>
-<PageHeader Title="@DisplayTextFor.ListLogbook" />
+<MudBreadcrumbs Items="_breadcrumbItems" Separator=">"></MudBreadcrumbs>
+<PageHeader Title="@DisplayTextFor.RekapLogbookMahasiswa" />
 <ErrorViewer Error="_error" />
 
 <MudTable Elevation="0" Hover="true" Breakpoint="Breakpoint.Sm"
-		  FixedHeader="true" Height="@HeightFor.ScrollableTable"
-		  Outlined="true" Bordered="true"
+		  FixedHeader="true" Height="@HeightFor.ScrollableTable" Bordered="true"
 		  @ref="_tableLogbooks"
 		  ServerData="@(new Func<TableState, Task<TableData<GetLogbooksLogbook>>>(ReloadTableLogbooks))">
 	<ToolBarContent>
 		<MudButton Variant="Variant.Filled" Color="Color.Primary" StartIcon="@Icons.Material.Filled.Add" OnClick="ShowDialogAdd">@CommonDisplayTextFor.Add @DisplayTextFor.Logbook</MudButton>
 		<MudSpacer />
-		<MudTextField Adornment="Adornment.Start" AdornmentIcon="@Icons.Material.Filled.Search" Placeholder="@CommonDisplayTextFor.Search" T="string" ValueChanged="@(async(keyword) => await OnSearch(keyword))"></MudTextField>
+		<MudTextField Adornment="Adornment.Start" Variant="Variant.Outlined" AdornmentIcon="@Icons.Material.Filled.Search" Placeholder="@CommonDisplayTextFor.Search" T="string" ValueChanged="@(async(keyword) => await OnSearch(keyword))"></MudTextField>
 	</ToolBarContent>
 	<HeaderContent>
-		<MudTh Align="Center"><MudTableSortLabel SortLabel="@nameof(GetLogbooksLogbook.MahasiswaId)" T="GetLogbooksLogbook">@DisplayTextFor.NoBadgeMahasiswa</MudTableSortLabel></MudTh>
-		<MudTh Align="Center"><MudTableSortLabel SortLabel="@nameof(GetLogbooksLogbook.MahasiswaNama)" T="GetLogbooksLogbook">@DisplayTextFor.NamaMahasiswa</MudTableSortLabel></MudTh>
-		<MudTh Align="Center"><MudTableSortLabel SortLabel="@nameof(GetLogbooksLogbook.LogbookDate)" T="GetLogbooksLogbook">@DisplayTextFor.Tanggal</MudTableSortLabel></MudTh>
-		<MudTh Align="Center"><MudTableSortLabel SortLabel="@nameof(GetLogbooksLogbook.Aktifitas)" T="GetLogbooksLogbook">@DisplayTextFor.Aktifitas</MudTableSortLabel></MudTh>
-		<MudTh Align="Center"><MudTableSortLabel SortLabel="@nameof(GetLogbooksLogbook.LogbookDate)" T="GetLogbooksLogbook">@DisplayTextFor.StatusLogbookPagi</MudTableSortLabel></MudTh>
-		<MudTh Align="Center"><MudTableSortLabel SortLabel="@nameof(GetLogbooksLogbook.LogbookDate)" T="GetLogbooksLogbook">@DisplayTextFor.StatusLogbookSiang</MudTableSortLabel></MudTh>
+		<MudTh Align="Center" Style="text-align: center;"><MudTableSortLabel SortLabel="@nameof(GetLogbooksLogbook.MahasiswaId)" T="GetLogbooksLogbook">@DisplayTextFor.NoBadgeMahasiswa</MudTableSortLabel></MudTh>
+		<MudTh Align="Center" Style="text-align: center;"><MudTableSortLabel SortLabel="@nameof(GetLogbooksLogbook.MahasiswaNama)" T="GetLogbooksLogbook">@DisplayTextFor.NamaMahasiswa</MudTableSortLabel></MudTh>
+		<MudTh Align="Center" Style="text-align: center;"><MudTableSortLabel SortLabel="@nameof(GetLogbooksLogbook.LogbookDate)" T="GetLogbooksLogbook">@DisplayTextFor.Tanggal</MudTableSortLabel></MudTh>
+		<MudTh Align="Center" Style="text-align: center;"><MudTableSortLabel SortLabel="@nameof(GetLogbooksLogbook.Aktifitas)" T="GetLogbooksLogbook">@DisplayTextFor.Aktifitas</MudTableSortLabel></MudTh>
+		<MudTh Align="Center" Style="text-align: center;"><MudTableSortLabel SortLabel="@nameof(GetLogbooksLogbook.LogbookDate)" T="GetLogbooksLogbook">@DisplayTextFor.StatusLogbookPagi</MudTableSortLabel></MudTh>
+		<MudTh Align="Center" Style="text-align: center;"><MudTableSortLabel SortLabel="@nameof(GetLogbooksLogbook.LogbookDate)" T="GetLogbooksLogbook">@DisplayTextFor.StatusLogbookSiang</MudTableSortLabel></MudTh>
 	</HeaderContent>
 	<RowTemplate>
-		<MudTd DataLabel="@DisplayTextFor.NoBadgeMahasiswa">
+		<MudTd DataLabel="@DisplayTextFor.NoBadgeMahasiswa" Style="text-align: center;">
 			<MudHighlighter Text="@context.MahasiswaNim.ToString()" HighlightedText="@_searchKeyword" />
 		</MudTd>
-		<MudTd DataLabel="@DisplayTextFor.NamaMahasiswa">
-				<MudHighlighter Text="@context.MahasiswaNama.ToString()" HighlightedText="@_searchKeyword" />
+		<MudTd DataLabel="@DisplayTextFor.NamaMahasiswa" Style="text-align: center;">
+			<MudHighlighter Text="@context.MahasiswaNama.ToString()" HighlightedText="@_searchKeyword" />
 		</MudTd>
-		<MudTd DataLabel="@DisplayTextFor.Logbook">
+		<MudTd DataLabel="@DisplayTextFor.Logbook" Style="text-align: center;">
 			<MudHighlighter Text="@context.LogbookDate.ToString()" HighlightedText="@_searchKeyword" />
 		</MudTd>
-		<MudTd DataLabel="@DisplayTextFor.Aktifitas">
+		<MudTd DataLabel="@DisplayTextFor.Aktifitas" Style="text-align: center;">
 			<MudHighlighter Text="@context.Aktifitas.ToString()" HighlightedText="@_searchKeyword" />
 		</MudTd>
-		<MudTd DataLabel="@DisplayTextFor.StatusLogbookPagi">
+		<MudTd DataLabel="@DisplayTextFor.StatusLogbookPagi" Style="text-align: center;">
 			@if (context.LogbookId != null && context.LogbookDate.TimeOfDay >= TimeSpan.FromHours(7) && context.LogbookDate.TimeOfDay < TimeSpan.FromHours(12))
 			{
 				<MudIcon Icon="@Icons.Material.Filled.CheckCircle" Color="Color.Success" />
@@ -53,7 +54,7 @@
 			}
 		</MudTd>
 
-		<MudTd DataLabel="@DisplayTextFor.StatusLogbookSiang">
+		<MudTd DataLabel="@DisplayTextFor.StatusLogbookSiang" Style="text-align: center;">
 			@if (context.LogbookId != null && context.LogbookDate.TimeOfDay >= TimeSpan.FromHours(13) && context.LogbookDate.TimeOfDay < TimeSpan.FromHours(16))
 			{
 				<MudIcon Icon="@Icons.Material.Filled.CheckCircle" Color="Color.Success" />
@@ -91,7 +92,7 @@
 					<MudGrid>
 						<MudItem xs="12">
 							<MudText Style="text-align: left">No.Badge Mahasiswa</MudText>
-							<MudTextField @bind-Value="_model.MahasiswaNim" Label="No Badge" Variant="Variant.Outlined" Required="true" />
+							<MudTextField @bind-Value="_model.MahasiswaNim" Label="Masukkan No Badge" Variant="Variant.Outlined" Required="true" />
 						</MudItem>
 						<MudItem xs="12">
 							<MudText Style="text-align: left">Tanggal</MudText>
@@ -99,10 +100,27 @@
 							<MudTextField Value="@_model.LogbookDate.ToString("yyyy-MM-dd")" Label="Tanggal" Variant="Variant.Outlined" Disabled="true" />
 						</MudItem>
 						<MudItem xs="12">
-							<MudText Style="text-align: left">Aktifitas</MudText>
-							<MudTextField @bind-Value="_model.Aktifitas" Label="Aktifitas" Variant="Variant.Outlined" Required="true" Style="height: 250px;" />
+							<MudTextField @bind-Value="_model.Aktifitas" Label="Aktivitas" Variant="Variant.Outlined" Required="true" />
 						</MudItem>
 					</MudGrid>
+					<MudPaper Elevation="0" Class="d-flex align-baseline">
+						<MudPaper Elevation="0" Class="flex-grow-1">
+							@if (Request.File is null)
+							{
+								<MudField Label="File Attachment" HelperText="Required">Please select a file.</MudField>
+							}
+							else
+							{
+								<MudField Label="File Attachment">@Request.File.Name</MudField>
+							}
+						</MudPaper>
+						<MudPaper Elevation="0" Class="ml-4">
+							<InputFile id="inputFile" OnChange="OnAttachmentFileSelected" hidden accept="@ContentTypesFor.LogbookAttachmentFile.AllowedFileExtensions" />
+							<MudButton Variant="Variant.Filled" Color="Color.Secondary" StartIcon="@Icons.Filled.CloudUpload" Size="Size.Small" HtmlTag="label" for="inputFile">
+								@CommonDisplayTextFor.Select
+							</MudButton>
+						</MudPaper>
+					</MudPaper>
 
 					<MudCardContent>
 						<BottomButtonPanel>
@@ -135,7 +153,7 @@ else if (IsAfternoonSession)
 					<MudGrid>
 						<MudItem xs="12">
 							<MudText Style="text-align: left">No.Badge Mahasiswa</MudText>
-							<MudTextField @bind-Value="_model.MahasiswaNim" Label="No Badge" Variant="Variant.Outlined" Required="true" />
+							<MudTextField @bind-Value="_model.MahasiswaNim" Label="Masukkan No Badge" Variant="Variant.Outlined" Required="true" />
 						</MudItem>
 						<MudItem xs="12">
 							<MudText Style="text-align: left">Tanggal</MudText>
@@ -143,10 +161,12 @@ else if (IsAfternoonSession)
 							<MudTextField Value="@_model.LogbookDate.ToString("yyyy-MM-dd")" Label="Tanggal" Variant="Variant.Outlined" Disabled="true" />
 						</MudItem>
 						<MudItem xs="12">
-							<MudText Style="text-align: left">Aktifitas</MudText>
-							<MudTextField @bind-Value="_model.Aktifitas" Label="Aktifitas" Variant="Variant.Outlined" Required="true" Style="height: 250px;" />
+							<MudTextField @bind-Value="_model.Aktifitas" Label="Aktivitas" Variant="Variant.Outlined" Required="true" />
 						</MudItem>
 					</MudGrid>
+					<MudPaper Elevation="0" Class="d-flex align-baseline">
+						
+					</MudPaper>
 
 					<MudCardContent>
 						<BottomButtonPanel>

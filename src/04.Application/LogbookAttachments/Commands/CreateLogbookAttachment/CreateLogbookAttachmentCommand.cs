@@ -1,38 +1,37 @@
 ﻿using FluentValidation;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.Options;
 using Pertamina.SIMIT.Application.Common.Exceptions;
 using Pertamina.SIMIT.Application.Services.CurrentUser;
 using Pertamina.SIMIT.Application.Services.Persistence;
 using Pertamina.SIMIT.Application.Services.Storage;
 using Pertamina.SIMIT.Domain.Entities;
 using Pertamina.SIMIT.Shared.Common.Constants;
+using Pertamina.SIMIT.Shared.LogbookAttachments.Commands.CreateLogbookAttachment;
 using Pertamina.SIMIT.Shared.LogbookAttachments.CreateLogbookAttachments;
-using Pertamina.SIMIT.Shared.LogbookAttachments.Options;
-using Pertamina.SIMIT.Shared.Logbooks.Constants;
+using DisplayTextFor = Pertamina.SIMIT.Shared.Logbooks.Constants.DisplayTextFor;
 
-namespace Pertamina.SIMIT.Application.LogbookAttachments.Commands.CreateTicketAttachment;
+namespace Pertamina.SIMIT.Application.LogbookAttachments.Commands.CreateLogbookAttachment;
 public class CreateLogbookAttachmentCommand : CreateLogbookAttachmentRequest, IRequest<CreateLogbookAttachmentResponse>
 {
 }
-public class CreateTicketAttachmentCommandValidator : AbstractValidator<CreateLogbookAttachmentCommand>
+public class CreateLogbookAttachmentCommandValidator : AbstractValidator<CreateLogbookAttachmentCommand>
 {
-    public CreateTicketAttachmentCommandValidator(IOptions<LogbookAttachmentOptions> logbookAttachmentOptions)
+    public CreateLogbookAttachmentCommandValidator()
     {
-        Include(new CreateLogbookAttachmentRequestValidator(logbookAttachmentOptions));
+        Include(new CreateLogbookAttachmentRequestValidator());
     }
 }
 public class CreateLogbookAttachmentCommandHandler : IRequestHandler<CreateLogbookAttachmentCommand, CreateLogbookAttachmentResponse>
 {
     private readonly ISIMITDbContext _context;
-    private readonly ICurrentUserService _currentUser;
+    private readonly ICurrentUserService _currentUserService;
     private readonly IStorageService _storageService;
 
-    public CreateLogbookAttachmentCommandHandler(ISIMITDbContext context, ICurrentUserService currentUser, IStorageService storageService)
+    public CreateLogbookAttachmentCommandHandler(ISIMITDbContext context, ICurrentUserService currentUserService, IStorageService storageService)
     {
         _context = context;
-        _currentUser = currentUser;
+        _currentUserService = currentUserService;
         _storageService = storageService;
     }
 
@@ -49,27 +48,13 @@ public class CreateLogbookAttachmentCommandHandler : IRequestHandler<CreateLogbo
             throw new NotFoundException(DisplayTextFor.Logbook, request.LogbookId);
         }
 
-        //if (logbook.CreatorId != _currentUser.UserId)
-        //{
-        //    throw new ForbiddenAccessException($"User {_currentUser.Username} is not the {DisplayTextFor.Creator} of {DisplayTextFor.Ticket} {ticket.Id}.");
-        //}
-
-        //if (logbook.Status != LogbookStatus.Draft)
-        //{
-        //    throw new InvalidOperationException(
-        //        @$"Cannot {CommonDisplayTextFor.Update.ToLower()} {DisplayTextFor.Ticket}
-        //            with {DisplayTextFor.Code} {ticket.Code} because
-        //            its {DisplayTextFor.Status.ToLower()}
-        //            is not {TicketStatus.Draft.GetDescription()}.");
-        //}
-
         var logbookAttachmentWithTheSameFileName = logbook.Attachments
             .Where(x => x.FileName == request.File.FileName)
             .SingleOrDefault();
 
         if (logbookAttachmentWithTheSameFileName is not null)
         {
-            throw new AlreadyExistsExceptions(Shared.LogbookAttachments.Constants.DisplayTextFor.Attachment, CommonDisplayTextFor.FileName, request.File.FileName);
+            throw new AlreadyExistsExceptions(Shared.LogbookAttachments.Constants.DisplayTextFor.DisplayTextFor.Attachment, CommonDisplayTextFor.FileName, request.File.FileName);
         }
 
         using var memoryStream = new MemoryStream();
@@ -85,11 +70,10 @@ public class CreateLogbookAttachmentCommandHandler : IRequestHandler<CreateLogbo
             FileName = request.File.FileName,
             FileSize = request.File.Length,
             FileContentType = request.File.ContentType,
-            StorageFileId = await _storageService.CreateAsync(file),
+            StorageFileId = await _storageService.CreateAsync(file)
         };
 
-        //logbookAttachment.DomainEvents.Add(new LogbookAttachmentCreatedEvent(logbookAttachment.Id));
-
+        //logbookAttachment.DomainEvents.Add(new LogbookAttachmentCreatedEvent(logbookAttachment.Id))
         await _context.LogbookAttachments.AddAsync(logbookAttachment, cancellationToken);
         await _context.SaveChangesAsync(this, cancellationToken);
 
@@ -99,3 +83,4 @@ public class CreateLogbookAttachmentCommandHandler : IRequestHandler<CreateLogbo
         };
     }
 }
+
