@@ -265,6 +265,53 @@ namespace Pertamina.SIMIT.Infrastructure.Persistence.SqlServer.Migrations
                     b.ToTable("Mahasiswas", "SIMIT");
                 });
 
+            modelBuilder.Entity("Pertamina.SIMIT.Domain.Entities.MahasiswaAttachment", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<DateTimeOffset>("Created")
+                        .HasColumnType("datetimeoffset");
+
+                    b.Property<string>("CreatedBy")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(100)");
+
+                    b.Property<string>("FileContentType")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(250)");
+
+                    b.Property<string>("FileName")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(250)");
+
+                    b.Property<long>("FileSize")
+                        .HasColumnType("bigint");
+
+                    b.Property<bool>("IsDeleted")
+                        .HasColumnType("bit");
+
+                    b.Property<Guid>("MahasiswaId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<DateTimeOffset?>("Modified")
+                        .HasColumnType("datetimeoffset");
+
+                    b.Property<string>("ModifiedBy")
+                        .HasColumnType("nvarchar(100)");
+
+                    b.Property<string>("StorageFileId")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(250)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("MahasiswaId");
+
+                    b.ToTable("MahasiswaAttachments", "SIMIT");
+                });
+
             modelBuilder.Entity("Pertamina.SIMIT.Domain.Entities.Pembimbing", b =>
                 {
                     b.Property<Guid>("Id")
@@ -370,20 +417,35 @@ namespace Pertamina.SIMIT.Infrastructure.Persistence.SqlServer.Migrations
             modelBuilder.Entity("Pertamina.SIMIT.Domain.Entities.Logbook", b =>
                 {
                     b.Navigation("Attachments");
-                });
+                    modelBuilder.Entity("Pertamina.SIMIT.Domain.Entities.MahasiswaAttachment", b =>
+                        {
+                            b.HasOne("Pertamina.SIMIT.Domain.Entities.Mahasiswa", "Mahasiswa")
+                                .WithMany("Attachments")
+                                .HasForeignKey("MahasiswaId")
+                                .OnDelete(DeleteBehavior.Restrict)
+                                .IsRequired();
 
-            modelBuilder.Entity("Pertamina.SIMIT.Domain.Entities.Mahasiswa", b =>
-                {
-                    b.Navigation("Laporans");
+                            b.Navigation("Mahasiswa");
+                        });
 
-                    b.Navigation("Logbooks");
-                });
+                    modelBuilder.Entity("Pertamina.SIMIT.Domain.Entities.Mahasiswa", b =>
+                        {
+                            b.Navigation("Laporans");
+                            b.Navigation("Attachments");
 
-            modelBuilder.Entity("Pertamina.SIMIT.Domain.Entities.Pembimbing", b =>
-                {
-                    b.Navigation("Mahasiswas");
-                });
+                            b.Navigation("Laporan")
+                                .IsRequired();
+
+                            b.Navigation("Logbooks");
+                        });
+
+                    modelBuilder.Entity("Pertamina.SIMIT.Domain.Entities.Pembimbing", b =>
+                        {
+                            b.Navigation("Mahasiswas");
+                        });
 #pragma warning restore 612, 618
+                });
         }
     }
+
 }
