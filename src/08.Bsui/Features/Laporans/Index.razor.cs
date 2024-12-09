@@ -90,14 +90,14 @@ public partial class Index
                 _snackbar.Add("Laporan berhasil disimpan!");
             }
         }
-        catch (Exception ex)
-        {
-            _snackbar.AddError($"Mahasiswa dengan NIM {_model.MahasiswaNim} tidak ditemukan.");
-        }
         //catch (Exception ex)
         //{
-        //    _snackbar.AddError($"Terjadi kesalahan saat menyimpan laporan: {ex.Message}");
+        //    _snackbar.AddError($"Mahasiswa dengan NIM {_model.MahasiswaNim} tidak ditemukan.");
         //}
+        catch (Exception ex)
+        {
+            _snackbar.AddError($"Terjadi kesalahan saat menyimpan laporan: {ex.Message}");
+        }
         finally
         {
             _isLoading = false;

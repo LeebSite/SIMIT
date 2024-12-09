@@ -29,7 +29,6 @@ public class SIMITDbContext : DbContext, ISIMITDbContext
     public DbSet<Pembimbing> Pembimbings => Set<Pembimbing>();
     public DbSet<Logbook> Logbooks => Set<Logbook>();
     public DbSet<Laporan> Laporans => Set<Laporan>();
-
     public DbSet<LogbookAttachment> LogbookAttachments => Set<LogbookAttachment>();
     public DbSet<MahasiswaAttachment> MahasiswaAttachments => Set<MahasiswaAttachment>();
     #endregion Business Entities
