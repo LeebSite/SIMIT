@@ -2,7 +2,8 @@
 
 @using Pertamina.SIMIT.Shared.Mahasiswas.Queries.GetMahasiswas
 @using static Pertamina.SIMIT.Shared.Mahasiswas.Constants.ApiEndpoint.V1
-
+@using static Pertamina.SIMIT.Shared.Logbooks.Constants.ApiEndPoint
+@using Pertamina.SIMIT.Shared.Logbooks.Queries.GetLogbooks
 
 @inject NavigationManager NavigationManager
 
@@ -45,7 +46,6 @@
 		<MudTh><MudTableSortLabel SortLabel="@nameof(GetMahasiswasMahasiswa.Bagian)" T="GetMahasiswasMahasiswa">@DisplayTextFor.Bagian</MudTableSortLabel></MudTh>
 		<MudTh><MudTableSortLabel SortLabel="@nameof(GetMahasiswasMahasiswa.PembimbingNama)" T="GetMahasiswasMahasiswa">@DisplayTextFor.Pembimbing</MudTableSortLabel></MudTh>
 		<MudTh><MudTableSortLabel SortLabel="@nameof(GetMahasiswasMahasiswa.LaporanId)" T="GetMahasiswasMahasiswa">@DisplayTextFor.StatusDokumen</MudTableSortLabel></MudTh>
-			 <MudTh>@DisplayTextFor.DetailLogbook</MudTh>
 	</HeaderContent>
 	<RowTemplate>
 		<MudTd DataLabel="@DisplayTextFor.Nama">
@@ -82,6 +82,7 @@
 			<MudIcon Icon="@Icons.Material.Filled.Cancel" Color="Color.Error" />
 		}
 		</MudTd>
+		
 
 	</RowTemplate>
 	<PagerContent>
