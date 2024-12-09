@@ -9,7 +9,6 @@ using Pertamina.SIMIT.Bsui.Features.Logbooks.Constants;
 using Pertamina.SIMIT.Shared.Common.Constants;
 using Pertamina.SIMIT.Shared.Common.Responses;
 using Pertamina.SIMIT.Shared.Logbooks.Commands.CreateLogbook;
-using Pertamina.SIMIT.Shared.LogbookAttachments.Commands.CreateLogbookAttachment;
 using Pertamina.SIMIT.Shared.Logbooks.Constants;
 using Pertamina.SIMIT.Shared.Logbooks.Queries.GetLogbooks;
 
@@ -157,49 +156,49 @@ public partial class Index
 
         var logbookId = createLogbookResponse.Result!.LogbookId;
 
-        // Jika file tersedia, buat request untuk attachment
-        if (Request.File != null)
-        {
-            var attachmentRequest = new CreateLogbookAttachmentRequest
-            {
-                LogbookId = logbookId,
-                File = Request.File
-            };
+        //// Jika file tersedia, buat request untuk attachment
+        //if (Request.File != null)
+        //{
+        //    var attachmentRequest = new CreateLogbookAttachmentRequest
+        //    {
+        //        LogbookId = logbookId,
+        //        File = Request.File
+        //    };
 
-            var createAttachmentResponse = await _logbookAttachmentService.CreateLogbookAttachmentAsync(attachmentRequest);
+        //    var createAttachmentResponse = await _logbookAttachmentService.CreateLogbookAttachmentAsync(attachmentRequest);
 
-            if (createAttachmentResponse.Error != null)
-            {
-                _error = createAttachmentResponse.Error;
-                return;
-            }
-        }
+        //    if (createAttachmentResponse.Error != null)
+        //    {
+        //        _error = createAttachmentResponse.Error;
+        //        return;
+        //    }
+        //}
 
         // Tampilkan notifikasi berhasil
         _snackbar.Add("Logbook Berhasil ditambahkan");
 
     }
-    private async Task OnAttachmentFileSelected(InputFileChangeEventArgs eventArgs)
-    {
-        var browserFile = eventArgs.File;
+    //private async Task OnAttachmentFileSelected(InputFileChangeEventArgs eventArgs)
+    //{
+    //    var browserFile = eventArgs.File;
 
-        if (browserFile is not null)
-        {
-            // Simpan stream dari IBrowserFile
-            var stream = browserFile.OpenReadStream(browserFile.Size);
+    //    if (browserFile is not null)
+    //    {
+    //        // Simpan stream dari IBrowserFile
+    //        var stream = browserFile.OpenReadStream(browserFile.Size);
 
-            // Bungkus IBrowserFile ke IFormFile menggunakan MemoryStream
-            var memoryStream = new MemoryStream();
-            await stream.CopyToAsync(memoryStream);
-            memoryStream.Position = 0; // Reset posisi stream agar bisa dibaca ulang
+    //        // Bungkus IBrowserFile ke IFormFile menggunakan MemoryStream
+    //        var memoryStream = new MemoryStream();
+    //        await stream.CopyToAsync(memoryStream);
+    //        memoryStream.Position = 0; // Reset posisi stream agar bisa dibaca ulang
 
-            Request.File = new FormFile(memoryStream, 0, memoryStream.Length, browserFile.Name, browserFile.Name)
-            {
-                Headers = new HeaderDictionary(), // Optional
-                ContentType = browserFile.ContentType
-            };
-        }
-    }
+    //        Request.File = new FormFile(memoryStream, 0, memoryStream.Length, browserFile.Name, browserFile.Name)
+    //        {
+    //            Headers = new HeaderDictionary(), // Optional
+    //            ContentType = browserFile.ContentType
+    //        };
+    //    }
+    //}
 
     private void OnInvalidSubmit(EditContext editContext)
     {

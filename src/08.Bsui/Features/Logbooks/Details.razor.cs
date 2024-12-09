@@ -62,6 +62,7 @@ public partial class Details
 
     private async Task GetLogbook()
     {
+        _isLoading = true;
         if (_isDisposed)
         {
             return; // Cek apakah komponen sudah di-dispose
@@ -80,10 +81,6 @@ public partial class Details
             _logbook = response.Result ?? new GetLogbookResponse();
         }
         catch (Exception ex)
-        {
-            // Tangani exception
-        }
-        finally
         {
             _isLoading = false;
         }

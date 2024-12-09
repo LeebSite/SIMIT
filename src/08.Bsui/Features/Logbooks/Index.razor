@@ -103,24 +103,7 @@
 							<MudTextField @bind-Value="_model.Aktifitas" Label="Aktivitas" Variant="Variant.Outlined" Required="true" />
 						</MudItem>
 					</MudGrid>
-					<MudPaper Elevation="0" Class="d-flex align-baseline">
-						<MudPaper Elevation="0" Class="flex-grow-1">
-							@if (Request.File is null)
-							{
-								<MudField Label="File Attachment" HelperText="Required">Please select a file.</MudField>
-							}
-							else
-							{
-								<MudField Label="File Attachment">@Request.File.Name</MudField>
-							}
-						</MudPaper>
-						<MudPaper Elevation="0" Class="ml-4">
-							<InputFile id="inputFile" OnChange="OnAttachmentFileSelected" hidden accept="@ContentTypesFor.LogbookAttachmentFile.AllowedFileExtensions" />
-							<MudButton Variant="Variant.Filled" Color="Color.Secondary" StartIcon="@Icons.Filled.CloudUpload" Size="Size.Small" HtmlTag="label" for="inputFile">
-								@CommonDisplayTextFor.Select
-							</MudButton>
-						</MudPaper>
-					</MudPaper>
+					
 
 					<MudCardContent>
 						<BottomButtonPanel>
@@ -164,9 +147,6 @@ else if (IsAfternoonSession)
 							<MudTextField @bind-Value="_model.Aktifitas" Label="Aktivitas" Variant="Variant.Outlined" Required="true" />
 						</MudItem>
 					</MudGrid>
-					<MudPaper Elevation="0" Class="d-flex align-baseline">
-						
-					</MudPaper>
 
 					<MudCardContent>
 						<BottomButtonPanel>

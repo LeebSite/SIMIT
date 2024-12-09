@@ -3,7 +3,6 @@ using Microsoft.AspNetCore.Http;
 using Pertamina.SIMIT.Shared.Common.Attributes;
 using Pertamina.SIMIT.Shared.Common.Constants;
 using Pertamina.SIMIT.Shared.LogbookAttachments.Constants;
-using Pertamina.SIMIT.Shared.LogbookAttachments.Constants.DisplayTextFor;
 
 namespace Pertamina.SIMIT.Shared.LogbookAttachments.Commands.CreateLogbookAttachment;
 public class CreateLogbookAttachmentRequest
@@ -26,11 +25,11 @@ public class CreateLogbookAttachmentRequestValidator : AbstractValidator<CreateL
         RuleFor(v => v.LogbookId)
             .NotEmpty();
 
-        RuleFor(v => v.File.Length);
+        //RuleFor(v => v.File.Length);
 
-        RuleFor(v => v.File.ContentType)
-            .Must(HaveSupportedContentType)
-            .WithMessage($"{DisplayTextFor.Attachment} file extension is not supported. Please {CommonDisplayTextFor.Upload.ToLower()} supported file.");
+        //RuleFor(v => v.File.ContentType)
+        //    .Must(HaveSupportedContentType)
+        //    .WithMessage($"{DisplayTextFor.Attachment} file extension is not supported. Please {CommonDisplayTextFor.Upload.ToLower()} supported file.");
     }
 
     private bool HaveSupportedContentType(string contentType)

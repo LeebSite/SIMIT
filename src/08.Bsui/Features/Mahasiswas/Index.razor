@@ -3,6 +3,7 @@
 @using Pertamina.SIMIT.Shared.Mahasiswas.Queries.GetMahasiswas
 @using static Pertamina.SIMIT.Shared.Mahasiswas.Constants.ApiEndpoint.V1
 
+
 @inject NavigationManager NavigationManager
 
 @code {
@@ -80,15 +81,6 @@
 		{
 			<MudIcon Icon="@Icons.Material.Filled.Cancel" Color="Color.Error" />
 		}
-		</MudTd>
-		<!-- Tambahkan tombol Detail Logbook -->
-		<MudTd DataLabel="@DisplayTextFor.DetailLogbook">
-			<MudButton Variant="Variant.Filled"
-					   Color="Color.Primary"
-					   StartIcon="@Icons.Material.Filled.Info"
-					   OnClick="() => NavigateToDetailLogbook(context.Id)">
-				Detail
-			</MudButton>
 		</MudTd>
 
 	</RowTemplate>
