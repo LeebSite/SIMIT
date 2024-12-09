@@ -6,7 +6,6 @@ using Pertamina.SIMIT.Application.Common.Exceptions;
 using Pertamina.SIMIT.Application.Services.Persistence;
 using Pertamina.SIMIT.Application.Services.Storage;
 using Pertamina.SIMIT.Domain.Entities;
-using Pertamina.SIMIT.Shared.Common.Constants;
 using Pertamina.SIMIT.Shared.Mahasiswas.Commands.CreateMahasiswa;
 using Pertamina.SIMIT.Shared.Mahasiswas.Constants;
 
