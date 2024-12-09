@@ -5,5 +5,5 @@ namespace Pertamina.SIMIT.Bsui.Features.Pembimbings.Constants;
 
 public class BreadCrumbFor
 {
-    public static readonly BreadcrumbItem Index = new(DisplayTextFor.Pembimbings, RouteFor.Index);
+    public static readonly BreadcrumbItem Index = new(DisplayTextFor.RekapDataPembimbing, RouteFor.Index);
 }

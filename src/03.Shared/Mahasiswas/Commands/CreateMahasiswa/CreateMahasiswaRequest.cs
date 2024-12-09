@@ -1,7 +1,9 @@
 ﻿
 using FluentValidation;
+using Microsoft.AspNetCore.Http;
 using Pertamina.SIMIT.Shared.Common.Attributes;
 using Pertamina.SIMIT.Shared.Common.Constants;
+using Pertamina.SIMIT.Shared.MahasiswaAttachments.Constants;
 using Pertamina.SIMIT.Shared.Mahasiswas.Constants;
 
 namespace Pertamina.SIMIT.Shared.Mahasiswas.Commands.CreateMahasiswa;
@@ -28,6 +30,9 @@ public class CreateMahasiswaRequest
 
     [OpenApiContentType(ContentTypes.TextPlain)]
     public Guid PembimbingId { get; set; } = default!;
+
+    [OpenApiContentType(ContentTypesFor.MahasiswaAttachmentFile.Value)]
+    public IFormFile File { get; set; } = default!;
 
 }
 
@@ -62,6 +67,12 @@ public class CreateMahasiswaRequestValidator : AbstractValidator<CreateMahasiswa
           .MaximumLength(MaximumLengthFor.Bagian);
 
         RuleFor(v => v.PembimbingId)
+         .NotEmpty();
+
+        //RuleFor(v => v.MahasiswaId)
+        // .NotEmpty();
+
+        RuleFor(v => v.File)
          .NotEmpty();
     }
 }

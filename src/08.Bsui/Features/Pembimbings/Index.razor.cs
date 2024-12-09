@@ -36,7 +36,7 @@ public partial class Index
         _breadcrumbItems = new()
         {
             CommonBreadcrumbFor.Home,
-            CommonBreadcrumbFor.Active(DisplayTextFor.Pembimbings)
+            CommonBreadcrumbFor.Active(DisplayTextFor.DataPembimbing)
         };
     }
 

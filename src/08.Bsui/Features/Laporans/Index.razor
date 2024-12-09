@@ -2,75 +2,75 @@
 @using Pertamina.SIMIT.Shared.Laporans.Queries.GetLaporans
 
 <BrowserTabTitle>@DisplayTextFor.DokumenMahasiswa</BrowserTabTitle>
-<MudBreadcrumbs Items="_breadcrumbItems"></MudBreadcrumbs>
-<PageHeader Title="@DisplayTextFor.TambahLaporanDanProyekMagang" />
+<MudBreadcrumbs Items="_breadcrumbItems" Separator=">"></MudBreadcrumbs>
+<PageHeader Title="@DisplayTextFor.TambahLaporanDanProyekMagang"/>
 <ErrorViewer Error="_error" />
 
 <!-- Form Section -->
-<MudLayout Align="center" Class="mt-4">
-	<MudGrid JustifyCenter>
-		<MudItem xl="12" sm="8" md="6">
-			<MudCard Outlined="true" Class="pa-4">
-				<MudCardContent>
-					<EditForm Model="_model" OnValidSubmit="OnValidSubmit" OnInvalidSubmit="OnInvalidSubmit">
-						<FluentValidationValidator />
-						<MudGrid>
-							<MudItem>
-								<MudButton Variant="Variant.Filled"
-										   Color="Color.Primary"
-										   ButtonType="ButtonType.Submit"
-										   StartIcon="@Icons.Material.Filled.Save">
-									@DisplayTextFor.Simpan
-								</MudButton>
-							</MudItem>
-						</MudGrid>
+<div style="display: flex; justify-content: center; align-items: center;">
+	<MudItem xl="12" sm="8" md="6">
+		<MudCard Outlined="true" Class="pa-4">
+			<MudCardContent>
+				<EditForm Model="_model" OnValidSubmit="OnValidSubmit" OnInvalidSubmit="OnInvalidSubmit">
 
-						<MudDivider Class="my-4" />
+					<!-- Input Fields -->
+					<MudGrid JustifyCenter Spacing="2">
+						<MudItem xs="12">
+							<MudTextField @bind-Value="_model.MahasiswaNim" Variant="Variant.Outlined"
+										  Required="true"
+										  Placeholder="Masukkan NIM Mahasiswa"
+										  HelperText="Contoh: 22654700"
+										  Adornment="Adornment.Start"
+										  AdornmentIcon="@Icons.Material.Filled.Person" />
+						</MudItem>
+						<MudItem xs="12">
+							<MudTextField @bind-Value="_model.Deskripsi" Variant="Variant.Outlined"
+										  Required="true"
+										  Placeholder="Masukkan Deskripsi Laporan"
+										  HelperText="Contoh: Aplikasi Sistem Informasi Magang"
+										  Adornment="Adornment.Start"
+										  AdornmentIcon="@Icons.Material.Filled.Edit" />
+						</MudItem>
 
-						<!-- Input Fields -->
-						<MudGrid Spacing="2">
-							<MudItem xs="12">
-								<MudTextField Label="NIM Mahasiswa"
-											  @bind-Value="_model.MahasiswaNim"
-											  Required="true"
-											  Placeholder="Masukkan NIM Mahasiswa"
-											  HelperText="Contoh: 12345678"
-											  Adornment="Adornment.Start"
-											  AdornmentIcon="@Icons.Material.Filled.Person" />
-							</MudItem>
-							<MudItem xs="12">
-								<MudTextField Label="Deskripsi"
-											  @bind-Value="_model.Deskripsi"
-											  Required="true"
-											  Placeholder="Masukkan deskripsi laporan"
-											  HelperText="Projecr."
-											  Adornment="Adornment.Start"
-											  AdornmentIcon="@Icons.Material.Filled.Edit" />
-							</MudItem>
-							<MudItem xs="12">
-								<MudPaper Elevation="0" Class="d-flex align-baseline mt-2">
-									<MudButton Variant="Variant.Filled"
-											   Color="Color.Secondary"
-											   StartIcon="@Icons.Material.Filled.CloudUpload"
-											   HtmlTag="label"
-											   for="inputFile">
-										Pilih File
-									</MudButton>
-									<InputFile id="inputFile"
-											   OnChange="OnAttachmentFileSelected"
-											   hidden
-											   accept="@ContentTypesFor.LaporanFile.AllowedFileExtensions" />
-								</MudPaper>
-								@if (_model.File == null)
-								{
-									<MudText Typo="Typo.caption" Color="Color.Error">File belum dipilih.</MudText>
-								}
-							</MudItem>
-						</MudGrid>
-					</EditForm>
-				</MudCardContent>
-			</MudCard>
-		</MudItem>
-	</MudGrid>
-</MudLayout>
+						<!-- Tombol Upload File -->
+						<MudItem xs="12">
+							<MudButton Variant="Variant.Outlined"
+									   Size="Size.Medium"
+									   Color="Color.Primary"
+									   StartIcon="@Icons.Material.Filled.CloudUpload"
+									   HtmlTag="label"
+									   for="inputFile"
+									   Style="width: 100%; height: auto; padding: 12px;">
+								Pilih File (.zip)
+							</MudButton>
+							<InputFile id="inputFile"
+									   OnChange="OnAttachmentFileSelected"
+									   hidden
+									   accept="@ContentTypesFor.LaporanFile.AllowedFileExtensions" />
+						</MudItem>
 
+						<!-- Pesan Error -->
+						@if (_model.File == null)
+						{
+							<MudItem xs="12" Class="d-flex justify-center align-center">
+								<MudText Typo="Typo.caption" Color="Color.Error">
+									File belum dipilih.
+								</MudText>
+							</MudItem>
+						}
+
+						<!-- Tombol Submit -->
+						<MudItem xs="12" Class="right-buttons">
+							<MudButton Variant="Variant.Filled"
+									   Color="Color.Primary"
+									   ButtonType="ButtonType.Submit"
+									   StartIcon="@Icons.Material.Outlined.Save">
+								@DisplayTextFor.Simpan
+							</MudButton>
+						</MudItem>
+					</MudGrid>
+				</EditForm>
+			</MudCardContent>
+		</MudCard>
+	</MudItem>
+</div>

@@ -15,7 +15,7 @@ public interface ISIMITDbContext
     DbSet<Logbook> Logbooks { get; }
     DbSet<LogbookAttachment> LogbookAttachments { get; }
     DbSet<Pembimbing> Pembimbings { get; }
-
+    DbSet<MahasiswaAttachment> MahasiswaAttachments { get; }
     #endregion Business Entities
 
     Task<int> SaveChangesAsync<THandler>(THandler handler, CancellationToken cancellationToken = default) where THandler : notnull;

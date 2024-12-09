@@ -56,35 +56,52 @@ public partial class Index
 
         if (_model.File is null)
         {
-            _snackbar.AddError($"Please select a {CommonDisplayTextFor.File.ToLower()}.");
-
+            _snackbar.AddError($"Silakan pilih {CommonDisplayTextFor.File.ToLower()}.");
             return;
         }
 
         _isLoading = true;
 
-        await using var memoryStream = new MemoryStream();
-        await _model.File.OpenReadStream().CopyToAsync(memoryStream);
-
-        var request = new CreateLaporanRequest
+        try
         {
-            MahasiswaNim = _model.MahasiswaNim,
-            Deskripsi = _model.Deskripsi,
-            File = _model.File.ToFormFile(memoryStream, nameof(CreateLaporanRequest.File))
-        };
+            // Baca file ke MemoryStream
+            await using var memoryStream = new MemoryStream();
+            await _model.File.OpenReadStream().CopyToAsync(memoryStream);
 
-        var response = await _laporanService.CreateLaporanAsync(request);
+            // Buat request untuk Create/Update Laporan
+            var request = new CreateLaporanRequest
+            {
+                MahasiswaNim = _model.MahasiswaNim,
+                Deskripsi = _model.Deskripsi,
+                File = _model.File.ToFormFile(memoryStream, nameof(CreateLaporanRequest.File))
+            };
 
-        _isLoading = false;
+            // Kirim ke layanan
+            var response = await _laporanService.CreateLaporanAsync(request);
 
-        if (response.Error is not null)
-        {
-            _error = response.Error;
-
-            return;
+            if (response.Error is not null)
+            {
+                // Jika ada error, tampilkan pesan
+                _snackbar.AddError($"Gagal menyimpan laporan: {response.Error.Status}");
+            }
+            else
+            {
+                // Berhasil
+                _snackbar.Add("Laporan berhasil disimpan!");
+            }
         }
-
-        _snackbar.Add("Berhasil ditambahkan");
+        //catch (Exception ex)
+        //{
+        //    _snackbar.AddError($"Mahasiswa dengan NIM {_model.MahasiswaNim} tidak ditemukan.");
+        //}
+        catch (Exception ex)
+        {
+            _snackbar.AddError($"Terjadi kesalahan saat menyimpan laporan: {ex.Message}");
+        }
+        finally
+        {
+            _isLoading = false;
+        }
     }
 
     private void OnInvalidSubmit(EditContext editContext)
