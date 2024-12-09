@@ -6,7 +6,6 @@ using Pertamina.SIMIT.Application.Services.Persistence;
 using Pertamina.SIMIT.Application.Services.Storage;
 using Pertamina.SIMIT.Domain.Entities;
 using Pertamina.SIMIT.Shared.Laporans.Commands.CreateLaporan;
-using Pertamina.SIMIT.Shared.Laporans.Constants;
 
 namespace Pertamina.SIMIT.Application.Laporans.Commands.CreateLaporan;
 public class CreateLaporanCommand : CreateLaporanRequest, IRequest<CreateLaporanResponse>
@@ -43,29 +42,55 @@ public class CreateLaporanCommandHandler : IRequestHandler<CreateLaporanCommand,
 
         if (mahasiswa is null)
         {
-            throw new NotFoundException($"{DisplayTextFor.Mahasiswa} dengan NIM {request.MahasiswaNim}", request.MahasiswaNim);
+            throw new NotFoundException($"Mahasiswa dengan NIM {request.MahasiswaNim} tidak ditemukan.");
         }
+
+        // Periksa apakah laporan untuk MahasiswaId sudah ada
+        var laporan = await _context.Laporans
+            .Where(x => x.MahasiswaId == mahasiswa.Id && !x.IsDeleted)
+            .SingleOrDefaultAsync(cancellationToken);
 
         // File handling
         using var memoryStream = new MemoryStream();
         await request.File.CopyToAsync(memoryStream, cancellationToken);
         memoryStream.Position = 0;
+        var fileContent = memoryStream.ToArray();
 
-        var file = memoryStream.ToArray();
-
-        var laporan = new Laporan
+        if (laporan is not null)
         {
-            Id = Guid.NewGuid(),
-            MahasiswaId = mahasiswa.Id,
-            FileName = request.File.FileName,
-            FileSize = request.File.Length,
-            FileContentType = request.File.ContentType,
-            StorageFileId = await _storageService.CreateAsync(file),
-            Deskripsi = request.Deskripsi
-        };
+            // Update laporan jika sudah ada
+            laporan.FileName = request.File.FileName;
+            laporan.FileSize = request.File.Length;
+            laporan.FileContentType = request.File.ContentType;
+            laporan.Deskripsi = request.Deskripsi;
 
-        await _context.Laporans.AddAsync(laporan, cancellationToken);
-        await _context.SaveChangesAsync(this, cancellationToken);
+            // Simpan file baru ke storage
+            laporan.StorageFileId = await _storageService.CreateAsync(fileContent);
+
+            // Tandai laporan sebagai telah dimodifikasi
+            laporan.Modified = DateTimeOffset.UtcNow;
+            laporan.ModifiedBy = "System"; // Sesuaikan dengan pengguna
+        }
+        else
+        {
+            // Buat laporan baru jika belum ada
+            laporan = new Laporan
+            {
+                Id = Guid.NewGuid(),
+                MahasiswaId = mahasiswa.Id,
+                FileName = request.File.FileName,
+                FileSize = request.File.Length,
+                FileContentType = request.File.ContentType,
+                Deskripsi = request.Deskripsi,
+                StorageFileId = await _storageService.CreateAsync(fileContent),
+                Created = DateTimeOffset.UtcNow,
+                CreatedBy = "System" // Sesuaikan dengan pengguna
+            };
+
+            await _context.Laporans.AddAsync(laporan, cancellationToken);
+        }
+
+        await _context.SaveChangesAsync(cancellationToken);
 
         return new CreateLaporanResponse
         {

@@ -4,19 +4,20 @@
 
 
 <BrowserTabTitle>@DisplayTextFor.Pembimbings</BrowserTabTitle>
-<MudBreadcrumbs Items="_breadcrumbItems"></MudBreadcrumbs>
-<PageHeader Title="@DisplayTextFor.ListPembimbing" />
+
+<MudBreadcrumbs Items="_breadcrumbItems" Separator=">"></MudBreadcrumbs>
+<PageHeader Title="@DisplayTextFor.RekapDataPembimbing" />
 <ErrorViewer Error="_error" />
 
 
-	<MudTable Elevation="0" Hover="true" Breakpoint="Breakpoint.Sm"
+<MudTable Elevation="0" Hover="true" Breakpoint="Breakpoint.Sm" Bordered="true"
 			  FixedHeader="true" Height="@HeightFor.ScrollableTable"
 			  @ref="_tablePembimbings"
 			  ServerData="@(new Func<TableState, Task<TableData<GetPembimbingsPembimbing>>>(ReloadTablePembimbings))">
 		<ToolBarContent>
 				<MudButton Variant="Variant.Filled" Color="Color.Primary" StartIcon="@Icons.Material.Filled.Add" OnClick="ShowDialogAdd">@CommonDisplayTextFor.Add @DisplayTextFor.Pembimbing</MudButton>		
 			<MudSpacer />
-			<MudTextField Adornment="Adornment.Start" AdornmentIcon="@Icons.Material.Filled.Search" Placeholder="@CommonDisplayTextFor.Search" T="string" ValueChanged="@(async(keyword) => await OnSearch(keyword))"></MudTextField>
+		<MudTextField Variant="Variant.Outlined" Margin="Margin.Dense" Adornment="Adornment.Start" AdornmentIcon="@Icons.Material.Filled.Search" Placeholder="@CommonDisplayTextFor.Search" T="string" ValueChanged="@(async(keyword) => await OnSearch(keyword))"></MudTextField>
 		</ToolBarContent>
 		<HeaderContent>
 		<MudTh><MudTableSortLabel SortLabel="@nameof(GetPembimbingsPembimbing.Nama)" T="GetPembimbingsPembimbing">@DisplayTextFor.Nama</MudTableSortLabel></MudTh>

@@ -30,7 +30,7 @@ public partial class Index
         _breadcrumbItems = new()
         {
             CommonBreadcrumbFor.Home,
-            CommonBreadcrumbFor.Active(DisplayTextFor.Mahasiswas)
+            CommonBreadcrumbFor.Active(DisplayTextFor.DataMahasiswa)
         };
 
     }
