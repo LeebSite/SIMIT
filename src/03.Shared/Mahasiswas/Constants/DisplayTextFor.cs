@@ -7,7 +7,9 @@ public class DisplayTextFor
     public const string Mahasiswas = nameof(Mahasiswas);
     public const string Mahasiswa = nameof(Mahasiswa);
 
-    public static readonly string ListMahasiswa = nameof(ListMahasiswa).SplitWords();
+    public static readonly string RekapDataMahasiswa = nameof(RekapDataMahasiswa).SplitWords();
+    public static readonly string DetailDataMahasiwa = nameof(DetailDataMahasiwa).SplitWords();
+    public static readonly string DataMahasiswa = nameof(DataMahasiswa).SplitWords();
 
     public const string Nama = nameof(Nama);
     public const string Deskripsi = nameof(Deskripsi);
