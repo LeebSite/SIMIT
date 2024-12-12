@@ -391,6 +391,33 @@ namespace Pertamina.SIMIT.Infrastructure.Persistence.SqlServer.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
+                    b.OwnsOne("Pertamina.SIMIT.Base.ValueObjects.Geolocation", "FromGeolocation", b1 =>
+                        {
+                            b1.Property<Guid>("LogbookId")
+                                .HasColumnType("uniqueidentifier");
+
+                            b1.Property<double>("Accuracy")
+                                .HasColumnType("float")
+                                .HasColumnName("Accuracy");
+
+                            b1.Property<double>("Latitude")
+                                .HasColumnType("float")
+                                .HasColumnName("Latitude");
+
+                            b1.Property<double>("Longitude")
+                                .HasColumnType("float")
+                                .HasColumnName("Longitude");
+
+                            b1.HasKey("LogbookId");
+
+                            b1.ToTable("Logbooks", "SIMIT");
+
+                            b1.WithOwner()
+                                .HasForeignKey("LogbookId");
+                        });
+
+                    b.Navigation("FromGeolocation");
+
                     b.Navigation("Mahasiswa");
                 });
 

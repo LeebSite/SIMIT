@@ -12,7 +12,7 @@ using Pertamina.SIMIT.Infrastructure.Persistence.SqlServer;
 namespace Pertamina.SIMIT.Infrastructure.Persistence.SqlServer.Migrations
 {
     [DbContext(typeof(SqlServerSIMITDbContext))]
-    [Migration("20241209071400_SqlServerSIMITDbContext_002_MahasiswaSchema")]
+    [Migration("20241211025504_SqlServerSIMITDbContext_002_MahasiswaSchema")]
     partial class SqlServerSIMITDbContext_002_MahasiswaSchema
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -392,6 +392,33 @@ namespace Pertamina.SIMIT.Infrastructure.Persistence.SqlServer.Migrations
                         .HasForeignKey("MahasiswaId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+
+                    b.OwnsOne("Pertamina.SIMIT.Base.ValueObjects.Geolocation", "FromGeolocation", b1 =>
+                        {
+                            b1.Property<Guid>("LogbookId")
+                                .HasColumnType("uniqueidentifier");
+
+                            b1.Property<double>("Accuracy")
+                                .HasColumnType("float")
+                                .HasColumnName("Accuracy");
+
+                            b1.Property<double>("Latitude")
+                                .HasColumnType("float")
+                                .HasColumnName("Latitude");
+
+                            b1.Property<double>("Longitude")
+                                .HasColumnType("float")
+                                .HasColumnName("Longitude");
+
+                            b1.HasKey("LogbookId");
+
+                            b1.ToTable("Logbooks", "SIMIT");
+
+                            b1.WithOwner()
+                                .HasForeignKey("LogbookId");
+                        });
+
+                    b.Navigation("FromGeolocation");
 
                     b.Navigation("Mahasiswa");
                 });

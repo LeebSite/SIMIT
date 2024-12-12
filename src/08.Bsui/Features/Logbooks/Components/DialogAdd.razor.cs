@@ -33,15 +33,31 @@ public partial class DialogAdd
     private async Task OnValidSubmit()
     {
         _error = null;
-
         _isLoading = true;
+
+        // Ambil lokasi pengguna saat ini
+        var geolocationResult = await _geolocationService.GetCurrentPosition();
+        if (geolocationResult.IsSuccess)
+        {
+            var coordinates = geolocationResult.Position.Coords;
+            Request.Latitude = coordinates.Latitude;
+            Request.Longitude = coordinates.Longitude;
+            Request.Accuracy = coordinates.Longitude;
+            // Anda bisa menyimpan akurasi jika diperlukan di request atau database
+        }
+        else
+        {
+            _snackbar.Add("Failed to retrieve geolocation: " + geolocationResult.Error.Message, Severity.Error);
+            _isLoading = false;
+            return;
+        }
+
         var response = await _logbookService.CreateLogbookAsync(Request);
         _isLoading = false;
 
         if (response.Error is not null)
         {
             _error = response.Error;
-
             return;
         }
 

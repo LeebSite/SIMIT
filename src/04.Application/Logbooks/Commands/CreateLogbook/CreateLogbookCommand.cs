@@ -4,6 +4,7 @@ using Microsoft.EntityFrameworkCore;
 using Pertamina.SIMIT.Application.Common.Exceptions;
 using Pertamina.SIMIT.Application.Services.Persistence;
 using Pertamina.SIMIT.Application.Services.Storage;
+using Pertamina.SIMIT.Base.ValueObjects;
 using Pertamina.SIMIT.Domain.Entities;
 using Pertamina.SIMIT.Shared.Logbooks.Commands.CreateLogbook;
 
@@ -67,6 +68,7 @@ public class CreateLogbookCommandHandler : IRequestHandler<CreateLogbookCommand,
             LogbookDate = (DateTime)request.LogbookDate,
             Aktifitas = request.Aktifitas,
             MahasiswaId = mahasiswa.Id, // Set the foreign key
+            FromGeolocation = new Geolocation(request.Latitude, request.Longitude, request.Accuracy) // Data geolocation
         };
 
         _context.Logbooks.Add(logbook);
