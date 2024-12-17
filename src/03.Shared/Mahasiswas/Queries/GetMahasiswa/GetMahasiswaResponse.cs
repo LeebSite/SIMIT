@@ -14,6 +14,7 @@ public class GetMahasiswaResponse : Response
     public Guid PembimbingId { get; set; }
     public string? PembimbingNama { get; set; }
 
+    public Guid MahasiswaAttachmentId { get; set; }
     public Guid LaporanId { get; set; }
     public string? LaporanDeskripsi { get; set; }
 
@@ -21,4 +22,7 @@ public class GetMahasiswaResponse : Response
     public string CreatedBy { get; set; } = default!;
     public DateTimeOffset? Modified { get; set; }
     public string? ModifiedBy { get; set; }
+
+    //public IList<GetMahasiswaMahasiswaAttachment> Attachments { get; set; } = new List<GetMahasiswaMahasiswaAttachment>();
+
 }

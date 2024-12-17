@@ -23,7 +23,29 @@ public partial class Details
     private ErrorResponse? _error;
     private List<BreadcrumbItem> _breadcrumbItems = new();
     private GetMahasiswaResponse _mahasiswa = default!;
+    //private string? _base64Image;
 
+    //private async Task HandleReadAsBase64()
+    //{
+    //    if (_mahasiswa.MahasiswaAttachmentId == null)
+    //    {
+    //        _snackbar.Add("Mahasiswa ini tidak memiliki file untuk dibaca.", Severity.Warning);
+    //        return;
+    //    }
+
+    //    try
+    //    {
+    //        var base64Content = await _mahasiswaAttachmentService.ReadAsBase64Async(_mahasiswa.MahasiswaAttachmentId.Value);
+    //        Console.WriteLine($"File Content in Base64: {base64Content}");
+    //    }
+    //    catch (Exception ex)
+    //    {
+    //        _snackbar.Add($"Gagal membaca file: {ex.Message}", Severity.Error);
+    //    }
+    //}
+
+    //[Inject]
+    //private MahasiswaAttachmentService _mahasiswaAttachmentService { get; set; } = default!;
     protected override async Task OnParametersSetAsync()
     {
         await Reload();
@@ -51,6 +73,55 @@ public partial class Details
             CommonBreadcrumbFor.Home,
             BreadcrumbFor.Index
         };
+    }
+
+    private async Task DownloadFoto()
+    {
+        //_isLoading = true;
+
+        //var response = await _mahasiswaAttachmentService.GetMahasiswaAttachmentFileAsync(Attachment.Id);
+
+        //_isLoading = false;
+
+        //if (response.Error is not null)
+        //{
+        //    _error = response.Error;
+
+        //    return;
+        //}
+
+        //await _jsRuntime.InvokeVoidAsync(
+        //    JavaScriptIdentifierFor.DownloadFile,
+        //    response.Result!.FileName,
+        //    response.Result.ContentType,
+        //    response.Result.Content);
+
+        Console.WriteLine($"MahasiswaId: {_mahasiswa.MahasiswaAttachmentId}");
+
+        _isLoading = true;
+        if (_mahasiswa.MahasiswaAttachmentId == null)
+        {
+            _snackbar.Add("Mahasiswa ini tidak memiliki laporan untuk diunduh.", Severity.Warning);
+            return;
+        }
+        // Panggil API untuk mendapatkan laporan
+        var response = await _mahasiswaAttachmentService.GetMahasiswaAttachmentFileAsync(_mahasiswa.MahasiswaAttachmentId);
+
+        _isLoading = false;
+
+        // Periksa apakah ada error dalam respons API
+        if (response.Error is not null)
+        {
+            _error = response.Error;
+            return;
+        }
+
+        // Jalankan fungsi JavaScript untuk mengunduh file
+        await _jsRuntime.InvokeVoidAsync(
+            JavaScriptIdentifierFor.DownloadFile,
+            response.Result!.FileName,
+            response.Result.ContentType,
+            response.Result.Content);
     }
 
     private async Task Download()

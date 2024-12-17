@@ -10,7 +10,7 @@ public class ApiEndpoint
             public static class RouteTemplateFor
             {
                 public const string MahasiswaAttachmentId = "{mahasiswaAttachmentId:guid}";
-                public const string Download = "Download/{mahasiswaAttachmentId:guid}";
+                public const string Download = "Downloads/{mahasiswaAttachmentId:guid}";
             }
         }
     }
