@@ -13,7 +13,9 @@ public class GetMahasiswaResponse : Response
     public string Bagian { get; set; } = default!;
     public Guid PembimbingId { get; set; }
     public string? PembimbingNama { get; set; }
-
+    public string FileName { get; set; } = default!;
+    public string ContentType { get; set; } = default!;
+    public byte[] Content { get; set; } = Array.Empty<byte>();
     public Guid MahasiswaAttachmentId { get; set; }
     public Guid LaporanId { get; set; }
     public string? LaporanDeskripsi { get; set; }

@@ -23,29 +23,8 @@ public partial class Details
     private ErrorResponse? _error;
     private List<BreadcrumbItem> _breadcrumbItems = new();
     private GetMahasiswaResponse _mahasiswa = default!;
-    //private string? _base64Image;
+    private string? _imageData;
 
-    //private async Task HandleReadAsBase64()
-    //{
-    //    if (_mahasiswa.MahasiswaAttachmentId == null)
-    //    {
-    //        _snackbar.Add("Mahasiswa ini tidak memiliki file untuk dibaca.", Severity.Warning);
-    //        return;
-    //    }
-
-    //    try
-    //    {
-    //        var base64Content = await _mahasiswaAttachmentService.ReadAsBase64Async(_mahasiswa.MahasiswaAttachmentId.Value);
-    //        Console.WriteLine($"File Content in Base64: {base64Content}");
-    //    }
-    //    catch (Exception ex)
-    //    {
-    //        _snackbar.Add($"Gagal membaca file: {ex.Message}", Severity.Error);
-    //    }
-    //}
-
-    //[Inject]
-    //private MahasiswaAttachmentService _mahasiswaAttachmentService { get; set; } = default!;
     protected override async Task OnParametersSetAsync()
     {
         await Reload();
@@ -152,43 +131,6 @@ public partial class Details
             response.Result!.FileName,
             response.Result.ContentType,
             response.Result.Content);
-
-        // Cek apakah mahasiswa memiliki laporan
-        //if (_mahasiswa.LaporanId != null)
-        //{
-        //    _snackbar.Add("Mahasiswa ini tidak memiliki laporan untuk diunduh.", Severity.Warning);
-        //    return;
-        //}
-
-        //try
-        //{
-        //    _isLoading = true;
-
-        //    // Panggil API untuk mendapatkan laporan
-        //    var response = await _laporanService.GetLaporanAsync(_mahasiswa.LaporanId.Value);
-
-        //    _isLoading = false;
-
-        //    // Periksa apakah ada error dalam respons API
-        //    if (response.Error is not null)
-        //    {
-        //        _error = response.Error;
-        //        _snackbar.Add($"Error: {response.Error.Status}", Severity.Error);
-        //        return;
-        //    }
-
-        //    // Jalankan fungsi JavaScript untuk mengunduh file
-        //    await _jsRuntime.InvokeVoidAsync(
-        //        JavaScriptIdentifierFor.DownloadFile,
-        //        response.Result!.FileName,
-        //        response.Result.ContentType,
-        //        response.Result.Content);
-        //}
-        //catch (Exception ex)
-        //{
-        //    _isLoading = false;
-        //    _snackbar.Add($"Terjadi kesalahan saat mengunduh laporan: {ex.Message}", Severity.Error);
-        //}
     }
 
     private async Task GetMahasiswa()
@@ -208,11 +150,14 @@ public partial class Details
             }
 
             _mahasiswa = response.Result ?? new GetMahasiswaResponse(); // Menghindari null
+            _imageData = $"data:image/jpeg;base64,{Convert.ToBase64String(response.Result!.Content)}";
+
         }
         catch (Exception ex)
         {
             _isLoading = false;
         }
+
     }
 
     private async Task ShowDialogEdit()

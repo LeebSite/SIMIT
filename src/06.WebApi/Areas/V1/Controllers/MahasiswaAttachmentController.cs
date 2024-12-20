@@ -1,9 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using Pertamina.SIMIT.Application.Laporans.Queries.GetLaporan;
 using Pertamina.SIMIT.Application.MahasiswaAttachments.Commands.CreateMahasiswaAttachment;
 using Pertamina.SIMIT.Application.MahasiswaAttachments.Queries.GetMahasiswaAttachmentFile;
 using Pertamina.SIMIT.Shared.Common.Constants;
-using Pertamina.SIMIT.Shared.Laporans.Queries.GetLaporan;
 using Pertamina.SIMIT.Shared.MahasiswaAttachments.Commands.CreateMahasiswaAttachment;
 using Pertamina.SIMIT.Shared.MahasiswaAttachments.Constants;
 using Pertamina.SIMIT.Shared.MahasiswaAttachments.Queries.GetMahasiswaAttachmentFile;
