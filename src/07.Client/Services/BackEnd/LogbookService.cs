@@ -24,7 +24,10 @@ public class LogbookService
     public async Task<ResponseResult<CreateLogbookResponse>> CreateLogbookAsync(CreateLogbookRequest request)
 
     {
-        var restRequest = new RestRequest(string.Empty, Method.Post);
+        var restRequest = new RestRequest(string.Empty, Method.Post)
+        {
+            AlwaysMultipartFormData = true
+        };
         restRequest.AddParameters(request);
 
         var restResponse = await _restClient.ExecuteAsync(restRequest);
@@ -40,6 +43,17 @@ public class LogbookService
 
         return restResponse.ToResponseResult<PaginatedListResponse<GetLogbooksLogbook>>();
     }
+
+    public async Task<ResponseResult<PaginatedListResponse<GetLogbooksLogbook>>> GetLogbooksByIdAsync(PaginatedListRequest request, Guid mahasiswaId)
+    {
+        var restRequest = new RestRequest($"V1/Logbooks/ByMahasiswaId/{mahasiswaId}", Method.Get);
+        restRequest.AddQueryParameters(request);
+
+        var restResponse = await _restClient.ExecuteAsync(restRequest);
+
+        return restResponse.ToResponseResult<PaginatedListResponse<GetLogbooksLogbook>>();
+    }
+
     public async Task<ResponseResult<ListResponse<GetLogbooksList>>> GetLogbooksListAsync()
     {
         var restRequest = new RestRequest(nameof(Logbooks.RouteTemplateFor.List), Method.Get);

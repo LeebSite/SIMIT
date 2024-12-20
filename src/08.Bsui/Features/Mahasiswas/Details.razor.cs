@@ -21,6 +21,9 @@ public partial class Details
 
     private bool _isLoading;
     private ErrorResponse? _error;
+
+    //private string? _errorMessage;
+
     private List<BreadcrumbItem> _breadcrumbItems = new();
     private GetMahasiswaResponse _mahasiswa = default!;
     private string? _imageData;
@@ -53,6 +56,30 @@ public partial class Details
             BreadcrumbFor.Index
         };
     }
+    private void NavigateToLogbook()
+    {
+        _navigationManager.NavigateTo(@RouteFor.Logbooks(MahasiswaId));
+    }
+
+    private void NavigateToLogbookDetails()
+    {
+        _navigationManager.NavigateTo(@RouteFor.LogbooksDetail(MahasiswaId));
+    }
+
+    //private async Task ShowLogbookDialog()
+    //{
+    //    var logbooks = _mahasiswa.Logbooks.Select(lb => new GetLogbooksList
+    //    {
+    //        LogbookDate = lb.LogbookDate,
+    //    }).ToList();
+
+    //    var dialog = _dialogService.Show<DialogLogbook>("Logbook", new DialogParameters
+    //{
+    //    { "Logbooks", logbooks }
+    //});
+
+    //    var result = await dialog.Result;
+    //}
 
     private async Task DownloadFoto()
     {

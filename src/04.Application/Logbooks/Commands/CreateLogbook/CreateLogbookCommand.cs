@@ -73,23 +73,23 @@ public class CreateLogbookCommandHandler : IRequestHandler<CreateLogbookCommand,
 
         _context.Logbooks.Add(logbook);
 
-        //using var memoryStream = new MemoryStream();
-        //await request.File.CopyToAsync(memoryStream, cancellationToken);
-        //memoryStream.Position = 0;
+        using var memoryStream = new MemoryStream();
+        await request.File.CopyToAsync(memoryStream, cancellationToken);
+        memoryStream.Position = 0;
 
-        //var file = memoryStream.ToArray();
+        var file = memoryStream.ToArray();
 
-        //var logbookAttachment = new LogbookAttachment
-        //{
-        //    Id = Guid.NewGuid(),
-        //    LogbookId = logbook.Id,
-        //    FileName = request.File.Name,
-        //    FileSize = request.File.Length,
-        //    FileContentType = request.File.ContentType,
-        //    StorageFileId = await _storageService.CreateAsync(file)
-        //};
+        var logbookAttachment = new LogbookAttachment
+        {
+            Id = Guid.NewGuid(),
+            LogbookId = logbook.Id,
+            FileName = request.File.Name,
+            FileSize = request.File.Length,
+            FileContentType = request.File.ContentType,
+            StorageFileId = await _storageService.CreateAsync(file)
+        };
 
-        //await _context.LogbookAttachments.AddAsync(logbookAttachment, cancellationToken);
+        await _context.LogbookAttachments.AddAsync(logbookAttachment, cancellationToken);
         await _context.SaveChangesAsync(this, cancellationToken);
 
         try

@@ -8,7 +8,6 @@ using Pertamina.SIMIT.Application.Services.Storage;
 using Pertamina.SIMIT.Domain.Entities;
 using Pertamina.SIMIT.Shared.Mahasiswas.Constants;
 using Pertamina.SIMIT.Shared.Mahasiswas.Queries.GetMahasiswa;
-using static Pertamina.SIMIT.Shared.MahasiswaAttachments.Constants.ApiEndpoint.V1;
 
 namespace Pertamina.SIMIT.Application.Mahasiswas.Queries.GetMahasiswa;
 public class GetMahasiswaQuery : IRequest<GetMahasiswaResponse>
@@ -30,7 +29,14 @@ public class GetMahasiswaResponseMapping : IMapFrom<Mahasiswa, GetMahasiswaRespo
             .ForMember(dest => dest.FileName, opt => opt.MapFrom(src =>
                src.Attachments.FirstOrDefault() != null ? src.Attachments.FirstOrDefault().FileName : (string?)null))
             .ForMember(dest => dest.ContentType, opt => opt.MapFrom(src =>
-               src.Attachments.FirstOrDefault() != null ? src.Attachments.FirstOrDefault().FileContentType : (string?)null));
+               src.Attachments.FirstOrDefault() != null ? src.Attachments.FirstOrDefault().FileContentType : (string?)null))
+            .ForMember(dest => dest.Logbooks, opt => opt.MapFrom(src =>
+                src.Logbooks.Select(lb => new LogbookItem
+                {
+                    LogbookId = lb.Id,
+                    Aktifitas = lb.Aktifitas,
+                    LogbookDate = lb.LogbookDate
+                }).ToList()));
     }
 }
 public class GetMahasiswaQueryHandler : IRequestHandler<GetMahasiswaQuery, GetMahasiswaResponse>
@@ -54,6 +60,7 @@ public class GetMahasiswaQueryHandler : IRequestHandler<GetMahasiswaQuery, GetMa
             .Include(m => m.Pembimbing)
             .Include(m => m.Laporans)
             .Include(m => m.Attachments)
+            .Include(m => m.Logbooks)
             .Where(x => !x.IsDeleted && x.Id == request.MahasiswaId)
             .SingleOrDefaultAsync(cancellationToken);
 

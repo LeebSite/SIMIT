@@ -9,10 +9,16 @@ public class ApiEndPoint
 
             public static class RouteTemplateFor
             {
-                public const string LogbookId = "{logbookId:guid}";
-                public const string MahasiswaId = "{mahasiswaId:guid}";
-                public const string List = nameof(List);
+                // Rute untuk Logbook berdasarkan logbookId
+                public const string ByLogbookId = $"{Segment}/{nameof(ByLogbookId)}/{{logbookId:guid}}";
+
+                // Rute untuk Logbook berdasarkan mahasiswaId
+                public const string ByMahasiswaId = $"{Segment}/{nameof(ByMahasiswaId)}/{{mahasiswaId:guid}}";
+
+                // Rute untuk mendapatkan daftar logbook
+                public const string List = $"{Segment}/{nameof(List)}";
             }
         }
     }
 }
+
