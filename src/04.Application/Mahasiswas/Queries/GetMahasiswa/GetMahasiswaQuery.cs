@@ -22,7 +22,14 @@ public class GetMahasiswaResponseMapping : IMapFrom<Mahasiswa, GetMahasiswaRespo
             .ForMember(dest => dest.LaporanId, opt => opt.MapFrom(src =>
                 src.Laporans.FirstOrDefault() != null ? src.Laporans.FirstOrDefault().Id : (Guid?)null))
             .ForMember(dest => dest.LaporanDeskripsi, opt => opt.MapFrom(src =>
-                src.Laporans.FirstOrDefault() != null ? src.Laporans.FirstOrDefault().Deskripsi : null));
+                src.Laporans.FirstOrDefault() != null ? src.Laporans.FirstOrDefault().Deskripsi : null))
+            .ForMember(dest => dest.Logbooks, opt => opt.MapFrom(src =>
+                src.Logbooks.Select(lb => new LogbookItem
+                {
+                    LogbookId = lb.Id,
+                    Aktifitas = lb.Aktifitas,
+                    LogbookDate = lb.LogbookDate
+                }).ToList()));
     }
 }
 public class GetMahasiswaQueryHandler : IRequestHandler<GetMahasiswaQuery, GetMahasiswaResponse>
@@ -42,6 +49,7 @@ public class GetMahasiswaQueryHandler : IRequestHandler<GetMahasiswaQuery, GetMa
             .AsNoTracking()
             .Include(m => m.Pembimbing)
             .Include(m => m.Laporans)
+            .Include(m => m.Logbooks)
             .Where(x => !x.IsDeleted && x.Id == request.MahasiswaId)
             .SingleOrDefaultAsync(cancellationToken);
 

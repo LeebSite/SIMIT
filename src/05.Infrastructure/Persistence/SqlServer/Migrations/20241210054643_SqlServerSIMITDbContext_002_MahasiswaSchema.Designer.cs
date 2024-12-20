@@ -12,7 +12,7 @@ using Pertamina.SIMIT.Infrastructure.Persistence.SqlServer;
 namespace Pertamina.SIMIT.Infrastructure.Persistence.SqlServer.Migrations
 {
     [DbContext(typeof(SqlServerSIMITDbContext))]
-    [Migration("20241209071400_SqlServerSIMITDbContext_002_MahasiswaSchema")]
+    [Migration("20241210054643_SqlServerSIMITDbContext_002_MahasiswaSchema")]
     partial class SqlServerSIMITDbContext_002_MahasiswaSchema
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)

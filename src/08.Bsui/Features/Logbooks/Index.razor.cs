@@ -1,6 +1,7 @@
 ﻿using FluentValidation;
 using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.Components.Forms;
+using Microsoft.JSInterop;
 using MudBlazor;
 using Pertamina.SIMIT.Bsui.Common.Constants;
 using Pertamina.SIMIT.Bsui.Common.Extensions;
@@ -32,6 +33,9 @@ public partial class Index
     private bool IsAfternoonSession => DateTime.Now.Hour is >= 13 and <= 16;
     private readonly List<GetLogbooksLogbook> _logbooks = new();
 
+    private bool _useBackCamera = false;
+    private string? _capturedPhoto; // Base64 foto
+    private bool _isSubmitting = false;
     public CreateLogbookRequest Request { get; set; } = default!;
 
     //private List<UpdateMahasiswasMahasiswa> _editedMahasiswas = new();
@@ -103,15 +107,46 @@ public partial class Index
 
     }
 
-    //private void OnAttachmentFileSelected(InputFileChangeEventArgs eventArgs)
-    //{
-    //    _model.File = eventArgs.File;
-    //}
-
     private async Task OnSearch(string keyword)
     {
         _searchKeyword = keyword.Trim();
         await _tableLogbooks.ReloadServerData();
+    }
+
+    private async Task StartCamera()
+    {
+        await _jsRuntime.InvokeVoidAsync("startCamera", "video", _useBackCamera);
+    }
+
+    private async Task SwitchCamera()
+    {
+        _useBackCamera = !_useBackCamera;
+        await StartCamera();
+    }
+
+    private async Task CapturePhoto()
+    {
+        try
+        {
+            // Gunakan await untuk memastikan bahwa foto hanya diambil setelah video siap
+            var photoData = await _jsRuntime.InvokeAsync<string>("capturePhoto", "video", "canvas");
+
+            // Debug: log panjang data untuk memastikan ukuran yang diterima
+            Console.WriteLine($"Captured photo length: {photoData?.Length ?? 0}");
+
+            if (string.IsNullOrEmpty(photoData))
+            {
+                Console.Error.WriteLine("Failed to capture photo.");
+                return;
+            }
+
+            _capturedPhoto = photoData;
+            StateHasChanged();
+        }
+        catch (Exception ex)
+        {
+            Console.Error.WriteLine($"Error capturing photo: {ex.Message}");
+        }
     }
 
     private async Task ShowDialogAdd()
@@ -138,46 +173,41 @@ public partial class Index
     {
         _error = null;
         _isLoading = true;
+        _isSubmitting = true;
+
+        var base64Data = _capturedPhoto?.Split(',')[1];
+        var imageBytes = Convert.FromBase64String(base64Data);
+
+        var fileName = $"{Guid.NewGuid()}.jpeg";
+        using var memoryStream = new MemoryStream(imageBytes);
+        var formFile = new FormFile(memoryStream, 0, imageBytes.Length, fileName, fileName)
+        {
+            Headers = new HeaderDictionary(),
+            ContentType = "image/jpeg"  // Correct content type for JPEG
+        };
 
         var request = new CreateLogbookRequest
         {
             MahasiswaNim = _model.MahasiswaNim,
             LogbookDate = _model.LogbookDate,
             Aktifitas = _model.Aktifitas,
+            File = formFile
         };
 
-        var createLogbookResponse = await _logbookService.CreateLogbookAsync(request);
+        var response = await _logbookService.CreateLogbookAsync(request);
 
-        if (createLogbookResponse.Error != null)
+        if (response.Error != null)
         {
-            _error = createLogbookResponse.Error;
-            return;
+            _error = response.Error;
+        }
+        else
+        {
+            _snackbar.Add("Logbook berhasil ditambahkan.");
         }
 
-        var logbookId = createLogbookResponse.Result!.LogbookId;
-
-        //// Jika file tersedia, buat request untuk attachment
-        //if (Request.File != null)
-        //{
-        //    var attachmentRequest = new CreateLogbookAttachmentRequest
-        //    {
-        //        LogbookId = logbookId,
-        //        File = Request.File
-        //    };
-
-        //    var createAttachmentResponse = await _logbookAttachmentService.CreateLogbookAttachmentAsync(attachmentRequest);
-
-        //    if (createAttachmentResponse.Error != null)
-        //    {
-        //        _error = createAttachmentResponse.Error;
-        //        return;
-        //    }
-        //}
-
-        // Tampilkan notifikasi berhasil
-        _snackbar.Add("Logbook Berhasil ditambahkan");
-
+        _isLoading = false;
     }
+
     //private async Task OnAttachmentFileSelected(InputFileChangeEventArgs eventArgs)
     //{
     //    var browserFile = eventArgs.File;
@@ -228,8 +258,8 @@ public class CreateLogbookModel
     public string Session => LogbookDate.Hour is >= 7 and <= 12 ? "Pagi" :
                             LogbookDate.Hour is >= 13 and <= 16 ? "Siang" : "Tidak Dikenal";
     public DateTime LogbookDate { get; set; } = DateTime.Now;
-
     public string Aktifitas { get; set; }
+    public IBrowserFile File { get; set; }
 }
 
 public class CreateLogbookModelValidator : AbstractValidator<CreateLogbookModel>
@@ -242,8 +272,8 @@ public class CreateLogbookModelValidator : AbstractValidator<CreateLogbookModel>
         RuleFor(v => v.Aktifitas)
             .NotEmpty();
 
-        //RuleFor(v => v.File)
-        //    .NotNull();
+        RuleFor(v => v.File)
+            ;
     }
 }
 

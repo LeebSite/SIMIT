@@ -6,14 +6,24 @@
 <Loading IsVisible="_isLoading" />
 <ErrorViewer Error="_error" />
 @* <PageHeader Title ="@(_mahasiswa?.Nama ?? "Loading...")"  /> *@
-                <TopButtonPanel>
-                    <MudButton Variant="Variant.Filled" Color="Color.Primary" StartIcon="@Icons.Material.Filled.Edit" OnClick="ShowDialogEdit">
+                <MudToolBar>
+	<MudButton Variant="Variant.Filled" Color="Color.Info" StartIcon="@Icons.Material.Filled.CalendarMonth" onclick="NavigateToLogbook" Class="mr-5">
+						@DisplayTextFor.Kehadiran
+					</MudButton>
+
+					<MudButton Variant="Variant.Filled" Color="Color.Info" StartIcon="@Icons.Material.Filled.CalendarMonth" onclick="NavigateToLogbookDetails">
+						@DisplayTextFor.DetailLogbook
+					</MudButton>
+					<MudSpacer/>
+					<MudButton Variant="Variant.Filled" Color="Color.Primary" StartIcon="@Icons.Material.Filled.Edit" OnClick="ShowDialogEdit" Class="mr-5">
                         @CommonDisplayTextFor.Edit
                     </MudButton>
 					<MudButton Variant="Variant.Filled" Color="Color.Error" StartIcon="@Icons.Material.Filled.Delete" OnClick="ShowDialogDelete">
 						@CommonDisplayTextFor.Delete
 					</MudButton>
-                </TopButtonPanel>
+                </MudToolBar>
+
+        <div id="calendar"></div>
 
 		@if (_mahasiswa != null)
 		{
@@ -67,3 +77,4 @@
 		{
 			<p>Loading data...</p>
 		}
+

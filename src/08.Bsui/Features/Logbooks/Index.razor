@@ -89,6 +89,25 @@
 
 				<EditForm Model="_model" OnValidSubmit="OnValidSubmit" OnInvalidSubmit="OnInvalidSubmit">
 					<FluentValidationValidator />
+					<div style="text-align: center;">
+						<video id="video" autoplay playsinline style="width: 100%; max-height: 300px; border: 1px solid gray;"></video>
+						<canvas id="canvas" style="display: none;"></canvas>
+						<div>
+							<MudButton Variant="Variant.Filled" Color="Color.Info" StartIcon="@Icons.Material.Filled.Camera" onclick="StartCamera">
+								@DisplayTextFor.StartKamera
+							</MudButton>
+							<MudButton Variant="Variant.Filled" Color="Color.Info" StartIcon="@Icons.Material.Filled.Upload" onclick="CapturePhoto">
+								@DisplayTextFor.AmbilFoto
+							</MudButton>
+							<MudButton Variant="Variant.Filled" Color="Color.Info" StartIcon="@Icons.Material.Filled.SwapHoriz" onclick="SwitchCamera">
+								@DisplayTextFor.SwitchKamera
+							</MudButton>
+						</div>
+						@if (_capturedPhoto != null)
+						{
+							<img src="@_capturedPhoto" alt="Captured Photo" style="width: 100%;" />
+						}
+					</div>
 					<MudGrid>
 						<MudItem xs="12">
 							<MudText Style="text-align: left">No.Badge Mahasiswa</MudText>
@@ -133,6 +152,25 @@ else if (IsAfternoonSession)
 
 				<EditForm Model="_model" OnValidSubmit="OnValidSubmit" OnInvalidSubmit="OnInvalidSubmit">
 					<FluentValidationValidator />
+					<div style="text-align: center;">
+						<video id="video" autoplay playsinline style="width: 100%; max-height: 300px; border: 1px solid gray;"></video>
+						<canvas id="canvas" style="display: none;"></canvas>
+						<div>
+							<MudButton Variant="Variant.Filled" Color="Color.Info" StartIcon="@Icons.Material.Filled.Camera" onclick="StartCamera">
+								@DisplayTextFor.StartKamera
+							</MudButton>
+							<MudButton Variant="Variant.Filled" Color="Color.Info" StartIcon="@Icons.Material.Filled.Upload" onclick="CapturePhoto">
+								@DisplayTextFor.AmbilFoto
+							</MudButton>
+							<MudButton Variant="Variant.Filled" Color="Color.Info" StartIcon="@Icons.Material.Filled.SwapHoriz" onclick="SwitchCamera">
+								@DisplayTextFor.SwitchKamera
+							</MudButton>
+						</div>
+						@if (_capturedPhoto != null)
+						{
+							<img src="@_capturedPhoto" alt="Captured Photo" style="width: 100%;" />
+						}
+					</div>
 					<MudGrid>
 						<MudItem xs="12">
 							<MudText Style="text-align: left">No.Badge Mahasiswa</MudText>
