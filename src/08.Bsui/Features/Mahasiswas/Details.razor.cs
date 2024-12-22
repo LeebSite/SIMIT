@@ -21,6 +21,9 @@ public partial class Details
 
     private bool _isLoading;
     private ErrorResponse? _error;
+
+    //private string? _errorMessage;
+
     private List<BreadcrumbItem> _breadcrumbItems = new();
     private GetMahasiswaResponse _mahasiswa = default!;
     private string? _imageData;
@@ -53,27 +56,18 @@ public partial class Details
             BreadcrumbFor.Index
         };
     }
+    private void NavigateToLogbook()
+    {
+        _navigationManager.NavigateTo(@RouteFor.Logbooks(MahasiswaId));
+    }
+
+    private void NavigateToLogbookDetails()
+    {
+        _navigationManager.NavigateTo(@RouteFor.LogbooksDetail(MahasiswaId));
+    }
 
     private async Task DownloadFoto()
     {
-        //_isLoading = true;
-
-        //var response = await _mahasiswaAttachmentService.GetMahasiswaAttachmentFileAsync(Attachment.Id);
-
-        //_isLoading = false;
-
-        //if (response.Error is not null)
-        //{
-        //    _error = response.Error;
-
-        //    return;
-        //}
-
-        //await _jsRuntime.InvokeVoidAsync(
-        //    JavaScriptIdentifierFor.DownloadFile,
-        //    response.Result!.FileName,
-        //    response.Result.ContentType,
-        //    response.Result.Content);
 
         Console.WriteLine($"MahasiswaId: {_mahasiswa.MahasiswaAttachmentId}");
 

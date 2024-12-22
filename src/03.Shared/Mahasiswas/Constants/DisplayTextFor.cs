@@ -7,6 +7,9 @@ public class DisplayTextFor
     public const string Mahasiswas = nameof(Mahasiswas);
     public const string Mahasiswa = nameof(Mahasiswa);
 
+    public const string Tanggal = nameof(Tanggal);
+    public const string Aktifitas = nameof(Aktifitas);
+
     public static readonly string RekapDataMahasiswa = nameof(RekapDataMahasiswa).SplitWords();
     public static readonly string DetailDataMahasiwa = nameof(DetailDataMahasiwa).SplitWords();
     public static readonly string DataMahasiswa = nameof(DataMahasiswa).SplitWords();
@@ -23,4 +26,6 @@ public class DisplayTextFor
     public static readonly string StatusDokumen = nameof(StatusDokumen).SplitWords();
     public static readonly string DeskripsiDokumen = nameof(DeskripsiDokumen).SplitWords();
     public static readonly string DetailLogbook = nameof(DetailLogbook).SplitWords();
+    public const string Kehadiran = nameof(Kehadiran);
+
 }

@@ -2,6 +2,13 @@
 using Pertamina.SIMIT.Shared.Common.Responses;
 
 namespace Pertamina.SIMIT.Shared.Mahasiswas.Queries.GetMahasiswa;
+public class LogbookItem
+{
+    public Guid LogbookId { get; set; }
+    public string Aktifitas { get; set; } = default!;
+    public DateTime LogbookDate { get; set; }
+}
+
 public class GetMahasiswaResponse : Response
 {
     public Guid Id { get; set; }
@@ -27,4 +34,10 @@ public class GetMahasiswaResponse : Response
 
     //public IList<GetMahasiswaMahasiswaAttachment> Attachments { get; set; } = new List<GetMahasiswaMahasiswaAttachment>();
 
+    // Tambahkan daftar logbook
+    public List<LogbookItem> Logbooks { get; set; } = new();
+    public Guid LogbookId { get; set; }
+    public DateTime LogbookDate { get; set; } = default!;
+    public string Aktifitas { get; set; } = default!;
 }
+

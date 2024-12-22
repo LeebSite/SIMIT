@@ -3,4 +3,6 @@
 public static class JavaScriptIdentifierFor
 {
     public const string DownloadFile = "downloadFile";
+
+    public const string FullCalendar = "fullCalendar";
 }
