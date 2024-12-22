@@ -8,7 +8,6 @@ using Pertamina.SIMIT.Application.Services.Storage;
 using Pertamina.SIMIT.Domain.Entities;
 using Pertamina.SIMIT.Shared.Mahasiswas.Constants;
 using Pertamina.SIMIT.Shared.Mahasiswas.Queries.GetMahasiswa;
-using static Pertamina.SIMIT.Shared.MahasiswaAttachments.Constants.ApiEndpoint.V1;
 
 namespace Pertamina.SIMIT.Application.Mahasiswas.Queries.GetMahasiswa;
 public class GetMahasiswaQuery : IRequest<GetMahasiswaResponse>
