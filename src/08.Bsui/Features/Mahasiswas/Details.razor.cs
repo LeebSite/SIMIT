@@ -66,41 +66,8 @@ public partial class Details
         _navigationManager.NavigateTo(@RouteFor.LogbooksDetail(MahasiswaId));
     }
 
-    //private async Task ShowLogbookDialog()
-    //{
-    //    var logbooks = _mahasiswa.Logbooks.Select(lb => new GetLogbooksList
-    //    {
-    //        LogbookDate = lb.LogbookDate,
-    //    }).ToList();
-
-    //    var dialog = _dialogService.Show<DialogLogbook>("Logbook", new DialogParameters
-    //{
-    //    { "Logbooks", logbooks }
-    //});
-
-    //    var result = await dialog.Result;
-    //}
-
     private async Task DownloadFoto()
     {
-        //_isLoading = true;
-
-        //var response = await _mahasiswaAttachmentService.GetMahasiswaAttachmentFileAsync(Attachment.Id);
-
-        //_isLoading = false;
-
-        //if (response.Error is not null)
-        //{
-        //    _error = response.Error;
-
-        //    return;
-        //}
-
-        //await _jsRuntime.InvokeVoidAsync(
-        //    JavaScriptIdentifierFor.DownloadFile,
-        //    response.Result!.FileName,
-        //    response.Result.ContentType,
-        //    response.Result.Content);
 
         Console.WriteLine($"MahasiswaId: {_mahasiswa.MahasiswaAttachmentId}");
 
