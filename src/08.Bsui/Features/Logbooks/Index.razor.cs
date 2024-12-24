@@ -186,11 +186,17 @@ public partial class Index
             ContentType = "image/jpeg"  // Correct content type for JPEG
         };
 
+        var geolocationResult = await _geolocationService.GetCurrentPosition();
+        var coordinates = geolocationResult.Position.Coords;
+
         var request = new CreateLogbookRequest
         {
             MahasiswaNim = _model.MahasiswaNim,
             LogbookDate = _model.LogbookDate,
             Aktifitas = _model.Aktifitas,
+            Latitude = coordinates.Latitude,
+            Longitude = coordinates.Longitude,
+            Accuracy = coordinates.Accuracy,
             File = formFile
         };
 

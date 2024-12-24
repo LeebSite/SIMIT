@@ -1,10 +1,11 @@
 ﻿@page "/Logbooks"
 
+@using Darnton.Blazor.DeviceInterop.Geolocation
+@inject IGeolocationService _geolocationService
 @using Pertamina.SIMIT.Bsui.Features.Logbooks.Constants
 @using Pertamina.SIMIT.Shared.LogbookAttachments.Constants
 @using Pertamina.SIMIT.Shared.Logbooks.Queries.GetLogbooks
 @using Pertamina.SIMIT.Shared.Logbooks.Constants
-
 
 
 <!-- Tampilan jika admin login dengan autorisasi -->
