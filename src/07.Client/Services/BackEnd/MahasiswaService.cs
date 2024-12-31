@@ -88,4 +88,12 @@ public class MahasiswaService
         return restResponse.ToResponseResult<SuccessResponse>();
     }
 
+    public async Task<ResponseResult<GetMahasiswasMahasiswa>> GetMahasiswaCountAsync()
+    {
+        var restRequest = new RestRequest(nameof(Mahasiswas.RouteTemplateFor.Count), Method.Get);
+        var restResponse = await _restClient.ExecuteAsync(restRequest);
+
+        return restResponse.ToResponseResult<GetMahasiswasMahasiswa>();
+    }
+
 }

@@ -5,6 +5,7 @@ using Pertamina.SIMIT.Application.Mahasiswas.Commands.DeleteMahasiswa;
 using Pertamina.SIMIT.Application.Mahasiswas.Commands.UpdateMahasiswa;
 using Pertamina.SIMIT.Application.Mahasiswas.Commands.UpdateMahasiswas;
 using Pertamina.SIMIT.Application.Mahasiswas.Queries.GetMahasiswa;
+using Pertamina.SIMIT.Application.Mahasiswas.Queries.GetMahasiswas;
 using Pertamina.SIMIT.Application.Mahasiswas.Queries.GetMahasiswasListQuery;
 using Pertamina.SIMIT.Application.Mahasiswas.Queries.GetMahasiswasQuery;
 using Pertamina.SIMIT.Shared.Common.Responses;
@@ -73,6 +74,13 @@ public class MahasiswasController : ApiControllerBase
         await Mediator.Send(new DeleteMahasiswaCommand { MahasiswaId = mahasiswaId });
 
         return NoContent();
+    }
+
+    [HttpGet(ApiEndpoint.V1.Mahasiswas.RouteTemplateFor.Count)]
+    [Produces(typeof(GetMahasiswasMahasiswa))]
+    public async Task<ActionResult<GetMahasiswasMahasiswa>> GetMahasiswaCount()
+    {
+        return await Mediator.Send(new GetMahasiswaCount());
     }
 
 }

@@ -68,5 +68,12 @@ public class LogbookService
 
         return restResponse.ToResponseResult<GetLogbookResponse>();
     }
+    public async Task<Dictionary<string, int>> GetLogbooksCountAsync()
+    {
+        var restRequest = new RestRequest(nameof(Logbooks.RouteTemplateFor.Count), Method.Get);
+        var restResponse = await _restClient.ExecuteAsync<Dictionary<string, int>>(restRequest);
+
+        return restResponse.Data ?? new Dictionary<string, int>();
+    }
 
 }
