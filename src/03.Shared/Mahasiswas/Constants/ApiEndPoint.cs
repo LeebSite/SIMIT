@@ -13,6 +13,7 @@ public class ApiEndpoint
 
                 public const string UpdateMahasiswas = nameof(UpdateMahasiswas);
                 public const string List = nameof(List);
+                public const string Count = nameof(Count);
             }
         }
     }

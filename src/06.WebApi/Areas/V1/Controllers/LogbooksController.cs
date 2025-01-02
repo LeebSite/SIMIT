@@ -64,10 +64,11 @@ public class LogbooksController : ApiControllerBase
         return await Mediator.Send(query);
     }
 
-    //[HttpGet(ApiEndPoint.V1.Logbooks.RouteTemplateFor.List)]
-    //[Produces(typeof(ListResponse<GetLogbooksList>))]
-    //public async Task<ActionResult<ListResponse<GetLogbooksList>>> GetLogbooksList()
-    //{
-    //    return await Mediator.Send(new GetLogbooksListQuery());
-    //}
+    [HttpGet(ApiEndPoint.V1.Logbooks.RouteTemplateFor.Count)]
+    public async Task<IActionResult> GetLogbooksPerMonth()
+    {
+        var result = await Mediator.Send(new GetLogbooksPerMonthQuery());
+        return Ok(result);
+    }
+
 }

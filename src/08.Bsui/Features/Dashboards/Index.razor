@@ -1,0 +1,28 @@
+﻿@page "/Dashboards"
+
+
+
+@if (_mahasiswa != null && _data != null)
+{
+	<MudGrid>
+		<MudItem xs="12" sm="6">
+			<MudPaper Class="d-flex align-center justify-center mud-width-full py-8">@_mahasiswa.Mahasiswa Mahasiswa</MudPaper>
+		</MudItem>
+		<MudItem xs="12" sm="6">
+			<MudPaper Class="d-flex align-center justify-center mud-width-full py-8">@_mahasiswa.Laporan / @_mahasiswa.Mahasiswa</MudPaper>
+		</MudItem>
+		<MudGrid>
+			<MudItem xs="12">
+				<MudPaper Class="d-flex align-center justify-center mud-width-full py-8" style="width: 100%; height: 400px;">
+					<canvas id="myChart" width="400" height="200"></canvas>
+				</MudPaper>
+			</MudItem>
+		</MudGrid>
+
+	</MudGrid>
+}
+else
+{
+	<p>Loading data...</p>
+}
+

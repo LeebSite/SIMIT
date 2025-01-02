@@ -14,6 +14,7 @@ public class DisplayTextFor
     public const string Nim = nameof(Nim);
     public const string Dokumen = nameof(Dokumen);
     public const string Simpan = nameof(Simpan);
+    public const string Dashboard = nameof(Dashboard);
 
     public static readonly string DokumenMahasiswa = nameof(DokumenMahasiswa).SplitWords();
     public static readonly string RekapDokumenMahasiswa = nameof(RekapDokumenMahasiswa).SplitWords();

@@ -16,6 +16,8 @@ public class DisplayTextFor
     public static readonly string DokumenMahasiswa = nameof(DokumenMahasiswa).SplitWords();
 
     public const string Nama = nameof(Nama);
+
+    public const string Dashboard = nameof(Dashboard);
     public const string Deskripsi = nameof(Deskripsi);
     public const string Nim = nameof(Nim);
     public const string Kampus = nameof(Kampus);
