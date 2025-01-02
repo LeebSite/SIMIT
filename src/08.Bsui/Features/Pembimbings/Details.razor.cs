@@ -53,7 +53,7 @@ public partial class Details
         _breadcrumbItems = new()
         {
             CommonBreadcrumbFor.Home,
-            BreadCrumbFor.Index
+            CommonBreadcrumbFor.Active(DisplayTextFor.DataPembimbing)
         };
     }
 

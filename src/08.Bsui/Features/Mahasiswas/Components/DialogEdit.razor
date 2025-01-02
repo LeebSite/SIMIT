@@ -1,59 +1,58 @@
 ﻿<MudDialog>
-    <DialogContent>
-        <LoadingLinear IsVisible="_isLoading" />
-        <ErrorViewer Error="_error" />
-        <EditForm Model="Request" OnInvalidSubmit="OnInvalidSubmit" OnValidSubmit="OnValidSubmit">
-            <FluentValidationValidator />
-            <MudGrid>
-                <MudItem xs="12">
-					<MudTextField Label="@DisplayTextFor.Nama" Variant="Variant.Outlined"
-                                  Required="true"
-                                  Placeholder="@($"{DisplayTextFor.Mahasiswa} {DisplayTextFor.Nama}")"
-                                  @bind-Value="Request.Nama" />
-                </MudItem>
-				<MudItem xs="12">
-					<MudTextField Label="@DisplayTextFor.Kampus" Variant="Variant.Outlined"
-								  Required="true"
-								  Placeholder="@($"{DisplayTextFor.Mahasiswa} {DisplayTextFor.Kampus}")"
-								  @bind-Value="Request.Kampus" />
-				</MudItem>
-				<MudItem xs="12">
-					<MudTextField Label="@DisplayTextFor.Nim" Variant="Variant.Outlined"
-								  Required="true"
-								  Placeholder="@($"{DisplayTextFor.Mahasiswa} {DisplayTextFor.Nim}")"
-								  @bind-Value="Request.Nim" />
-				</MudItem>
-				<MudItem xs="12">
-					<MudDatePicker Label="@DisplayTextFor.MulaiMagang" Variant="Variant.Outlined"
-								  Required="true"
-								  Placeholder="@($"{DisplayTextFor.Mahasiswa} {DisplayTextFor.MulaiMagang}")"
-								   @bind-Date="Request.MulaiMagang" 
-								   ShowToolbar="false" PickerVariant="PickerVariant.Dialog" />
-				</MudItem>
-				<MudItem xs="12">
-					<MudDatePicker Label="@DisplayTextFor.SelesaiMagang" Variant="Variant.Outlined"
-								  Required="true"
-								  Placeholder="@($"{DisplayTextFor.Mahasiswa} {DisplayTextFor.SelesaiMagang}")"
-								   @bind-Date="Request.SelesaiMagang" 
-								   MinDate="Request.MulaiMagang" ShowToolbar="false" PickerVariant="PickerVariant.Dialog" />
-				</MudItem>
-				<MudItem xs="12">
-					<MudSelect Label="@DisplayTextFor.Pembimbing" T="Guid" @bind-Value="Request.PembimbingId" Required="true" Placeholder="Pilih Pembimbing" Variant="Variant.Outlined">
-						<MudSelectItem Value="default(Guid)">Pilih Pembimbing</MudSelectItem>
-						@foreach (var pembimbing in _pembimbingList)
-						{
-							<MudSelectItem Value="@pembimbing.Id">@pembimbing.Nama</MudSelectItem>
-						}
-					</MudSelect>
-				</MudItem>
-            </MudGrid>
-            <BottomButtonPanel>
-                <MudButton Variant="Variant.Filled" Color="Color.Default" OnClick="Cancel">@CommonDisplayTextFor.Cancel</MudButton>
-                <MudButton Variant="Variant.Filled" Color="Color.Primary" ButtonType="ButtonType.Submit">@CommonDisplayTextFor.Update</MudButton>
-            </BottomButtonPanel>
-        </EditForm>
-    </DialogContent>
+	<DialogContent>
+		<div style="max-height: 70vh; overflow-y: auto;">
+			<LoadingLinear IsVisible="_isLoading" />
+			<ErrorViewer Error="_error" />
+			<EditForm Model="Request" OnInvalidSubmit="OnInvalidSubmit" OnValidSubmit="OnValidSubmit">
+				<FluentValidationValidator />
+				<MudGrid>
+					<MudItem xs="12">
+						<MudTextField Label="@DisplayTextFor.Nama" Variant="Variant.Outlined"
+									  Required="true"
+									  Placeholder="@($"{DisplayTextFor.Mahasiswa} {DisplayTextFor.Nama}")"
+									  @bind-Value="Request.Nama" />
+					</MudItem>
+					<MudItem xs="12">
+						<MudTextField Label="@DisplayTextFor.Kampus" Variant="Variant.Outlined"
+									  Required="true"
+									  Placeholder="@($"{DisplayTextFor.Mahasiswa} {DisplayTextFor.Kampus}")"
+									  @bind-Value="Request.Kampus" />
+					</MudItem>
+					<MudItem xs="12">
+						<MudTextField Label="@DisplayTextFor.Nim" Variant="Variant.Outlined"
+									  Required="true"
+									  Placeholder="@($"{DisplayTextFor.Mahasiswa} {DisplayTextFor.Nim}")"
+									  @bind-Value="Request.Nim" />
+					</MudItem>
+					<MudItem xs="12">
+						<MudDatePicker Label="@DisplayTextFor.MulaiMagang" Variant="Variant.Outlined"
+									   Required="true"
+									   Placeholder="@($"{DisplayTextFor.Mahasiswa} {DisplayTextFor.MulaiMagang}")"
+									   @bind-Date="Request.MulaiMagang"
+									   ShowToolbar="false" PickerVariant="PickerVariant.Dialog" />
+					</MudItem>
+					<MudItem xs="12">
+						<MudDatePicker Label="@DisplayTextFor.SelesaiMagang" Variant="Variant.Outlined"
+									   Required="true"
+									   Placeholder="@($"{DisplayTextFor.Mahasiswa} {DisplayTextFor.SelesaiMagang}")"
+									   @bind-Date="Request.SelesaiMagang"
+									   MinDate="Request.MulaiMagang" ShowToolbar="false" PickerVariant="PickerVariant.Dialog" />
+					</MudItem>
+					<MudItem xs="12">
+						<MudSelect Label="@DisplayTextFor.Pembimbing" T="Guid" @bind-Value="Request.PembimbingId" Required="true" Placeholder="Pilih Pembimbing" Variant="Variant.Outlined">
+							<MudSelectItem Value="default(Guid)">Pilih Pembimbing</MudSelectItem>
+							@foreach (var pembimbing in _pembimbingList)
+							{
+								<MudSelectItem Value="@pembimbing.Id">@pembimbing.Nama</MudSelectItem>
+							}
+						</MudSelect>
+					</MudItem>
+				</MudGrid>
+				<BottomButtonPanel>
+					<MudButton Variant="Variant.Filled" Color="Color.Default" OnClick="Cancel">@CommonDisplayTextFor.Cancel</MudButton>
+					<MudButton Variant="Variant.Filled" Color="Color.Primary" ButtonType="ButtonType.Submit">@CommonDisplayTextFor.Update</MudButton>
+				</BottomButtonPanel>
+			</EditForm>
+		</div>
+	</DialogContent>
 </MudDialog>
-
-
-

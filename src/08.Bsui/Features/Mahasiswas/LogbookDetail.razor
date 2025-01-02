@@ -4,34 +4,38 @@
 
 <ErrorViewer Error="_error" />
 
-<MudTable Elevation="0" Hover="true" Breakpoint="Breakpoint.Sm" Bordered="true"
-              FixedHeader="true" Height="@HeightFor.ScrollableTable"
-              @ref="_tableLogbooks"
-		  ServerData="@(new Func<TableState, Task<TableData<GetLogbooksLogbook>>>(ReloadTableLogbooks))">
+<MudCard Outlined="true" Class="pa-4">
+	<MudCardContent>
+		<MudTable Elevation="0" Hover="true" Breakpoint="Breakpoint.Sm" Bordered="true"
+				  FixedHeader="true" Height="@HeightFor.ScrollableTable"
+				  @ref="_tableLogbooks"
+				  ServerData="@(new Func<TableState, Task<TableData<GetLogbooksLogbook>>>(ReloadTableLogbooks))">
 
-	<HeaderContent>
-		<MudTh><MudTableSortLabel SortLabel="@nameof(GetLogbooksLogbook.LogbookDate)" T="GetLogbooksLogbook" Class="d-flex justify-center align-center">@DisplayTextFor.Tanggal</MudTableSortLabel></MudTh>
-		<MudTh><MudTableSortLabel SortLabel="@nameof(GetLogbooksLogbook.Aktifitas)" T="GetLogbooksLogbook" Class="d-flex justify-center align-center">@DisplayTextFor.Aktifitas</MudTableSortLabel></MudTh>
-		<MudTh>File</MudTh>
-	</HeaderContent>
-	<RowTemplate>
-		<MudTd DataLabel="@DisplayTextFor.Tanggal">
-			<MudHighlighter Text="@context.LogbookDate.ToString()" HighlightedText="@_searchKeyword" />
-		</MudTd>
-		<MudTd DataLabel="@DisplayTextFor.Aktifitas">
-			<MudHighlighter Text="@context.Aktifitas" HighlightedText="@_searchKeyword" />
-		</MudTd>
-		<MudTd DataLabel="File">
-			@if (!string.IsNullOrEmpty(context.ImageBase64Url))
-			{
-				<img src="@(!string.IsNullOrEmpty(context.ImageBase64Url) ? context.ImageBase64Url : "/images/placeholder.png")"
-					 alt="Logbook Image" style="max-width:30%; height:auto;" />
+			<HeaderContent>
+				<MudTh><MudTableSortLabel SortLabel="@nameof(GetLogbooksLogbook.LogbookDate)" T="GetLogbooksLogbook" Class="d-flex justify-center align-center">@DisplayTextFor.Tanggal</MudTableSortLabel></MudTh>
+				<MudTh><MudTableSortLabel SortLabel="@nameof(GetLogbooksLogbook.Aktifitas)" T="GetLogbooksLogbook" Class="d-flex justify-center align-center">@DisplayTextFor.Aktifitas</MudTableSortLabel></MudTh>
+				<MudTh><MudTableSortLabel SortLabel="@nameof(GetLogbooksLogbook.FileName)" T="GetLogbooksLogbook" Class="d-flex justify-center align-center">File</MudTableSortLabel></MudTh>
+			</HeaderContent>
 
-			}
+			<RowTemplate>
+				<MudTd DataLabel="@DisplayTextFor.Tanggal" Style="text-align: center;">
+					<MudHighlighter Text="@context.LogbookDate.ToString()" HighlightedText="@_searchKeyword" />
+				</MudTd>
+				<MudTd DataLabel="@DisplayTextFor.Aktifitas" Style="text-align: center;">
+					<MudHighlighter Text="@context.Aktifitas" HighlightedText="@_searchKeyword" />
+				</MudTd>
+				<MudTd DataLabel="File" Style="text-align: center;">
+					@if (!string.IsNullOrEmpty(context.ImageBase64Url))
+					{
+						<img src="@(!string.IsNullOrEmpty(context.ImageBase64Url) ? context.ImageBase64Url : "/images/placeholder.png")"
+							 alt="Logbook Image" style="max-width:30%; height:auto;" />
 
-		</MudTd>
-	</RowTemplate>
-	<PagerContent>
-		<MudTablePager />
-	</PagerContent>
-</MudTable>
+					}
+				</MudTd>
+			</RowTemplate>
+			<PagerContent>
+				<MudTablePager />
+			</PagerContent>
+		</MudTable>
+	</MudCardContent>
+</MudCard>

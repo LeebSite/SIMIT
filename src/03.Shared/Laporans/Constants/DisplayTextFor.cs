@@ -18,4 +18,6 @@ public class DisplayTextFor
     public static readonly string DokumenMahasiswa = nameof(DokumenMahasiswa).SplitWords();
     public static readonly string RekapDokumenMahasiswa = nameof(RekapDokumenMahasiswa).SplitWords();
     public static readonly string TambahLaporanDanProyekMagang = nameof(TambahLaporanDanProyekMagang).SplitWords();
+    public static readonly string LaporanMahasiswa = nameof(LaporanMahasiswa).SplitWords();
+
 }

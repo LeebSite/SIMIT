@@ -1,11 +1,10 @@
 ﻿@page "/Logbooks"
 
-@using Darnton.Blazor.DeviceInterop.Geolocation
-@inject IGeolocationService _geolocationService
 @using Pertamina.SIMIT.Bsui.Features.Logbooks.Constants
 @using Pertamina.SIMIT.Shared.LogbookAttachments.Constants
 @using Pertamina.SIMIT.Shared.Logbooks.Queries.GetLogbooks
 @using Pertamina.SIMIT.Shared.Logbooks.Constants
+
 
 
 <!-- Tampilan jika admin login dengan autorisasi -->
@@ -19,9 +18,8 @@
 		  @ref="_tableLogbooks"
 		  ServerData="@(new Func<TableState, Task<TableData<GetLogbooksLogbook>>>(ReloadTableLogbooks))">
 	<ToolBarContent>
-		<MudButton Variant="Variant.Filled" Color="Color.Primary" StartIcon="@Icons.Material.Filled.Add" OnClick="ShowDialogAdd">@CommonDisplayTextFor.Add @DisplayTextFor.Logbook</MudButton>
 		<MudSpacer />
-		<MudTextField Adornment="Adornment.Start" Variant="Variant.Outlined" AdornmentIcon="@Icons.Material.Filled.Search" Placeholder="@CommonDisplayTextFor.Search" T="string" ValueChanged="@(async(keyword) => await OnSearch(keyword))"></MudTextField>
+		<MudTextField Variant="Variant.Outlined" Margin="Margin.Dense" Adornment="Adornment.Start" AdornmentIcon="@Icons.Material.Filled.Search" Placeholder="@CommonDisplayTextFor.Search" T="string" ValueChanged="@(async(keyword) => await OnSearch(keyword))"></MudTextField>
 	</ToolBarContent>
 	<HeaderContent>
 		<MudTh Align="Center" Style="text-align: center;"><MudTableSortLabel SortLabel="@nameof(GetLogbooksLogbook.MahasiswaId)" T="GetLogbooksLogbook">@DisplayTextFor.NoBadgeMahasiswa</MudTableSortLabel></MudTh>
@@ -91,39 +89,56 @@
 				<EditForm Model="_model" OnValidSubmit="OnValidSubmit" OnInvalidSubmit="OnInvalidSubmit">
 					<FluentValidationValidator />
 					<div style="text-align: center;">
-						<video id="video" autoplay playsinline style="width: 100%; max-height: 300px; border: 1px solid gray;"></video>
-						<canvas id="canvas" style="display: none;"></canvas>
-						<div>
-							<MudButton Variant="Variant.Filled" Color="Color.Info" StartIcon="@Icons.Material.Filled.Camera" OnClick="StartCamera">
+						<div style="display: inline-block; border: 1px solid gray; padding: 10px; border-radius: 5px;">
+							<div style="display: flex; justify-content: center; align-items: center; gap: 20px;">
+								<video id="video" autoplay playsinline style="width: 300px; height: 300px; object-fit: cover;"></video>
+								<canvas id="canvas" style="display: none;"></canvas>
+								@if (_capturedPhoto != null)
+								{
+									<img src="@_capturedPhoto" alt="Captured Photo" style="width: 300px; height: 300px; object-fit: cover;" />
+								}
+							</div>
+						</div>
+						<div style="margin-top: 20px;">
+							<MudButton Variant="Variant.Filled"
+									   Color="Color.Info"
+									   StartIcon="@Icons.Material.Filled.Camera"
+									   OnClick="StartCamera"
+									   Style="font-size: 14px; padding: 5px 10px;">
 								@DisplayTextFor.StartKamera
 							</MudButton>
-							<MudButton Variant="Variant.Filled" Color="Color.Info" StartIcon="@Icons.Material.Filled.Upload" OnClick="CapturePhoto">
+							<MudButton Variant="Variant.Filled"
+									   Color="Color.Info"
+									   StartIcon="@Icons.Material.Filled.CameraAlt"
+									   OnClick="CapturePhoto"
+									   Style="font-size: 14px; padding: 5px 10px;">
 								@DisplayTextFor.AmbilFoto
 							</MudButton>
-							<MudButton Variant="Variant.Filled" Color="Color.Info" StartIcon="@Icons.Material.Filled.SwapHoriz" OnClick="SwitchCamera">
+							<MudButton Variant="Variant.Filled"
+									   Color="Color.Info"
+									   StartIcon="@Icons.Material.Filled.FlipCameraIos"
+									   OnClick="SwitchCamera"
+									   Style="font-size: 14px; padding: 5px 10px;">
 								@DisplayTextFor.SwitchKamera
 							</MudButton>
 						</div>
-						@if (_capturedPhoto != null)
-						{
-							<img src="@_capturedPhoto" alt="Captured Photo" style="width: 100%;" />
-						}
 					</div>
-					<MudGrid>
+
+					<MudGrid Spacing="3">
 						<MudItem xs="12">
 							<MudText Style="text-align: left">No.Badge Mahasiswa</MudText>
-							<MudTextField @bind-Value="_model.MahasiswaNim" Label="Masukkan No Badge" Variant="Variant.Outlined" Required="true" />
+							<MudTextField @bind-Value="_model.MahasiswaNim" Variant="Variant.Outlined" Required="true" Margin="Margin.Dense" />
 						</MudItem>
 						<MudItem xs="12">
 							<MudText Style="text-align: left">Tanggal</MudText>
 							<!-- Tanggal otomatis diatur ke hari ini dan tidak dapat diedit -->
-							<MudTextField Value="@_model.LogbookDate.ToString("yyyy-MM-dd")" Label="Tanggal" Variant="Variant.Outlined" Disabled="true" />
+							<MudTextField Value="@_model.LogbookDate.ToString("yyyy-MM-dd")" Variant="Variant.Outlined" Disabled="true" Margin="Margin.Dense" />
 						</MudItem>
 						<MudItem xs="12">
-							<MudTextField @bind-Value="_model.Aktifitas" Label="Aktivitas" Variant="Variant.Outlined" Required="true" />
+							<MudText Style="text-align: left">Aktivitas</MudText>
+							<MudTextField @bind-Value="_model.Aktifitas" Variant="Variant.Outlined" Required="true" Margin="Margin.Dense" />
 						</MudItem>
 					</MudGrid>
-					
 
 					<MudCardContent>
 						<BottomButtonPanel>
@@ -154,36 +169,54 @@ else if (IsAfternoonSession)
 				<EditForm Model="_model" OnValidSubmit="OnValidSubmit" OnInvalidSubmit="OnInvalidSubmit">
 					<FluentValidationValidator />
 					<div style="text-align: center;">
-						<video id="video" autoplay playsinline style="width: 100%; max-height: 300px; border: 1px solid gray;"></video>
-						<canvas id="canvas" style="display: none;"></canvas>
-						<div>
-							<MudButton Variant="Variant.Filled" Color="Color.Info" StartIcon="@Icons.Material.Filled.Camera" OnClick="StartCamera">
+						<div style="display: inline-block; border: 1px solid gray; padding: 10px; border-radius: 5px;">
+							<div style="display: flex; justify-content: center; align-items: center; gap: 20px;">
+								<video id="video" autoplay playsinline style="width: 300px; height: 300px; object-fit: cover;"></video>
+								<canvas id="canvas" style="display: none;"></canvas>
+								@if (_capturedPhoto != null)
+								{
+									<img src="@_capturedPhoto" alt="Captured Photo" style="width: 300px; height: 300px; object-fit: cover;" />
+								}
+							</div>
+						</div>
+						<div style="margin-top: 20px;">
+							<MudButton Variant="Variant.Filled"
+									   Color="Color.Info"
+									   StartIcon="@Icons.Material.Filled.Camera"
+									   OnClick="StartCamera"
+									   Style="font-size: 14px; padding: 5px 10px;">
 								@DisplayTextFor.StartKamera
 							</MudButton>
-							<MudButton Variant="Variant.Filled" Color="Color.Info" StartIcon="@Icons.Material.Filled.Upload" OnClick="CapturePhoto">
+							<MudButton Variant="Variant.Filled"
+									   Color="Color.Info"
+									   StartIcon="@Icons.Material.Filled.CameraAlt"
+									   OnClick="CapturePhoto"
+									   Style="font-size: 14px; padding: 5px 10px;">
 								@DisplayTextFor.AmbilFoto
 							</MudButton>
-							<MudButton Variant="Variant.Filled" Color="Color.Info" StartIcon="@Icons.Material.Filled.SwapHoriz" OnClick="SwitchCamera">
+							<MudButton Variant="Variant.Filled"
+									   Color="Color.Info"
+									   StartIcon="@Icons.Material.Filled.FlipCameraIos"
+									   OnClick="SwitchCamera"
+									   Style="font-size: 14px; padding: 5px 10px;">
 								@DisplayTextFor.SwitchKamera
 							</MudButton>
 						</div>
-						@if (_capturedPhoto != null)
-						{
-							<img src="@_capturedPhoto" alt="Captured Photo" style="width: 100%;" />
-						}
 					</div>
-					<MudGrid>
+
+					<MudGrid Spacing="3">
 						<MudItem xs="12">
 							<MudText Style="text-align: left">No.Badge Mahasiswa</MudText>
-							<MudTextField @bind-Value="_model.MahasiswaNim" Label="Masukkan No Badge" Variant="Variant.Outlined" Required="true" />
+							<MudTextField @bind-Value="_model.MahasiswaNim" Variant="Variant.Outlined" Required="true" Margin="Margin.Dense" />
 						</MudItem>
 						<MudItem xs="12">
 							<MudText Style="text-align: left">Tanggal</MudText>
 							<!-- Tanggal otomatis diatur ke hari ini dan tidak dapat diedit -->
-							<MudTextField Value="@_model.LogbookDate.ToString("yyyy-MM-dd")" Label="Tanggal" Variant="Variant.Outlined" Disabled="true" />
+							<MudTextField Value="@_model.LogbookDate.ToString("yyyy-MM-dd")" Variant="Variant.Outlined" Disabled="true" Margin="Margin.Dense" />
 						</MudItem>
 						<MudItem xs="12">
-							<MudTextField @bind-Value="_model.Aktifitas" Label="Aktivitas" Variant="Variant.Outlined" Required="true" />
+							<MudText Style="text-align: left">Aktivitas</MudText>
+							<MudTextField @bind-Value="_model.Aktifitas" Variant="Variant.Outlined" Required="true" Margin="Margin.Dense" />
 						</MudItem>
 					</MudGrid>
 

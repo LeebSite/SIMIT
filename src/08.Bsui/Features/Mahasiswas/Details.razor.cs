@@ -1,4 +1,3 @@
-
 using Microsoft.AspNetCore.Components;
 using Microsoft.JSInterop;
 using MudBlazor;
@@ -53,7 +52,7 @@ public partial class Details
         _breadcrumbItems = new()
         {
             CommonBreadcrumbFor.Home,
-            BreadcrumbFor.Index
+            CommonBreadcrumbFor.Active(DisplayTextFor.DataMahasiswa)
         };
     }
     private void NavigateToLogbook()
@@ -205,4 +204,3 @@ public partial class Details
         }
     }
 }
-

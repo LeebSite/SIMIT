@@ -10,14 +10,14 @@
 <ErrorViewer Error="_error" />
 
 <MudTable Elevation="0" Hover="true" Breakpoint="Breakpoint.Sm" Bordered="true"
-              FixedHeader="true" Height="@HeightFor.ScrollableTable"
-              @ref="_tableMahasiswas"
-              ServerData="@(new Func<TableState, Task<TableData<GetMahasiswasMahasiswa>>>(ReloadTableMahasiswas))"
-              CommitEditTooltip="@($"{CommonDisplayTextFor.Commit} {CommonDisplayTextFor.Edit}")"
-			RowEditCommit="EditCommit" RowEditPreview="EditPreview" RowEditCancel="EditCancel">
+		  FixedHeader="true" Height="@HeightFor.ScrollableTable"
+		  @ref="_tableMahasiswas"
+		  ServerData="@(new Func<TableState, Task<TableData<GetMahasiswasMahasiswa>>>(ReloadTableMahasiswas))"
+		  CommitEditTooltip="@($"{CommonDisplayTextFor.Commit} {CommonDisplayTextFor.Edit}")"
+		  RowEditCommit="EditCommit" RowEditPreview="EditPreview" RowEditCancel="EditCancel">
 
 	<ToolBarContent>
-			<MudButton Variant="Variant.Filled" Color="Color.Primary" StartIcon="@Icons.Material.Filled.Add" OnClick="ShowDialogAdd">@CommonDisplayTextFor.Add @DisplayTextFor.Mahasiswa</MudButton>
+		<MudButton Variant="Variant.Filled" Color="Color.Primary" StartIcon="@Icons.Material.Filled.Add" OnClick="ShowDialogAdd">@CommonDisplayTextFor.Add @DisplayTextFor.Mahasiswa</MudButton>
 		<MudSpacer />
 		<MudTextField Variant="Variant.Outlined" Margin="Margin.Dense" Adornment="Adornment.Start" AdornmentIcon="@Icons.Material.Filled.Search" Placeholder="@CommonDisplayTextFor.Search" T="string" ValueChanged="@(async(keyword) => await OnSearch(keyword))"></MudTextField>
 	</ToolBarContent>
@@ -57,7 +57,7 @@
 			<MudHighlighter Text="@context.PembimbingNama.ToString()" HighlightedText="@_searchKeyword" />
 		</MudTd>
 
-		<MudTd DataLabel="@DisplayTextFor.StatusDokumen" Class="d-flex justify-center align-center">
+		<MudTd DataLabel="@DisplayTextFor.StatusDokumen" Style="text-align: center;">
 			@if (context.LaporanId != null)
 			{
 				<MudIcon Icon="@Icons.Material.Filled.CheckCircle" Color="Color.Success" />
@@ -67,10 +67,8 @@
 				<MudIcon Icon="@Icons.Material.Filled.Cancel" Color="Color.Error" />
 			}
 		</MudTd>
-
-
 	</RowTemplate>
 	<PagerContent>
 		<MudTablePager />
 	</PagerContent>
- </MudTable>
+</MudTable>

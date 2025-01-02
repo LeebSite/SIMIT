@@ -1,5 +1,4 @@
-﻿
-using Pertamina.SIMIT.Shared.Common.Extensions;
+﻿using Pertamina.SIMIT.Shared.Common.Extensions;
 
 namespace Pertamina.SIMIT.Shared.Mahasiswas.Constants;
 public class DisplayTextFor
@@ -13,6 +12,8 @@ public class DisplayTextFor
     public static readonly string RekapDataMahasiswa = nameof(RekapDataMahasiswa).SplitWords();
     public static readonly string DetailDataMahasiwa = nameof(DetailDataMahasiwa).SplitWords();
     public static readonly string DataMahasiswa = nameof(DataMahasiswa).SplitWords();
+
+    public static readonly string DokumenMahasiswa = nameof(DokumenMahasiswa).SplitWords();
 
     public const string Nama = nameof(Nama);
     public const string Deskripsi = nameof(Deskripsi);

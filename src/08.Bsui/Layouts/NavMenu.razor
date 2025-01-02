@@ -1,27 +1,27 @@
 ﻿<MudNavMenu>
-    <MudNavLink Icon="@Icons.Material.Filled.Home" Match="NavLinkMatch.All" Href="@CommonRouteFor.Index">@CommonDisplayTextFor.Home</MudNavLink>
+	<MudNavLink Icon="@Icons.Material.Filled.Home" Match="NavLinkMatch.All" Href="@CommonRouteFor.Index">@CommonDisplayTextFor.Home</MudNavLink>
 
-    @* <AuthorizeView> *@
-    @*     <Authorized> *@
-    @*         <!-- #region Business Menus --> *@
-    @*         <!-- #endregion Business Menus --> *@
+	@* <AuthorizeView> *@
+	@*     <Authorized> *@
+	@*         <!-- #region Business Menus --> *@
+	@*         <!-- #endregion Business Menus --> *@
 
-    @*         @if (context.User.HasPermission(Permissions.SolTem_Audit_Index)) *@
-    @*         { *@
-    @*             <MudNavLink Icon="@Icons.Material.Filled.EventNote" Href="@Features.Audits.Constants.RouteFor.Index">@SIMIT.Shared.Audits.Constants.DisplayTextFor.Audits</MudNavLink> *@
-    @*         } *@
-    @*     </Authorized> *@
-    @* </AuthorizeView> *@
+	@*         @if (context.User.HasPermission(Permissions.SolTem_Audit_Index)) *@
+	@*         { *@
+	@*             <MudNavLink Icon="@Icons.Material.Filled.EventNote" Href="@Features.Audits.Constants.RouteFor.Index">@SIMIT.Shared.Audits.Constants.DisplayTextFor.Audits</MudNavLink> *@
+	@*         } *@
+	@*     </Authorized> *@
+	@* </AuthorizeView> *@
 
-		<MudNavGroup Icon="@Icons.Material.Filled.School"
-					 ExpandIcon="@Icons.Material.Filled.ExpandMore"
-					 Expanded="true"
-					 Title="@Pertamina.SIMIT.Shared.Mahasiswas.Constants.DisplayTextFor.Mahasiswa">
-			<MudNavLink Icon="@Icons.Material.Outlined.Folder" Href="@Features.Mahasiswas.Constants.RouteFor.Index">@Pertamina.SIMIT.Shared.Mahasiswas.Constants.DisplayTextFor.DataMahasiswa</MudNavLink>
-		</MudNavGroup>
+	<MudNavGroup Icon="@Icons.Material.Filled.School"
+				 ExpandIcon="@Icons.Material.Filled.ExpandMore"
+				 Expanded="true"
+				 Title="@Pertamina.SIMIT.Shared.Mahasiswas.Constants.DisplayTextFor.Mahasiswa">
+		<MudNavLink Icon="@Icons.Material.Outlined.Folder" Href="@Features.Mahasiswas.Constants.RouteFor.Index">@Pertamina.SIMIT.Shared.Mahasiswas.Constants.DisplayTextFor.DataMahasiswa</MudNavLink>
+	</MudNavGroup>
 
-            <!-- #region Business Menus -->
-            <!-- #endregion Business Menus -->
+	<!-- #region Business Menus -->
+	<!-- #endregion Business Menus -->
 	<MudNavGroup Icon="@Icons.Material.Filled.AdminPanelSettings"
 				 ExpandIcon="@Icons.Material.Filled.ExpandMore"
 				 Expanded="true"
@@ -32,10 +32,11 @@
 	<MudNavGroup Icon="@Icons.Material.Filled.Book"
 				 ExpandIcon="@Icons.Material.Filled.ExpandMore"
 				 Expanded="true"
-				 Title="@Pertamina.SIMIT.Shared.Logbooks.Constants.DisplayTextFor.Logbooks">
+				 Title="@Pertamina.SIMIT.Shared.Laporans.Constants.DisplayTextFor.DokumenMahasiswa">
+		<MudNavLink Icon="@Icons.Material.Outlined.Folder" Href="@Features.Laporans.Constants.RouteFor.Index">@Pertamina.SIMIT.Shared.Laporans.Constants.DisplayTextFor.LaporanMahasiswa</MudNavLink>
 		<MudNavLink Icon="@Icons.Material.Outlined.Folder" Href="@Features.Logbooks.Constants.RouteFor.Index">@Pertamina.SIMIT.Shared.Logbooks.Constants.DisplayTextFor.LogbookHarianMahasiswa</MudNavLink>
 	</MudNavGroup>
-	<MudNavLink Icon="@Icons.Material.Filled.Folder" Href="@Features.Laporans.Constants.RouteFor.Index">@Pertamina.SIMIT.Shared.Laporans.Constants.DisplayTextFor.DokumenMahasiswa</MudNavLink>
-    <MudNavLink Icon="@Icons.Material.Filled.EventNote" Href="@Features.Audits.Constants.RouteFor.Index">@SIMIT.Shared.Audits.Constants.DisplayTextFor.Audits</MudNavLink>
-    <MudNavLink Icon="@Icons.Material.Filled.Countertops" Href="@CommonRouteFor.About">@CommonDisplayTextFor.About</MudNavLink>
+
+	<MudNavLink Icon="@Icons.Material.Filled.EventNote" Href="@Features.Audits.Constants.RouteFor.Index">@SIMIT.Shared.Audits.Constants.DisplayTextFor.Audits</MudNavLink>
+	<MudNavLink Icon="@Icons.Material.Filled.Countertops" Href="@CommonRouteFor.About">@CommonDisplayTextFor.About</MudNavLink>
 </MudNavMenu>

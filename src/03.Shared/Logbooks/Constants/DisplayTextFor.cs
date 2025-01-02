@@ -28,5 +28,6 @@ public class DisplayTextFor
 
     public static readonly string ListLogbook = nameof(ListLogbook).SplitWords();
 
-}
+    public static readonly string DokumenMahasiswa = nameof(DokumenMahasiswa).SplitWords();
 
+}
