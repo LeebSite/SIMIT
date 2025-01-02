@@ -208,7 +208,7 @@ namespace Pertamina.SIMIT.Infrastructure.Persistence.SqlServer.Migrations
 
                     b.HasIndex("LogbookId");
 
-                    b.ToTable("LogbookAttachments");
+                    b.ToTable("LogbookAttachments", (string)null);
                 });
 
             modelBuilder.Entity("Pertamina.SIMIT.Domain.Entities.Mahasiswa", b =>
@@ -344,7 +344,7 @@ namespace Pertamina.SIMIT.Infrastructure.Persistence.SqlServer.Migrations
 
             modelBuilder.Entity("Pertamina.SIMIT.Domain.Entities.Audit", b =>
                 {
-                    b.OwnsOne("Pertamina.SIMIT.Base.ValueObjects.Geolocation", "FromGeolocation", b1 =>
+                    b.OwnsOne("Pertamina.SIMIT.Domain.Entities.Audit.FromGeolocation#Pertamina.SIMIT.Base.ValueObjects.Geolocation", "FromGeolocation", b1 =>
                         {
                             b1.Property<Guid>("AuditId")
                                 .HasColumnType("uniqueidentifier");
@@ -390,6 +390,33 @@ namespace Pertamina.SIMIT.Infrastructure.Persistence.SqlServer.Migrations
                         .HasForeignKey("MahasiswaId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+
+                    b.OwnsOne("Pertamina.SIMIT.Domain.Entities.Logbook.FromGeolocation#Pertamina.SIMIT.Base.ValueObjects.Geolocation", "FromGeolocation", b1 =>
+                        {
+                            b1.Property<Guid>("LogbookId")
+                                .HasColumnType("uniqueidentifier");
+
+                            b1.Property<double>("Accuracy")
+                                .HasColumnType("float")
+                                .HasColumnName("Accuracy");
+
+                            b1.Property<double>("Latitude")
+                                .HasColumnType("float")
+                                .HasColumnName("Latitude");
+
+                            b1.Property<double>("Longitude")
+                                .HasColumnType("float")
+                                .HasColumnName("Longitude");
+
+                            b1.HasKey("LogbookId");
+
+                            b1.ToTable("Logbooks", "SIMIT");
+
+                            b1.WithOwner()
+                                .HasForeignKey("LogbookId");
+                        });
+
+                    b.Navigation("FromGeolocation");
 
                     b.Navigation("Mahasiswa");
                 });
