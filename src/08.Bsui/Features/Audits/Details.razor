@@ -1,5 +1,5 @@
 ﻿@page "/Audits/Details/{AuditId:guid}"
-@attribute [Authorize(Policy = Permissions.SolTem_Audit_View)]
+@attribute [Authorize]
 
 <BrowserTabTitle>@DisplayTextFor.Audit</BrowserTabTitle>
 <MudBreadcrumbs Items="_breadcrumbItems"></MudBreadcrumbs>

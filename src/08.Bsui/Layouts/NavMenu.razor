@@ -1,44 +1,24 @@
 ﻿<MudNavMenu>
 	<MudNavLink Icon="@Icons.Material.Filled.Home" Match="NavLinkMatch.All" Href="@CommonRouteFor.Index">@CommonDisplayTextFor.Home</MudNavLink>
 
-	@* <AuthorizeView> *@
-	@*     <Authorized> *@
-	@*         <!-- #region Business Menus --> *@
-	@*         <!-- #endregion Business Menus --> *@
+			<MudNavLink Icon="@Icons.Material.Filled.Dashboard" Href="@Features.Dashboards.Constants.RouteFor.Index">@Pertamina.SIMIT.Shared.Mahasiswas.Constants.DisplayTextFor.Dashboard</MudNavLink>
 
-	@*         @if (context.User.HasPermission(Permissions.SolTem_Audit_Index)) *@
-	@*         { *@
-	@*             <MudNavLink Icon="@Icons.Material.Filled.EventNote" Href="@Features.Audits.Constants.RouteFor.Index">@SIMIT.Shared.Audits.Constants.DisplayTextFor.Audits</MudNavLink> *@
-	@*         } *@
-	@*     </Authorized> *@
-	@* </AuthorizeView> *@
+			<MudNavLink Icon="@Icons.Material.Filled.School" Href="@Features.Mahasiswas.Constants.RouteFor.Index">
+				@Pertamina.SIMIT.Shared.Mahasiswas.Constants.DisplayTextFor.Mahasiswa
+			</MudNavLink>
+
+			<MudNavLink Icon="@Icons.Material.Filled.AdminPanelSettings" Href="@Features.Pembimbings.Constants.RouteFor.Index">
+				@Pertamina.SIMIT.Shared.Pembimbings.Constants.DisplayTextFor.Pembimbing
+			</MudNavLink>
 
 
-
-	<MudNavGroup Icon="@Icons.Material.Filled.School"
-				 ExpandIcon="@Icons.Material.Filled.ExpandMore"
-				 Expanded="true"
-				 Title="@Pertamina.SIMIT.Shared.Mahasiswas.Constants.DisplayTextFor.Mahasiswa">
-		<MudNavLink Icon="@Icons.Material.Outlined.Folder" Href="@Features.Mahasiswas.Constants.RouteFor.Index">@Pertamina.SIMIT.Shared.Mahasiswas.Constants.DisplayTextFor.DataMahasiswa</MudNavLink>
-	</MudNavGroup>
-
-	<!-- #region Business Menus -->
-	<!-- #endregion Business Menus -->
-	<MudNavGroup Icon="@Icons.Material.Filled.AdminPanelSettings"
-				 ExpandIcon="@Icons.Material.Filled.ExpandMore"
-				 Expanded="true"
-				 Title="@Pertamina.SIMIT.Shared.Pembimbings.Constants.DisplayTextFor.Pembimbing">
-		<MudNavLink Icon="@Icons.Material.Outlined.Folder" Href="@Features.Pembimbings.Constants.RouteFor.Index">@Pertamina.SIMIT.Shared.Pembimbings.Constants.DisplayTextFor.DataPembimbing</MudNavLink>
-	</MudNavGroup>
-
-	<MudNavGroup Icon="@Icons.Material.Filled.Book"
-				 ExpandIcon="@Icons.Material.Filled.ExpandMore"
-				 Expanded="true"
-				 Title="@Pertamina.SIMIT.Shared.Laporans.Constants.DisplayTextFor.DokumenMahasiswa">
-		<MudNavLink Icon="@Icons.Material.Outlined.Folder" Href="@Features.Laporans.Constants.RouteFor.Index">@Pertamina.SIMIT.Shared.Laporans.Constants.DisplayTextFor.LaporanMahasiswa</MudNavLink>
-		<MudNavLink Icon="@Icons.Material.Outlined.Folder" Href="@Features.Logbooks.Constants.RouteFor.Index">@Pertamina.SIMIT.Shared.Logbooks.Constants.DisplayTextFor.LogbookHarianMahasiswa</MudNavLink>
-	</MudNavGroup>
-
-	<MudNavLink Icon="@Icons.Material.Filled.EventNote" Href="@Features.Audits.Constants.RouteFor.Index">@SIMIT.Shared.Audits.Constants.DisplayTextFor.Audits</MudNavLink>
-	<MudNavLink Icon="@Icons.Material.Filled.Countertops" Href="@CommonRouteFor.About">@CommonDisplayTextFor.About</MudNavLink>
+			<MudNavLink Icon="@Icons.Material.Filled.EventNote" Href="@Features.Audits.Constants.RouteFor.Index">@SIMIT.Shared.Audits.Constants.DisplayTextFor.Audits</MudNavLink>
+			<MudNavLink Icon="@Icons.Material.Filled.Countertops" Href="@CommonRouteFor.About">@CommonDisplayTextFor.About</MudNavLink>
+			<MudNavGroup Icon="@Icons.Material.Filled.Book"
+						 ExpandIcon="@Icons.Material.Filled.ExpandMore"
+						 Expanded="true"
+						 Title="@Pertamina.SIMIT.Shared.Laporans.Constants.DisplayTextFor.DokumenMahasiswa">
+				<MudNavLink Icon="@Icons.Material.Outlined.Folder" Href="@Features.Laporans.Constants.RouteFor.Index">@Pertamina.SIMIT.Shared.Laporans.Constants.DisplayTextFor.LaporanMahasiswa</MudNavLink>
+				<MudNavLink Icon="@Icons.Material.Outlined.Folder" Href="@Features.Logbooks.Constants.RouteFor.Index">@Pertamina.SIMIT.Shared.Logbooks.Constants.DisplayTextFor.LogbookHarianMahasiswa</MudNavLink>
+			</MudNavGroup>
 </MudNavMenu>

@@ -16,21 +16,24 @@
 					<!-- Input Fields -->
 					<MudGrid JustifyCenter Spacing="2">
 						<MudItem xs="12">
+														<MudText Style="text-align: left">No.Badge Mahasiswa</MudText>
 							<MudTextField @bind-Value="_model.MahasiswaNim" Variant="Variant.Outlined"
 										  Required="true"
-										  Placeholder="Masukkan NIM Mahasiswa"
-										  HelperText="Contoh: 22654700"
 										  Adornment="Adornment.Start"
 										  AdornmentIcon="@Icons.Material.Filled.Person" />
 						</MudItem>
 						<MudItem xs="12">
-							<MudTextField @bind-Value="_model.Deskripsi" Variant="Variant.Outlined"
-										  Required="true"
-										  Placeholder="Masukkan Deskripsi Laporan"
-										  HelperText="Contoh: Aplikasi Sistem Informasi Magang"
-										  Adornment="Adornment.Start"
-										  AdornmentIcon="@Icons.Material.Filled.Edit" />
-						</MudItem>
+						<MudText Style="text-align: left">Deskripsi</MudText>
+				<MudTextField @bind-Value="_model.Deskripsi"
+				  @ref="multilineReference" 
+				  T="string" 
+				  Variant="Variant.Outlined" 
+				  Lines="3"
+				  Required="true"
+				  HelperText="Contoh: Aplikasi Sistem Informasi Magang"
+				  
+				  Style="text-align: left; display: flex; align-items: center;" />
+</MudItem>
 
 						<!-- Tombol Upload File -->
 						<MudItem xs="12">
@@ -74,3 +77,8 @@
 		</MudCard>
 	</MudItem>
 </div>
+
+@code
+{
+	private MudTextField<string> multilineReference;
+}

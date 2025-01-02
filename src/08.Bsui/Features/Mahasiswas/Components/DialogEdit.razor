@@ -39,6 +39,12 @@
 									   MinDate="Request.MulaiMagang" ShowToolbar="false" PickerVariant="PickerVariant.Dialog" />
 					</MudItem>
 					<MudItem xs="12">
+						<MudTextField Label="@DisplayTextFor.Bagian" Variant="Variant.Outlined"
+									  Required="true"
+									  Placeholder="@($"{DisplayTextFor.Mahasiswa} {DisplayTextFor.Bagian}")"
+									  @bind-Value="Request.Bagian" />
+					</MudItem>
+					<MudItem xs="12">
 						<MudSelect Label="@DisplayTextFor.Pembimbing" T="Guid" @bind-Value="Request.PembimbingId" Required="true" Placeholder="Pilih Pembimbing" Variant="Variant.Outlined">
 							<MudSelectItem Value="default(Guid)">Pilih Pembimbing</MudSelectItem>
 							@foreach (var pembimbing in _pembimbingList)

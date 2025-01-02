@@ -36,26 +36,65 @@ function renderBarChart(labels, values) {
                 {
                     label: "Jumlah Logbooks",
                     data: finalValues,
-                    backgroundColor: [
-                        "#4CAF50", "#2196F3", "#FF9800", "#E91E63", "#9C27B0",
-                        "#3F51B5", "#00BCD4", "#8BC34A", "#FFC107", "#FF5722",
-                        "#795548", "#607D8B"
-                    ],
+                    backgroundColor: "#1976D2", // Set bar color to #1976D2
+                    borderColor: "#1976D2", // Border color to match
+                    borderWidth: 1, // Add a border width for better styling
+                    borderRadius: 5, // Rounded corners for bars
+                    hoverBackgroundColor: "#145A86", // Slightly darker color on hover
+                    hoverBorderColor: "#145A86", // Border color on hover
                 },
             ],
         },
         options: {
             responsive: true,
             plugins: {
-                legend: { display: true },
-                title: {
+                legend: {
                     display: true,
-                    text: "Jumlah Logbooks per Bulan",
+                    position: "top", // Position the legend at the top
+                    align: "end", // Align the legend to the right
+                    labels: {
+                        font: {
+                            size: 12, // Adjust the font size
+                            family: "Arial", // Adjust the font family if needed
+                        },
+                    },
                 },
             },
             scales: {
-                x: { title: { display: true, text: "Bulan" } },
-                y: { title: { display: true, text: "Jumlah" }, beginAtZero: true },
+                x: {
+                    title: {
+                        display: true,
+                        text: "Bulan",
+                        font: {
+                            size: 14,
+                        },
+                    },
+                    ticks: {
+                        color: "#555", // Axis label color
+                        font: {
+                            size: 12,
+                        },
+                    },
+                },
+                y: {
+                    title: {
+                        display: true,
+                        text: "Jumlah",
+                        font: {
+                            size: 14,
+                        },
+                    },
+                    ticks: {
+                        color: "#555", // Axis label color
+                        font: {
+                            size: 12,
+                        },
+                        beginAtZero: true, // Ensure Y-axis starts at zero
+                        callback: function (value) {
+                            return Math.floor(value); // Round down to remove decimals
+                        },
+                    },
+                },
             },
         },
     });
