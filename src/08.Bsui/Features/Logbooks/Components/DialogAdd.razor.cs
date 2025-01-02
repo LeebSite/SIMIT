@@ -42,7 +42,7 @@ public partial class DialogAdd
             var coordinates = geolocationResult.Position.Coords;
             Request.Latitude = coordinates.Latitude;
             Request.Longitude = coordinates.Longitude;
-            Request.Accuracy = coordinates.Longitude;
+            Request.Accuracy = coordinates.Accuracy;
             // Anda bisa menyimpan akurasi jika diperlukan di request atau database
         }
         else
