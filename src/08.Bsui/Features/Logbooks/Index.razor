@@ -15,7 +15,8 @@
 
 <AuthorizeView Context="userContext">
 	<Authorized>
-
+		 	</Authorized>
+ </AuthorizeView>
 		<MudTable Elevation="0" Hover="true" Breakpoint="Breakpoint.Sm"
 				  FixedHeader="true" Height="@HeightFor.ScrollableTable" Bordered="true"
 				  @ref="_tableLogbooks"
@@ -79,8 +80,7 @@
 			</PagerContent>
 
 		</MudTable>
-	</Authorized>
-</AuthorizeView>
+
 
 @if (IsMorningSession)
 {
