@@ -1,7 +1,10 @@
 ﻿@using Pertamina.SIMIT.Bsui.Features.Logbooks.Constants
 @using Pertamina.SIMIT.Shared.Logbooks.Constants
+@using Darnton.Blazor.DeviceInterop.Geolocation
+
 
 @inject LogbookService _logbookService
 @inject MahasiswaService _mahasiswaService
 @inject LogbookAttachmentService _logbookAttachmentService
 @inject IJSRuntime _jsRuntime
+@inject IGeolocationService _geolocationService

@@ -33,7 +33,7 @@ public partial class Index
     private bool IsAfternoonSession => DateTime.Now.Hour is >= 13 and <= 16;
     private readonly List<GetLogbooksLogbook> _logbooks = new();
 
-    private bool _useBackCamera = false;
+    //private bool _useBackCamera = false;
     private string? _capturedPhoto; // Base64 foto
     private bool _isSubmitting = false;
     public CreateLogbookRequest Request { get; set; } = default!;
@@ -115,14 +115,16 @@ public partial class Index
 
     private async Task StartCamera()
     {
-        await _jsRuntime.InvokeVoidAsync("startCamera", "video", _useBackCamera);
+        _capturedPhoto = null; // Reset foto saat kamera dimulai
+        await _jsRuntime.InvokeVoidAsync("startCamera", "video");
+        StateHasChanged();
     }
 
-    private async Task SwitchCamera()
-    {
-        _useBackCamera = !_useBackCamera;
-        await StartCamera();
-    }
+    //private async Task SwitchCamera()
+    //{
+    //    _useBackCamera = !_useBackCamera;
+    //    await StartCamera();
+    //}
 
     private async Task CapturePhoto()
     {
@@ -185,13 +187,17 @@ public partial class Index
             Headers = new HeaderDictionary(),
             ContentType = "image/jpeg"  // Correct content type for JPEG
         };
-
+        var geolocationResult = await _geolocationService.GetCurrentPosition();
+        var coordinates = geolocationResult.Position.Coords;
         var request = new CreateLogbookRequest
         {
             MahasiswaNim = _model.MahasiswaNim,
             LogbookDate = _model.LogbookDate,
             Aktifitas = _model.Aktifitas,
-            File = formFile
+            File = formFile,
+            Latitude = coordinates.Latitude,
+            Longitude = coordinates.Longitude,
+            Accuracy = coordinates.Accuracy
         };
 
         var response = await _logbookService.CreateLogbookAsync(request);
