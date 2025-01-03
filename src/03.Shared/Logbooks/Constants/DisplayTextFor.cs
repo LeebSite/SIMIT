@@ -15,9 +15,10 @@ public class DisplayTextFor
     public static readonly string StartKamera = nameof(StartKamera).SplitWords();
     public static readonly string ResetKamera = nameof(ResetKamera).SplitWords();
     public static readonly string AmbilFoto = nameof(AmbilFoto).SplitWords();
-    public static readonly string SwitchKamera = nameof(SwitchKamera).SplitWords();
+    public static readonly string Ulangi = nameof(Ulangi).SplitWords();
 
     public const string Tanggal = nameof(Tanggal);
+    public const string Waktu = nameof(Waktu);
     public const string Detail = nameof(Detail);
     public const string Aktifitas = nameof(Aktifitas);
     public const string Nim = nameof(Nim);

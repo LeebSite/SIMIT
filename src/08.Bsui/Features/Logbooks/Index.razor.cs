@@ -28,7 +28,6 @@ public partial class Index
     private ErrorResponse? _error;
     private readonly CreateLogbookModel _model = new();
     private bool _isLoading;
-    private bool IsAuthorized => true; // Ubah logika otorisasi untuk admin
     private bool IsMorningSession => DateTime.Now.Hour is >= 7 and <= 12;
     private bool IsAfternoonSession => DateTime.Now.Hour is >= 13 and <= 16;
     private readonly List<GetLogbooksLogbook> _logbooks = new();
@@ -36,6 +35,8 @@ public partial class Index
     //private bool _useBackCamera = false;
     private string? _capturedPhoto; // Base64 foto
     private bool _isSubmitting = false;
+    private bool _isCameraActive = false;
+
     public CreateLogbookRequest Request { get; set; } = default!;
 
     //private List<UpdateMahasiswasMahasiswa> _editedMahasiswas = new();
@@ -86,6 +87,31 @@ public partial class Index
             .Where(logbook => logbook.LogbookDate.Date == today)
             .ToList();
 
+        // Gabungkan data berdasarkan NIM
+        var groupedItems = filteredItems
+     .GroupBy(logbook => logbook.MahasiswaNim)
+     .Select(group =>
+     {
+         var pagiLogbook = group.FirstOrDefault(logbook =>
+             logbook.LogbookDate.TimeOfDay >= TimeSpan.FromHours(7) &&
+             logbook.LogbookDate.TimeOfDay < TimeSpan.FromHours(12));
+
+         var siangLogbook = group.FirstOrDefault(logbook =>
+             logbook.LogbookDate.TimeOfDay >= TimeSpan.FromHours(13) &&
+             logbook.LogbookDate.TimeOfDay < TimeSpan.FromHours(16));
+
+         return new GetLogbooksLogbook
+         {
+             MahasiswaNim = group.Key,
+             MahasiswaNama = pagiLogbook?.MahasiswaNama ?? siangLogbook?.MahasiswaNama,
+             LogbookDate = (DateTime)(pagiLogbook?.LogbookDate ?? siangLogbook?.LogbookDate),
+             Aktifitas = $"{pagiLogbook?.Aktifitas ?? string.Empty} | {siangLogbook?.Aktifitas ?? string.Empty}".Trim(),
+             StatusPagi = pagiLogbook != null,  // Status pagi tercentang jika ada logbook pagi
+             StatusSiang = siangLogbook != null  // Status siang tercentang jika ada logbook siang
+         };
+     })
+     .ToList();
+
         // Debug log data setelah filtering
         Console.WriteLine("Filtered data for today:");
         foreach (var item in filteredItems)
@@ -93,11 +119,11 @@ public partial class Index
             Console.WriteLine($"NIM: {item.MahasiswaNim}, Date: {item.LogbookDate}");
         }
 
-        // Mengembalikan data yang sudah difilter dalam format TableData
+        // Mengembalikan data yang sudah digabung dalam format TableData
         tableData = new TableData<GetLogbooksLogbook>
         {
-            Items = filteredItems,
-            TotalItems = filteredItems.Count
+            Items = groupedItems,
+            TotalItems = groupedItems.Count
         };
 
         // Pastikan UI di-refresh setelah data selesai dimuat
@@ -115,7 +141,7 @@ public partial class Index
 
     private async Task StartCamera()
     {
-        _capturedPhoto = null; // Reset foto saat kamera dimulai
+        _isCameraActive = true;
         await _jsRuntime.InvokeVoidAsync("startCamera", "video");
         StateHasChanged();
     }
@@ -125,6 +151,13 @@ public partial class Index
     //    _useBackCamera = !_useBackCamera;
     //    await StartCamera();
     //}
+
+    private void ResetPhoto()
+    {
+        _capturedPhoto = null;
+        _isCameraActive = true; // Re-activate the camera
+        StateHasChanged();
+    }
 
     private async Task CapturePhoto()
     {
@@ -143,6 +176,7 @@ public partial class Index
             }
 
             _capturedPhoto = photoData;
+            _isCameraActive = false; // Deactivate the camera after photo capture
             StateHasChanged();
         }
         catch (Exception ex)

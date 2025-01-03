@@ -20,6 +20,9 @@ public class GetLogbooksLogbook : FileResponse
     public string? MahasiswaNama { get; set; }
     public string? MahasiswaNim { get; set; }
 
+    public bool StatusPagi { get; set; } // Status logbook pagi
+    public bool StatusSiang { get; set; } // Status logbook siang
+
     public DateTimeOffset Created { get; set; }
     public string CreatedBy { get; set; } = default!;
 }
