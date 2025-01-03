@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Pertamina.SIMIT.Application.Logbooks.Commands.CreateLogbook;
 using Pertamina.SIMIT.Application.Logbooks.Queries.GetLogbook;
+using Pertamina.SIMIT.Application.Logbooks.Queries.GetLogbooks;
 using Pertamina.SIMIT.Application.Logbooks.Queries.GetLogbooksListQuery;
 using Pertamina.SIMIT.Application.Logbooks.Queries.GetLogbooksQuery;
 using Pertamina.SIMIT.Shared.Common.Constants;
@@ -16,7 +17,8 @@ namespace Pertamina.SIMIT.WebApi.Areas.V1.Controllers;
 public class LogbooksController : ApiControllerBase
 {
     [HttpPost]
-    [Consumes(ContentTypes.ApplicationXWwwFormUrlEncoded)]
+    [Consumes(ContentTypes.MultipartFormData)]
+    [DisableRequestSizeLimit]
     [ProducesResponseType(StatusCodes.Status201Created)]
     [ProducesResponseType(StatusCodes.Status409Conflict)]
     public async Task<ActionResult<CreateLogbookResponse>> CreateLogbook([FromForm] CreateLogbookCommand command)
@@ -24,18 +26,27 @@ public class LogbooksController : ApiControllerBase
         return CreatedAtAction(nameof(CreateLogbook), await Mediator.Send(command));
     }
 
-    [HttpGet(ApiEndPoint.V1.Logbooks.RouteTemplateFor.LogbookId)]
+    [HttpGet(ApiEndPoint.V1.Logbooks.RouteTemplateFor.ByLogbookId)]
     [Produces(typeof(GetLogbookResponse))]
-    //[ProducesResponseType(StatusCodes.Status404NotFound)]
     public async Task<ActionResult<GetLogbookResponse>> GetLogbook([FromRoute] Guid logbookId)
     {
         return await Mediator.Send(new GetLogbookQuery { LogbookId = logbookId });
     }
 
-    [HttpGet]
+    [HttpGet(ApiEndPoint.V1.Logbooks.RouteTemplateFor.ByMahasiswaId)]
     [Produces(typeof(PaginatedListResponse<GetLogbooksLogbook>))]
-    public async Task<ActionResult<PaginatedListResponse<GetLogbooksLogbook>>> GetLogbooks([FromQuery] GetLogbooksQuery query)
+    public async Task<ActionResult<PaginatedListResponse<GetLogbooksLogbook>>> GetLogbookbById([FromRoute] Guid mahasiswaId, [FromQuery] GetLogbooksByIdQuery request)
     {
+        var query = new GetLogbooksByIdQuery
+        {
+            MahasiswaId = mahasiswaId,
+            Page = request.Page,
+            PageSize = request.PageSize,
+            SearchText = request.SearchText,
+            SortField = request.SortField,
+            SortOrder = request.SortOrder
+        };
+
         return await Mediator.Send(query);
     }
 
@@ -45,4 +56,19 @@ public class LogbooksController : ApiControllerBase
     {
         return await Mediator.Send(new GetLogbooksListQuery());
     }
+
+    [HttpGet]
+    [Produces(typeof(PaginatedListResponse<GetLogbooksLogbook>))]
+    public async Task<ActionResult<PaginatedListResponse<GetLogbooksLogbook>>> GetLogbooks([FromQuery] GetLogbooksQuery query)
+    {
+        return await Mediator.Send(query);
+    }
+
+    [HttpGet(ApiEndPoint.V1.Logbooks.RouteTemplateFor.Count)]
+    public async Task<IActionResult> GetLogbooksPerMonth()
+    {
+        var result = await Mediator.Send(new GetLogbooksPerMonthQuery());
+        return Ok(result);
+    }
+
 }

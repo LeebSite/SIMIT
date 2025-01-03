@@ -2,6 +2,7 @@
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 using Pertamina.SIMIT.Application.Services.Persistence;
+using Pertamina.SIMIT.Base.ValueObjects;
 using Pertamina.SIMIT.Domain.Entities;
 using Pertamina.SIMIT.Infrastructure.Persistence.Common.Constants;
 using Pertamina.SIMIT.Infrastructure.Persistence.Common.Extensions;
@@ -17,5 +18,13 @@ public class LogbookConfiguration : IEntityTypeConfiguration<Logbook>
         builder.ConfigureModifiableProperties();
 
         builder.Property(e => e.Aktifitas).HasColumnType(CommonColumnTypes.Nvarchar(MaximumLengthFor.Aktifitas));
+
+        builder.OwnsOne(o => o.FromGeolocation, p =>
+        {
+            p.Property(p => p.Latitude).HasColumnName(nameof(Geolocation.Latitude));
+            p.Property(p => p.Longitude).HasColumnName(nameof(Geolocation.Longitude));
+            p.Property(p => p.Accuracy).HasColumnName(nameof(Geolocation.Accuracy));
+        });
     }
+
 }

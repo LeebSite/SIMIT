@@ -12,6 +12,10 @@ public class DisplayTextFor
     public static readonly string StatusLogbookSiang = nameof(StatusLogbookSiang).SplitWords();
     public static readonly string NamaMahasiswa = nameof(NamaMahasiswa).SplitWords();
     public static readonly string RekapLogbookMahasiswa = nameof(RekapLogbookMahasiswa).SplitWords();
+    public static readonly string StartKamera = nameof(StartKamera).SplitWords();
+    public static readonly string ResetKamera = nameof(ResetKamera).SplitWords();
+    public static readonly string AmbilFoto = nameof(AmbilFoto).SplitWords();
+    public static readonly string SwitchKamera = nameof(SwitchKamera).SplitWords();
 
     public const string Tanggal = nameof(Tanggal);
     public const string Detail = nameof(Detail);
@@ -25,5 +29,6 @@ public class DisplayTextFor
 
     public static readonly string ListLogbook = nameof(ListLogbook).SplitWords();
 
-}
+    public static readonly string DokumenMahasiswa = nameof(DokumenMahasiswa).SplitWords();
 
+}

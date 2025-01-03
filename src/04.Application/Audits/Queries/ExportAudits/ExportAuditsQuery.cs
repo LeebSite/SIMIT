@@ -7,11 +7,10 @@ using Pertamina.SIMIT.Application.Services.DateAndTime;
 using Pertamina.SIMIT.Application.Services.Persistence;
 using Pertamina.SIMIT.Shared.Audits.Queries.ExportAudits;
 using Pertamina.SIMIT.Shared.Common.Constants;
-using Pertamina.SIMIT.Shared.Services.Authorization.Constants;
 
 namespace Pertamina.SIMIT.Application.Audits.Queries.ExportAudits;
 
-[Authorize(Policy = Permissions.SolTem_Audit_Index)]
+[Authorize]
 public class ExportAuditsQuery : ExportAuditsRequest, IRequest<ExportAuditsResponse>
 {
 }

@@ -8,6 +8,7 @@ public class DisplayTextFor
     public const string Pembimbings = nameof(Pembimbings);
     public const string Pembimbing = nameof(Pembimbing);
     public static readonly string ListPembimbing = nameof(ListPembimbing).SplitWords();
+    public static readonly string DetailDataPembimbing = nameof(DetailDataPembimbing).SplitWords();
 
     public const string Nama = nameof(Nama);
     public static readonly string Nip = nameof(Nip).ToUpper();

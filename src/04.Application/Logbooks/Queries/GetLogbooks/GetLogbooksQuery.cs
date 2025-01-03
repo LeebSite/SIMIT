@@ -28,7 +28,6 @@ public class GetLogbooksLogbookMapping : IMapFrom<Logbook, GetLogbooksLogbook>
     public void Mapping(Profile profile)
     {
         profile.CreateMap<Logbook, GetLogbooksLogbook>();
-
     }
 }
 

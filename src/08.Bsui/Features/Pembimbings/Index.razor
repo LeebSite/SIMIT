@@ -11,34 +11,34 @@
 
 
 <MudTable Elevation="0" Hover="true" Breakpoint="Breakpoint.Sm" Bordered="true"
-			  FixedHeader="true" Height="@HeightFor.ScrollableTable"
-			  @ref="_tablePembimbings"
-			  ServerData="@(new Func<TableState, Task<TableData<GetPembimbingsPembimbing>>>(ReloadTablePembimbings))">
-		<ToolBarContent>
-				<MudButton Variant="Variant.Filled" Color="Color.Primary" StartIcon="@Icons.Material.Filled.Add" OnClick="ShowDialogAdd">@CommonDisplayTextFor.Add @DisplayTextFor.Pembimbing</MudButton>		
-			<MudSpacer />
+		  FixedHeader="true" Height="@HeightFor.ScrollableTable"
+		  @ref="_tablePembimbings"
+		  ServerData="@(new Func<TableState, Task<TableData<GetPembimbingsPembimbing>>>(ReloadTablePembimbings))">
+	<ToolBarContent>
+		<MudButton Variant="Variant.Filled" Color="Color.Primary" StartIcon="@Icons.Material.Filled.Add" OnClick="ShowDialogAdd">@CommonDisplayTextFor.Add @DisplayTextFor.Pembimbing</MudButton>
+		<MudSpacer />
 		<MudTextField Variant="Variant.Outlined" Margin="Margin.Dense" Adornment="Adornment.Start" AdornmentIcon="@Icons.Material.Filled.Search" Placeholder="@CommonDisplayTextFor.Search" T="string" ValueChanged="@(async(keyword) => await OnSearch(keyword))"></MudTextField>
-		</ToolBarContent>
-		<HeaderContent>
+	</ToolBarContent>
+	<HeaderContent>
 		<MudTh><MudTableSortLabel SortLabel="@nameof(GetPembimbingsPembimbing.Nama)" T="GetPembimbingsPembimbing">@DisplayTextFor.Nama</MudTableSortLabel></MudTh>
 		<MudTh><MudTableSortLabel SortLabel="@nameof(GetPembimbingsPembimbing.Nip)" T="GetPembimbingsPembimbing">@DisplayTextFor.Nip</MudTableSortLabel></MudTh>
 		<MudTh><MudTableSortLabel SortLabel="@nameof(GetPembimbingsPembimbing.Jabatan)" T="GetPembimbingsPembimbing">@DisplayTextFor.Jabatan</MudTableSortLabel></MudTh>
-		</HeaderContent>
-		<RowTemplate>
-			<MudTd DataLabel="@DisplayTextFor.Nama">
-				<MudLink Href="@RouteFor.Details(context.Id)">
-					<MudHighlighter Text="@context.Nama" HighlightedText="@_searchKeyword" />
-				</MudLink>
-			</MudTd>
-			<MudTd DataLabel="@DisplayTextFor.Nip">
-				<MudHighlighter Text="@context.Nip" HighlightedText="@_searchKeyword" />
-			</MudTd>
-			<MudTd DataLabel="@DisplayTextFor.Jabatan">
-				<MudHighlighter Text="@context.Jabatan.ToString()" HighlightedText="@_searchKeyword" />
-			</MudTd>
-		</RowTemplate>
-		<PagerContent>
-			<MudTablePager />
-		</PagerContent>
-	</MudTable>
+	</HeaderContent>
+	<RowTemplate>
+		<MudTd DataLabel="@DisplayTextFor.Nama">
+			<MudLink Href="@RouteFor.Details(context.Id)">
+				<MudHighlighter Text="@context.Nama" HighlightedText="@_searchKeyword" />
+			</MudLink>
+		</MudTd>
+		<MudTd DataLabel="@DisplayTextFor.Nip">
+			<MudHighlighter Text="@context.Nip" HighlightedText="@_searchKeyword" />
+		</MudTd>
+		<MudTd DataLabel="@DisplayTextFor.Jabatan">
+			<MudHighlighter Text="@context.Jabatan.ToString()" HighlightedText="@_searchKeyword" />
+		</MudTd>
+	</RowTemplate>
+	<PagerContent>
+		<MudTablePager />
+	</PagerContent>
+</MudTable>
 }

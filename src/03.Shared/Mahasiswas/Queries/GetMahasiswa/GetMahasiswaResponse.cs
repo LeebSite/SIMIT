@@ -2,6 +2,13 @@
 using Pertamina.SIMIT.Shared.Common.Responses;
 
 namespace Pertamina.SIMIT.Shared.Mahasiswas.Queries.GetMahasiswa;
+public class LogbookItem
+{
+    public Guid LogbookId { get; set; }
+    public string Aktifitas { get; set; } = default!;
+    public DateTime LogbookDate { get; set; }
+}
+
 public class GetMahasiswaResponse : Response
 {
     public Guid Id { get; set; }
@@ -13,7 +20,10 @@ public class GetMahasiswaResponse : Response
     public string Bagian { get; set; } = default!;
     public Guid PembimbingId { get; set; }
     public string? PembimbingNama { get; set; }
-
+    public string FileName { get; set; } = default!;
+    public string ContentType { get; set; } = default!;
+    public byte[] Content { get; set; } = Array.Empty<byte>();
+    public Guid MahasiswaAttachmentId { get; set; }
     public Guid LaporanId { get; set; }
     public string? LaporanDeskripsi { get; set; }
 
@@ -21,4 +31,13 @@ public class GetMahasiswaResponse : Response
     public string CreatedBy { get; set; } = default!;
     public DateTimeOffset? Modified { get; set; }
     public string? ModifiedBy { get; set; }
+
+    //public IList<GetMahasiswaMahasiswaAttachment> Attachments { get; set; } = new List<GetMahasiswaMahasiswaAttachment>();
+
+    // Tambahkan daftar logbook
+    public List<LogbookItem> Logbooks { get; set; } = new();
+    public Guid LogbookId { get; set; }
+    public DateTime LogbookDate { get; set; } = default!;
+    public string Aktifitas { get; set; } = default!;
 }
+

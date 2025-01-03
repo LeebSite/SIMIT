@@ -1,4 +1,3 @@
-
 using Microsoft.AspNetCore.Components;
 using Microsoft.JSInterop;
 using MudBlazor;
@@ -21,8 +20,12 @@ public partial class Details
 
     private bool _isLoading;
     private ErrorResponse? _error;
+
+    //private string? _errorMessage;
+
     private List<BreadcrumbItem> _breadcrumbItems = new();
     private GetMahasiswaResponse _mahasiswa = default!;
+    private string? _imageData;
 
     protected override async Task OnParametersSetAsync()
     {
@@ -49,8 +52,48 @@ public partial class Details
         _breadcrumbItems = new()
         {
             CommonBreadcrumbFor.Home,
-            BreadcrumbFor.Index
+            CommonBreadcrumbFor.Active(DisplayTextFor.DataMahasiswa)
         };
+    }
+    private void NavigateToLogbook()
+    {
+        _navigationManager.NavigateTo(@RouteFor.Logbooks(MahasiswaId));
+    }
+
+    private void NavigateToLogbookDetails()
+    {
+        _navigationManager.NavigateTo(@RouteFor.LogbooksDetail(MahasiswaId));
+    }
+
+    private async Task DownloadFoto()
+    {
+
+        Console.WriteLine($"MahasiswaId: {_mahasiswa.MahasiswaAttachmentId}");
+
+        _isLoading = true;
+        if (_mahasiswa.MahasiswaAttachmentId == null)
+        {
+            _snackbar.Add("Mahasiswa ini tidak memiliki laporan untuk diunduh.", Severity.Warning);
+            return;
+        }
+        // Panggil API untuk mendapatkan laporan
+        var response = await _mahasiswaAttachmentService.GetMahasiswaAttachmentFileAsync(_mahasiswa.MahasiswaAttachmentId);
+
+        _isLoading = false;
+
+        // Periksa apakah ada error dalam respons API
+        if (response.Error is not null)
+        {
+            _error = response.Error;
+            return;
+        }
+
+        // Jalankan fungsi JavaScript untuk mengunduh file
+        await _jsRuntime.InvokeVoidAsync(
+            JavaScriptIdentifierFor.DownloadFile,
+            response.Result!.FileName,
+            response.Result.ContentType,
+            response.Result.Content);
     }
 
     private async Task Download()
@@ -81,43 +124,6 @@ public partial class Details
             response.Result!.FileName,
             response.Result.ContentType,
             response.Result.Content);
-
-        // Cek apakah mahasiswa memiliki laporan
-        //if (_mahasiswa.LaporanId != null)
-        //{
-        //    _snackbar.Add("Mahasiswa ini tidak memiliki laporan untuk diunduh.", Severity.Warning);
-        //    return;
-        //}
-
-        //try
-        //{
-        //    _isLoading = true;
-
-        //    // Panggil API untuk mendapatkan laporan
-        //    var response = await _laporanService.GetLaporanAsync(_mahasiswa.LaporanId.Value);
-
-        //    _isLoading = false;
-
-        //    // Periksa apakah ada error dalam respons API
-        //    if (response.Error is not null)
-        //    {
-        //        _error = response.Error;
-        //        _snackbar.Add($"Error: {response.Error.Status}", Severity.Error);
-        //        return;
-        //    }
-
-        //    // Jalankan fungsi JavaScript untuk mengunduh file
-        //    await _jsRuntime.InvokeVoidAsync(
-        //        JavaScriptIdentifierFor.DownloadFile,
-        //        response.Result!.FileName,
-        //        response.Result.ContentType,
-        //        response.Result.Content);
-        //}
-        //catch (Exception ex)
-        //{
-        //    _isLoading = false;
-        //    _snackbar.Add($"Terjadi kesalahan saat mengunduh laporan: {ex.Message}", Severity.Error);
-        //}
     }
 
     private async Task GetMahasiswa()
@@ -137,11 +143,14 @@ public partial class Details
             }
 
             _mahasiswa = response.Result ?? new GetMahasiswaResponse(); // Menghindari null
+            _imageData = $"data:image/jpeg;base64,{Convert.ToBase64String(response.Result!.Content)}";
+
         }
         catch (Exception ex)
         {
             _isLoading = false;
         }
+
     }
 
     private async Task ShowDialogEdit()
@@ -195,4 +204,3 @@ public partial class Details
         }
     }
 }
-

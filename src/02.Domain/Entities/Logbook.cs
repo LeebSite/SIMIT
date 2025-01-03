@@ -1,4 +1,5 @@
-﻿using Pertamina.SIMIT.Domain.Abstracts;
+﻿using Pertamina.SIMIT.Base.ValueObjects;
+using Pertamina.SIMIT.Domain.Abstracts;
 
 namespace Pertamina.SIMIT.Domain.Entities;
 public class Logbook : AuditableEntity
@@ -6,6 +7,7 @@ public class Logbook : AuditableEntity
 
     public DateTime LogbookDate { get; set; } = default!;
     public string Aktifitas { get; set; } = default!;
+    public Geolocation? FromGeolocation { get; set; }
 
     // Foreign key ke Mahasiswa
     public Guid MahasiswaId { get; set; }

@@ -13,11 +13,10 @@ using Pertamina.SIMIT.Shared.Audits.Options;
 using Pertamina.SIMIT.Shared.Audits.Queries.GetAudits;
 using Pertamina.SIMIT.Shared.Common.Enums;
 using Pertamina.SIMIT.Shared.Common.Responses;
-using Pertamina.SIMIT.Shared.Services.Authorization.Constants;
 
 namespace Pertamina.SIMIT.Application.Audits.Queries.GetAudits;
 
-[Authorize(Policy = Permissions.SolTem_Audit_Index)]
+[Authorize]
 public class GetAuditsQuery : GetAuditsRequest, IRequest<PaginatedListResponse<GetAuditsAudit>>
 {
 }

@@ -391,7 +391,8 @@ namespace Pertamina.SIMIT.Infrastructure.Persistence.SqlServer.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.OwnsOne("Pertamina.SIMIT.Domain.Entities.Logbook.FromGeolocation#Pertamina.SIMIT.Base.ValueObjects.Geolocation", "FromGeolocation", b1 =>
+
+                    b.OwnsOne("Pertamina.SIMIT.Base.ValueObjects.Geolocation", "FromGeolocation", b1 =>
                         {
                             b1.Property<Guid>("LogbookId")
                                 .HasColumnType("uniqueidentifier");

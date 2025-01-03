@@ -1,45 +1,49 @@
 ﻿@page "/Pembimbings/Details/{PembimbingId:guid}"
-	
+
 
 <BrowserTabTitle>@DisplayTextFor.Pembimbing</BrowserTabTitle>
-<MudBreadcrumbs Items="_breadcrumbItems"></MudBreadcrumbs>
+<MudBreadcrumbs Items="_breadcrumbItems" Separator=">"></MudBreadcrumbs>
+<PageHeader Title="@DisplayTextFor.DetailDataPembimbing" />
 <Loading IsVisible="_isLoading" />
 <ErrorViewer Error="_error" />
 
+<MudToolBar>
+	<MudSpacer />
+	<MudButton Variant="Variant.Filled" Color="Color.Primary" StartIcon="@Icons.Material.Filled.Edit" OnClick="ShowDialogEdit" Class="mr-5">
+		@CommonDisplayTextFor.Edit
+	</MudButton>
+	<MudButton Variant="Variant.Filled" Color="Color.Error" StartIcon="@Icons.Material.Filled.Delete" OnClick="ShowDialogDelete">
+		@CommonDisplayTextFor.Delete
+	</MudButton>
+</MudToolBar>
+
 @if (_pembimbing is not null)
 {
-	<PageHeader Title="@_pembimbing.Nama" />
-
-
-	<TopButtonPanel>
-		<MudMenu Color="Color.Dark" Icon="@Icons.Material.Filled.MoreVert"
-				 AnchorOrigin="Origin.TopRight" TransformOrigin="Origin.TopRight"
-				 Class="ml-2">
-			<MudMenuItem OnClick="ShowDialogDelete">@CommonDisplayTextFor.Delete</MudMenuItem>
-		</MudMenu>
-	</TopButtonPanel>
-
-	<MudTabs Color="Color.Dark" PanelClass="pa-6">
-		<MudTabPanel Text="@CommonDisplayTextFor.GeneralInfo">
-			<TopButtonPanel>
-				<MudButton Variant="Variant.Filled" Color="Color.Secondary" StartIcon="@Icons.Material.Filled.Edit" OnClick="ShowDialogEdit">
-					@CommonDisplayTextFor.Edit
-				</MudButton>
-			</TopButtonPanel>
-			<MudGrid>
-				<MudItem xs="12">
-					<MudField Label="@DisplayTextFor.Nama">@_pembimbing.Nama</MudField>
-				</MudItem>
-				<MudItem xs="12">
-					<MudField Label="@DisplayTextFor.Nip">@_pembimbing.Nip</MudField>
-				</MudItem>
-				<MudItem xs="12">
-					<MudField Label="@DisplayTextFor.Jabatan">@_pembimbing.Jabatan</MudField>
-				</MudItem>
-				<MudItem xs="12" sm="6">
-					<MudField Label="@CommonDisplayTextFor.Created" HelperText="@($"{CommonDisplayTextFor.By} {_pembimbing.CreatedBy}")">@_pembimbing.Created.ToLongDateTimeDisplayText()</MudField>
-				</MudItem>
-			</MudGrid>
-		</MudTabPanel>
-	</MudTabs>
+	<MudCard Outlined="true" Class="pa-4">
+		<MudCardContent>
+			<!-- Bagian Tabel Vertikal -->
+			<table class="mud-table" style="width: 100%; border-collapse: collapse; margin-top: 20px; border: 1px solid #ddd;">
+				<tbody>
+					<tr style="border-bottom: 1px solid #ddd;">
+						<td style="padding: 10px; font-weight: bold; text-align: left; border: 1px solid #ddd; width: 30%;">@DisplayTextFor.Nama</td>
+						<td style="padding: 10px; border: 1px solid #ddd; width: 70%;">@_pembimbing.Nama</td>
+					</tr>
+					<tr style="border-bottom: 1px solid #ddd;">
+						<td style="padding: 10px; font-weight: bold; text-align: left; border: 1px solid #ddd; width: 30%;">@DisplayTextFor.Nip</td>
+						<td style="padding: 10px; border: 1px solid #ddd; width: 70%;">@_pembimbing.Nip</td>
+					</tr>
+					<tr style="border-bottom: 1px solid #ddd;">
+						<td style="padding: 10px; font-weight: bold; text-align: left; border: 1px solid #ddd; width: 30%;">@DisplayTextFor.Jabatan</td>
+						<td style="padding: 10px; border: 1px solid #ddd; width: 70%;">@_pembimbing.Jabatan</td>
+					</tr>
+					<tr style="border-bottom: 1px solid #ddd;">
+						<td style="padding: 10px; font-weight: bold; text-align: left; border: 1px solid #ddd; width: 30%;">@CommonDisplayTextFor.Created</td>
+						<td style="padding: 10px; border: 1px solid #ddd; width: 70%;">
+							@_pembimbing.Created.ToLongDateTimeDisplayText()
+						</td>
+					</tr>
+				</tbody>
+			</table>
+		</MudCardContent>
+	</MudCard>
 }

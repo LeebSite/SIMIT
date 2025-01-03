@@ -4,6 +4,7 @@ using Microsoft.EntityFrameworkCore;
 using Pertamina.SIMIT.Application.Common.Exceptions;
 using Pertamina.SIMIT.Application.Services.Persistence;
 using Pertamina.SIMIT.Application.Services.Storage;
+using Pertamina.SIMIT.Base.ValueObjects;
 using Pertamina.SIMIT.Domain.Entities;
 using Pertamina.SIMIT.Shared.Logbooks.Commands.CreateLogbook;
 
@@ -67,27 +68,28 @@ public class CreateLogbookCommandHandler : IRequestHandler<CreateLogbookCommand,
             LogbookDate = (DateTime)request.LogbookDate,
             Aktifitas = request.Aktifitas,
             MahasiswaId = mahasiswa.Id, // Set the foreign key
+            FromGeolocation = new Geolocation(request.Latitude, request.Longitude, request.Accuracy) // Data geolocation
         };
 
         _context.Logbooks.Add(logbook);
 
-        //using var memoryStream = new MemoryStream();
-        //await request.File.CopyToAsync(memoryStream, cancellationToken);
-        //memoryStream.Position = 0;
+        using var memoryStream = new MemoryStream();
+        await request.File.CopyToAsync(memoryStream, cancellationToken);
+        memoryStream.Position = 0;
 
-        //var file = memoryStream.ToArray();
+        var file = memoryStream.ToArray();
 
-        //var logbookAttachment = new LogbookAttachment
-        //{
-        //    Id = Guid.NewGuid(),
-        //    LogbookId = logbook.Id,
-        //    FileName = request.File.Name,
-        //    FileSize = request.File.Length,
-        //    FileContentType = request.File.ContentType,
-        //    StorageFileId = await _storageService.CreateAsync(file)
-        //};
+        var logbookAttachment = new LogbookAttachment
+        {
+            Id = Guid.NewGuid(),
+            LogbookId = logbook.Id,
+            FileName = request.File.Name,
+            FileSize = request.File.Length,
+            FileContentType = request.File.ContentType,
+            StorageFileId = await _storageService.CreateAsync(file)
+        };
 
-        //await _context.LogbookAttachments.AddAsync(logbookAttachment, cancellationToken);
+        await _context.LogbookAttachments.AddAsync(logbookAttachment, cancellationToken);
         await _context.SaveChangesAsync(this, cancellationToken);
 
         try

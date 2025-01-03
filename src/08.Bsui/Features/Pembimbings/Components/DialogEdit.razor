@@ -6,19 +6,19 @@
 			<FluentValidationValidator />
 			<MudGrid>
 				<MudItem xs="12">
-					<MudTextField Label="@DisplayTextFor.Nama"
+					<MudTextField Label="@DisplayTextFor.Nama" Variant="Variant.Outlined"
 								  Required="true"
 								  Placeholder="@($"{DisplayTextFor.Pembimbing} {DisplayTextFor.Nama}")"
 								  @bind-Value="Request.Nama" />
 				</MudItem>
 				<MudItem xs="12">
-					<MudTextField Label="@DisplayTextFor.Nip"
+					<MudTextField Label="@DisplayTextFor.Nip" Variant="Variant.Outlined"
 								  Required="true"
 								  Placeholder="@($"{DisplayTextFor.Pembimbing} {DisplayTextFor.Nip}")"
 								  @bind-Value="Request.Nip" />
 				</MudItem>
 				<MudItem xs="12">
-					<MudTextField Label="@DisplayTextFor.Jabatan"
+					<MudTextField Label="@DisplayTextFor.Jabatan" Variant="Variant.Outlined"
 								  Required="true"
 								  Placeholder="@($"{DisplayTextFor.Pembimbing} {DisplayTextFor.Jabatan}")"
 								  @bind-Value="Request.Jabatan" />
