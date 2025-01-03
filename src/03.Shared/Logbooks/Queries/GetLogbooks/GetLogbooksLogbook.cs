@@ -11,6 +11,8 @@ public class GetLogbooksLogbook : FileResponse
     public Guid MahasiswaId { get; set; }
 
     public Guid LogbookAttachmentId { get; set; }
+    public bool StatusPagi { get; set; }
+    public bool StatusSiang { get; set; }
 
     // Contoh properti tambahan di GetLogbooksLogbook
     public string? ImageBase64Url => Content != null
