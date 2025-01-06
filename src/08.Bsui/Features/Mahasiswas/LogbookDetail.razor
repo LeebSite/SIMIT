@@ -10,7 +10,9 @@
 				  FixedHeader="true" Height="@HeightFor.ScrollableTable"
 				  @ref="_tableLogbooks"
 				  ServerData="@(new Func<TableState, Task<TableData<GetLogbooksLogbook>>>(ReloadTableLogbooks))">
-
+			<ToolBarContent>
+				<MudTextField Variant="Variant.Outlined" Margin="Margin.Dense" Adornment="Adornment.Start" AdornmentIcon="@Icons.Material.Filled.Search" Placeholder="@CommonDisplayTextFor.Search" T="string" ValueChanged="@(async(keyword) => await OnSearch(keyword))"></MudTextField>
+			</ToolBarContent>
 			<HeaderContent>
 				<MudTh><MudTableSortLabel SortLabel="@nameof(GetLogbooksLogbook.LogbookDate)" T="GetLogbooksLogbook" Class="d-flex justify-center align-center">@DisplayTextFor.Tanggal</MudTableSortLabel></MudTh>
 				<MudTh><MudTableSortLabel SortLabel="@nameof(GetLogbooksLogbook.Aktifitas)" T="GetLogbooksLogbook" Class="d-flex justify-center align-center">@DisplayTextFor.Aktifitas</MudTableSortLabel></MudTh>

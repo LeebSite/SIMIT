@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Pertamina.SIMIT.Infrastructure.Persistence.SqlServer;
 
@@ -11,9 +12,10 @@ using Pertamina.SIMIT.Infrastructure.Persistence.SqlServer;
 namespace Pertamina.SIMIT.Infrastructure.Persistence.SqlServer.Migrations
 {
     [DbContext(typeof(SqlServerSIMITDbContext))]
-    partial class SqlServerSIMITDbContextModelSnapshot : ModelSnapshot
+    [Migration("20250103022831_SqlServerSIMITDbContext_002_MahasiswaSchema")]
+    partial class SqlServerSIMITDbContext_002_MahasiswaSchema
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -208,7 +210,7 @@ namespace Pertamina.SIMIT.Infrastructure.Persistence.SqlServer.Migrations
 
                     b.HasIndex("LogbookId");
 
-                    b.ToTable("LogbookAttachments", (string)null);
+                    b.ToTable("LogbookAttachments");
                 });
 
             modelBuilder.Entity("Pertamina.SIMIT.Domain.Entities.Mahasiswa", b =>
@@ -344,7 +346,7 @@ namespace Pertamina.SIMIT.Infrastructure.Persistence.SqlServer.Migrations
 
             modelBuilder.Entity("Pertamina.SIMIT.Domain.Entities.Audit", b =>
                 {
-                    b.OwnsOne("Pertamina.SIMIT.Domain.Entities.Audit.FromGeolocation#Pertamina.SIMIT.Base.ValueObjects.Geolocation", "FromGeolocation", b1 =>
+                    b.OwnsOne("Pertamina.SIMIT.Base.ValueObjects.Geolocation", "FromGeolocation", b1 =>
                         {
                             b1.Property<Guid>("AuditId")
                                 .HasColumnType("uniqueidentifier");
@@ -390,7 +392,6 @@ namespace Pertamina.SIMIT.Infrastructure.Persistence.SqlServer.Migrations
                         .HasForeignKey("MahasiswaId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
-
 
                     b.OwnsOne("Pertamina.SIMIT.Base.ValueObjects.Geolocation", "FromGeolocation", b1 =>
                         {

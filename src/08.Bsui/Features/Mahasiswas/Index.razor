@@ -2,7 +2,8 @@
 
 @using Pertamina.SIMIT.Shared.Mahasiswas.Queries.GetMahasiswas
 @using static Pertamina.SIMIT.Shared.Mahasiswas.Constants.ApiEndpoint.V1
-
+@using static Pertamina.SIMIT.Shared.Logbooks.Constants.ApiEndPoint
+@using Pertamina.SIMIT.Shared.Logbooks.Queries.GetLogbooks
 
 <BrowserTabTitle>@DisplayTextFor.DataMahasiswa</BrowserTabTitle>
 <MudBreadcrumbs Items="_breadcrumbItems" Separator=">"></MudBreadcrumbs>
@@ -23,14 +24,15 @@
 	</ToolBarContent>
 
 	<HeaderContent>
-		<MudTh><MudTableSortLabel SortLabel="@nameof(GetMahasiswasMahasiswa.Nama)" T="GetMahasiswasMahasiswa" Class="d-flex justify-center align-center">@DisplayTextFor.Nama</MudTableSortLabel></MudTh>
-		<MudTh><MudTableSortLabel SortLabel="@nameof(GetMahasiswasMahasiswa.Nim)" T="GetMahasiswasMahasiswa" Class="d-flex justify-center align-center">@DisplayTextFor.Nim</MudTableSortLabel></MudTh>
-		<MudTh><MudTableSortLabel SortLabel="@nameof(GetMahasiswasMahasiswa.Kampus)" T="GetMahasiswasMahasiswa" Class="d-flex justify-center align-center">@DisplayTextFor.Kampus</MudTableSortLabel></MudTh>
-		<MudTh><MudTableSortLabel SortLabel="@nameof(GetMahasiswasMahasiswa.MulaiMagang)" T="GetMahasiswasMahasiswa" Class="d-flex justify-center align-center">@DisplayTextFor.MulaiMagang</MudTableSortLabel></MudTh>
-		<MudTh><MudTableSortLabel SortLabel="@nameof(GetMahasiswasMahasiswa.SelesaiMagang)" T="GetMahasiswasMahasiswa" Class="d-flex justify-center align-center">@DisplayTextFor.SelesaiMagang</MudTableSortLabel></MudTh>
-		<MudTh><MudTableSortLabel SortLabel="@nameof(GetMahasiswasMahasiswa.Bagian)" T="GetMahasiswasMahasiswa" Class="d-flex justify-center align-center">@DisplayTextFor.Bagian</MudTableSortLabel></MudTh>
-		<MudTh><MudTableSortLabel SortLabel="@nameof(GetMahasiswasMahasiswa.PembimbingNama)" T="GetMahasiswasMahasiswa" Class="d-flex justify-center align-center">@DisplayTextFor.Pembimbing</MudTableSortLabel></MudTh>
-		<MudTh><MudTableSortLabel SortLabel="@nameof(GetMahasiswasMahasiswa.LaporanId)" T="GetMahasiswasMahasiswa" Class="d-flex justify-center align-center">@DisplayTextFor.StatusDokumen</MudTableSortLabel></MudTh>
+		<MudTh><MudTableSortLabel SortLabel="@nameof(GetMahasiswasMahasiswa.Nama)" T="GetMahasiswasMahasiswa">@DisplayTextFor.Nama</MudTableSortLabel></MudTh>
+		<MudTh><MudTableSortLabel SortLabel="@nameof(GetMahasiswasMahasiswa.Nim)" T="GetMahasiswasMahasiswa">@DisplayTextFor.Nim</MudTableSortLabel></MudTh>
+		<MudTh><MudTableSortLabel SortLabel="@nameof(GetMahasiswasMahasiswa.Kampus)" T="GetMahasiswasMahasiswa">@DisplayTextFor.Kampus</MudTableSortLabel></MudTh>
+		<MudTh><MudTableSortLabel SortLabel="@nameof(GetMahasiswasMahasiswa.MulaiMagang)" T="GetMahasiswasMahasiswa">@DisplayTextFor.MulaiMagang</MudTableSortLabel></MudTh>
+		<MudTh><MudTableSortLabel SortLabel="@nameof(GetMahasiswasMahasiswa.SelesaiMagang)" T="GetMahasiswasMahasiswa">@DisplayTextFor.SelesaiMagang</MudTableSortLabel></MudTh>
+		<MudTh><MudTableSortLabel SortLabel="@nameof(GetMahasiswasMahasiswa.Bagian)" T="GetMahasiswasMahasiswa">@DisplayTextFor.Bagian</MudTableSortLabel></MudTh>
+		<MudTh><MudTableSortLabel SortLabel="@nameof(GetMahasiswasMahasiswa.PembimbingNama)" T="GetMahasiswasMahasiswa">@DisplayTextFor.Pembimbing</MudTableSortLabel></MudTh>
+		<MudTh><MudTableSortLabel SortLabel="@nameof(GetMahasiswasMahasiswa.LaporanId)" T="GetMahasiswasMahasiswa">@DisplayTextFor.StatusDokumen</MudTableSortLabel></MudTh>
+		
 	</HeaderContent>
 	<RowTemplate>
 		<MudTd DataLabel="@DisplayTextFor.Nama">
@@ -67,6 +69,7 @@
 				<MudIcon Icon="@Icons.Material.Filled.Cancel" Color="Color.Error" />
 			}
 		</MudTd>
+
 	</RowTemplate>
 	<PagerContent>
 		<MudTablePager />

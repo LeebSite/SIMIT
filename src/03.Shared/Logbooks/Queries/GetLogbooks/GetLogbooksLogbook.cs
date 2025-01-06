@@ -21,7 +21,6 @@ public class GetLogbooksLogbook : FileResponse
 
     public string? MahasiswaNama { get; set; }
     public string? MahasiswaNim { get; set; }
-
     public DateTimeOffset Created { get; set; }
     public string CreatedBy { get; set; } = default!;
 }
