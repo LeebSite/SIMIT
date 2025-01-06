@@ -208,7 +208,7 @@ namespace Pertamina.SIMIT.Infrastructure.Persistence.SqlServer.Migrations
 
                     b.HasIndex("LogbookId");
 
-                    b.ToTable("LogbookAttachments", (string)null);
+                    b.ToTable("LogbookAttachments");
                 });
 
             modelBuilder.Entity("Pertamina.SIMIT.Domain.Entities.Mahasiswa", b =>
@@ -344,7 +344,7 @@ namespace Pertamina.SIMIT.Infrastructure.Persistence.SqlServer.Migrations
 
             modelBuilder.Entity("Pertamina.SIMIT.Domain.Entities.Audit", b =>
                 {
-                    b.OwnsOne("Pertamina.SIMIT.Domain.Entities.Audit.FromGeolocation#Pertamina.SIMIT.Base.ValueObjects.Geolocation", "FromGeolocation", b1 =>
+                    b.OwnsOne("Pertamina.SIMIT.Base.ValueObjects.Geolocation", "FromGeolocation", b1 =>
                         {
                             b1.Property<Guid>("AuditId")
                                 .HasColumnType("uniqueidentifier");
@@ -390,7 +390,6 @@ namespace Pertamina.SIMIT.Infrastructure.Persistence.SqlServer.Migrations
                         .HasForeignKey("MahasiswaId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
-
 
                     b.OwnsOne("Pertamina.SIMIT.Base.ValueObjects.Geolocation", "FromGeolocation", b1 =>
                         {

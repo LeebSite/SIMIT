@@ -13,71 +13,72 @@
 <PageHeader Title="@DisplayTextFor.RekapLogbookMahasiswa" />
 <ErrorViewer Error="_error" />
 
+<MudTable Elevation="0" Hover="true" Breakpoint="Breakpoint.Sm"
+		  FixedHeader="true" Height="@HeightFor.ScrollableTable" Bordered="true"
+		  @ref="_tableLogbooks"
+		  ServerData="@(new Func<TableState, Task<TableData<GetLogbooksLogbook>>>(ReloadTableLogbooks))">
+	<ToolBarContent>
+		<MudText Typo="Typo.body2" Class="ml-2" Style="display: flex; align-items: center;">
+			<MudIcon Icon="@Icons.Material.Filled.CalendarToday" Class="mr-1" />
+			@DateTime.Now.ToString("dddd, dd MMMM yyyy")
+		</MudText>
+
+		<MudSpacer />
+
+		<MudTextField Variant="Variant.Outlined" Margin="Margin.Dense" Adornment="Adornment.Start" AdornmentIcon="@Icons.Material.Filled.Search" Placeholder="@CommonDisplayTextFor.Search" T="string" ValueChanged="@(async(keyword) => await OnSearch(keyword))"></MudTextField>
+	</ToolBarContent>
+	<HeaderContent>
+		<MudTh Align="Center" Style="text-align: center;"><MudTableSortLabel SortLabel="@nameof(GetLogbooksLogbook.MahasiswaId)" T="GetLogbooksLogbook">@DisplayTextFor.NoBadgeMahasiswa</MudTableSortLabel></MudTh>
+		<MudTh Align="Center" Style="text-align: center;"><MudTableSortLabel SortLabel="@nameof(GetLogbooksLogbook.MahasiswaNama)" T="GetLogbooksLogbook">@DisplayTextFor.NamaMahasiswa</MudTableSortLabel></MudTh>
+		<MudTh Align="Center" Style="text-align: center;"><MudTableSortLabel SortLabel="@nameof(GetLogbooksLogbook.LogbookDate)" T="GetLogbooksLogbook">@DisplayTextFor.Waktu</MudTableSortLabel></MudTh>
+		<MudTh Align="Center" Style="text-align: center;"><MudTableSortLabel SortLabel="@nameof(GetLogbooksLogbook.Aktifitas)" T="GetLogbooksLogbook">@DisplayTextFor.Aktifitas</MudTableSortLabel></MudTh>
+		<MudTh Align="Center" Style="text-align: center;"><MudTableSortLabel SortLabel="@nameof(GetLogbooksLogbook.LogbookDate)" T="GetLogbooksLogbook">@DisplayTextFor.StatusLogbookPagi</MudTableSortLabel></MudTh>
+		<MudTh Align="Center" Style="text-align: center;"><MudTableSortLabel SortLabel="@nameof(GetLogbooksLogbook.LogbookDate)" T="GetLogbooksLogbook">@DisplayTextFor.StatusLogbookSiang</MudTableSortLabel></MudTh>
+	</HeaderContent>
+	<RowTemplate>
+		<MudTd DataLabel="@DisplayTextFor.NoBadgeMahasiswa" Style="text-align: center;">
+			<MudHighlighter Text="@context.MahasiswaNim.ToString()" HighlightedText="@_searchKeyword" />
+		</MudTd>
+		<MudTd DataLabel="@DisplayTextFor.NamaMahasiswa" Style="text-align: center;">
+			<MudHighlighter Text="@context.MahasiswaNama.ToString()" HighlightedText="@_searchKeyword" />
+		</MudTd>
+		<MudTd DataLabel="@DisplayTextFor.Logbook" Style="text-align: center;">
+			<MudHighlighter Text="@context.LogbookDate.ToString()" HighlightedText="@_searchKeyword" />
+		</MudTd>
+		<MudTd DataLabel="@DisplayTextFor.Aktifitas" Style="text-align: center;">
+			<MudHighlighter Text="@context.Aktifitas.ToString()" HighlightedText="@_searchKeyword" />
+		</MudTd>
+		<MudTd DataLabel="@DisplayTextFor.StatusLogbookPagi" Style="text-align: center;">
+			@if (context.StatusPagi)
+			{
+				<MudIcon Icon="@Icons.Material.Filled.CheckCircle" Color="Color.Success" />
+			}
+			else
+			{
+				<MudIcon Icon="@Icons.Material.Filled.Cancel" Color="Color.Error" />
+			}
+		</MudTd>
+
+		<MudTd DataLabel="@DisplayTextFor.StatusLogbookSiang" Style="text-align: center;">
+			@if (context.StatusSiang)
+			{
+				<MudIcon Icon="@Icons.Material.Filled.CheckCircle" Color="Color.Success" />
+			}
+			else
+			{
+				<MudIcon Icon="@Icons.Material.Filled.Cancel" Color="Color.Error" />
+			}
+		</MudTd>
+
+	</RowTemplate>
+	<PagerContent>
+		<MudTablePager />
+	</PagerContent>
+
+</MudTable>
+
 <AuthorizeView Context="userContext">
 	<Authorized>
-		<MudTable Elevation="0" Hover="true" Breakpoint="Breakpoint.Sm"
-				  FixedHeader="true" Height="@HeightFor.ScrollableTable" Bordered="true"
-				  @ref="_tableLogbooks"
-				  ServerData="@(new Func<TableState, Task<TableData<GetLogbooksLogbook>>>(ReloadTableLogbooks))">
-			<ToolBarContent>
-				<MudText Typo="Typo.body2" Class="ml-2" Style="display: flex; align-items: center;">
-					<MudIcon Icon="@Icons.Material.Filled.CalendarToday" Class="mr-1" />
-					@DateTime.Now.ToString("dddd, dd MMMM yyyy")
-				</MudText>
-
-				<MudSpacer />
-
-				<MudTextField Variant="Variant.Outlined" Margin="Margin.Dense" Adornment="Adornment.Start" AdornmentIcon="@Icons.Material.Filled.Search" Placeholder="@CommonDisplayTextFor.Search" T="string" ValueChanged="@(async(keyword) => await OnSearch(keyword))"></MudTextField>
-			</ToolBarContent>
-			<HeaderContent>
-				<MudTh Align="Center" Style="text-align: center;"><MudTableSortLabel SortLabel="@nameof(GetLogbooksLogbook.MahasiswaId)" T="GetLogbooksLogbook">@DisplayTextFor.NoBadgeMahasiswa</MudTableSortLabel></MudTh>
-				<MudTh Align="Center" Style="text-align: center;"><MudTableSortLabel SortLabel="@nameof(GetLogbooksLogbook.MahasiswaNama)" T="GetLogbooksLogbook">@DisplayTextFor.NamaMahasiswa</MudTableSortLabel></MudTh>
-				<MudTh Align="Center" Style="text-align: center;"><MudTableSortLabel SortLabel="@nameof(GetLogbooksLogbook.LogbookDate)" T="GetLogbooksLogbook">@DisplayTextFor.Waktu</MudTableSortLabel></MudTh>
-				<MudTh Align="Center" Style="text-align: center;"><MudTableSortLabel SortLabel="@nameof(GetLogbooksLogbook.Aktifitas)" T="GetLogbooksLogbook">@DisplayTextFor.Aktifitas</MudTableSortLabel></MudTh>
-				<MudTh Align="Center" Style="text-align: center;"><MudTableSortLabel SortLabel="@nameof(GetLogbooksLogbook.LogbookDate)" T="GetLogbooksLogbook">@DisplayTextFor.StatusLogbookPagi</MudTableSortLabel></MudTh>
-				<MudTh Align="Center" Style="text-align: center;"><MudTableSortLabel SortLabel="@nameof(GetLogbooksLogbook.LogbookDate)" T="GetLogbooksLogbook">@DisplayTextFor.StatusLogbookSiang</MudTableSortLabel></MudTh>
-			</HeaderContent>
-			<RowTemplate>
-				<MudTd DataLabel="@DisplayTextFor.NoBadgeMahasiswa" Style="text-align: center;">
-					<MudHighlighter Text="@context.MahasiswaNim.ToString()" HighlightedText="@_searchKeyword" />
-				</MudTd>
-				<MudTd DataLabel="@DisplayTextFor.NamaMahasiswa" Style="text-align: center;">
-					<MudHighlighter Text="@context.MahasiswaNama.ToString()" HighlightedText="@_searchKeyword" />
-				</MudTd>
-				<MudTd DataLabel="@DisplayTextFor.Logbook" Style="text-align: center;">
-					<MudHighlighter Text="@context.LogbookDate.ToString()" HighlightedText="@_searchKeyword" />
-				</MudTd>
-				<MudTd DataLabel="@DisplayTextFor.Aktifitas" Style="text-align: center;">
-					<MudHighlighter Text="@context.Aktifitas.ToString()" HighlightedText="@_searchKeyword" />
-				</MudTd>
-				<MudTd DataLabel="@DisplayTextFor.StatusLogbookPagi" Style="text-align: center;">
-					@if (context.StatusPagi)
-					{
-						<MudIcon Icon="@Icons.Material.Filled.CheckCircle" Color="Color.Success" />
-					}
-					else
-					{
-						<MudIcon Icon="@Icons.Material.Filled.Cancel" Color="Color.Error" />
-					}
-				</MudTd>
-
-				<MudTd DataLabel="@DisplayTextFor.StatusLogbookSiang" Style="text-align: center;">
-					@if (context.StatusSiang)
-					{
-						<MudIcon Icon="@Icons.Material.Filled.CheckCircle" Color="Color.Success" />
-					}
-					else
-					{
-						<MudIcon Icon="@Icons.Material.Filled.Cancel" Color="Color.Error" />
-					}
-				</MudTd>
-
-			</RowTemplate>
-			<PagerContent>
-				<MudTablePager />
-			</PagerContent>
-
-		</MudTable>
 
 	</Authorized>
 
