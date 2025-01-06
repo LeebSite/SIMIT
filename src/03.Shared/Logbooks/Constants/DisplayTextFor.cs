@@ -12,6 +12,7 @@ public class DisplayTextFor
     public static readonly string StatusLogbookSiang = nameof(StatusLogbookSiang).SplitWords();
     public static readonly string NamaMahasiswa = nameof(NamaMahasiswa).SplitWords();
     public static readonly string RekapLogbookMahasiswa = nameof(RekapLogbookMahasiswa).SplitWords();
+    public static readonly string Waktu = nameof(Waktu).SplitWords();
     public static readonly string StartKamera = nameof(StartKamera).SplitWords();
     public static readonly string Ulangi = nameof(Ulangi).SplitWords();
     public static readonly string AmbilFoto = nameof(AmbilFoto).SplitWords();

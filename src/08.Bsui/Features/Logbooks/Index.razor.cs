@@ -5,9 +5,6 @@ using Microsoft.JSInterop;
 using MudBlazor;
 using Pertamina.SIMIT.Bsui.Common.Constants;
 using Pertamina.SIMIT.Bsui.Common.Extensions;
-using Pertamina.SIMIT.Bsui.Features.Logbooks.Components;
-using Pertamina.SIMIT.Bsui.Features.Logbooks.Constants;
-using Pertamina.SIMIT.Shared.Common.Constants;
 using Pertamina.SIMIT.Shared.Common.Responses;
 using Pertamina.SIMIT.Shared.Logbooks.Commands.CreateLogbook;
 using Pertamina.SIMIT.Shared.Logbooks.Constants;
@@ -28,7 +25,6 @@ public partial class Index
     private ErrorResponse? _error;
     private readonly CreateLogbookModel _model = new();
     private bool _isLoading;
-    private bool IsAuthorized => true; // Ubah logika otorisasi untuk admin
     private bool IsMorningSession => DateTime.Now.Hour is >= 7 and <= 12;
     private bool IsAfternoonSession => DateTime.Now.Hour is >= 13 and <= 16;
     private readonly List<GetLogbooksLogbook> _logbooks = new();
@@ -37,6 +33,7 @@ public partial class Index
     private string? _capturedPhoto; // Base64 foto
     private bool _isSubmitting = false;
     private bool _isCameraActive = false;
+
     public CreateLogbookRequest Request { get; set; } = default!;
 
     //private List<UpdateMahasiswasMahasiswa> _editedMahasiswas = new();
@@ -185,26 +182,26 @@ public partial class Index
         }
     }
 
-    private async Task ShowDialogAdd()
-    {
-        var request = new CreateLogbookRequest();
+    //private async Task ShowDialogAdd()
+    //{
+    //    var request = new CreateLogbookRequest();
 
-        var parameters = new DialogParameters
-        {
-            { nameof(DialogAdd.Request), request }
-        };
+    //    var parameters = new DialogParameters
+    //    {
+    //        { nameof(DialogAdd.Request), request }
+    //    };
 
-        var dialog = _dialogService.Show<DialogAdd>($"{CommonDisplayTextFor.Add} {DisplayTextFor.Logbook}", parameters);
-        var result = await dialog.Result;
+    //    var dialog = _dialogService.Show<DialogAdd>($"{CommonDisplayTextFor.Add} {DisplayTextFor.Logbook}", parameters);
+    //    var result = await dialog.Result;
 
-        if (!result.Cancelled)
-        {
-            var id = (Guid)result.Data;
+    //    if (!result.Cancelled)
+    //    {
+    //        var id = (Guid)result.Data;
 
-            _snackbar.AddSuccess(SuccessMessageFor.Action(DisplayTextFor.Logbook, CommonDisplayTextFor.Created));
-            _navigationManager.NavigateTo(RouteFor.Index, forceLoad: true);
-        }
-    }
+    //        _snackbar.AddSuccess(SuccessMessageFor.Action(DisplayTextFor.Logbook, CommonDisplayTextFor.Created));
+    //        _navigationManager.NavigateTo(RouteFor.Index, forceLoad: true);
+    //    }
+    //}
     private async Task OnValidSubmit()
     {
         _error = null;
@@ -274,19 +271,6 @@ public partial class Index
     {
         _snackbar.AddErrors(editContext.GetValidationMessages());
     }
-    //private bool IsLogbookSubmitted(string mahasiswaNim, string period)
-    //{
-    //    var (pagiStart, pagiEnd) = (new TimeSpan(7, 0, 0), new TimeSpan(12, 0, 0));
-    //    var (siangStart, siangEnd) = (new TimeSpan(12, 1, 0), new TimeSpan(16, 0, 0));
-
-    //    return _logbooks.Any(log =>
-    //        log.MahasiswaNim == mahasiswaNim &&
-    //        log.LogbookDate.Date == DateTime.Today &&
-    //        (
-    //            (period == "Pagi" && log.LogbookDate.TimeOfDay >= pagiStart && log.LogbookDate.TimeOfDay <= pagiEnd) ||
-    //            (period == "Siang" && log.LogbookDate.TimeOfDay >= siangStart && log.LogbookDate.TimeOfDay <= siangEnd)
-    //        ));
-    //}
 
 }
 
