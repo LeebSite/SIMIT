@@ -22,6 +22,11 @@
 										  Required="true"
 										  @bind-Value="Request.Jabatan" />
 						</MudItem>
+						<MudItem xs="12">
+							<MudTextField Label="@DisplayTextFor.Email" Variant="Variant.Outlined"
+										  Required="true"
+										  @bind-Value="Request.Email" />
+						</MudItem>
 					</MudGrid>
 					<BottomButtonPanel>
 						<MudButton Variant="Variant.Filled" Color="Color.Default" OnClick="Cancel">@CommonDisplayTextFor.Cancel</MudButton>

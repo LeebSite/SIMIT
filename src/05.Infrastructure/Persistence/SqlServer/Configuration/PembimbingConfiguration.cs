@@ -16,5 +16,6 @@ public class PembimbingConfiguration : IEntityTypeConfiguration<Pembimbing>
         builder.Property(e => e.Nama).HasColumnType(CommonColumnTypes.Nvarchar(MaximumLengthFor.Nama));
         builder.Property(e => e.Nip).HasColumnType(CommonColumnTypes.Nvarchar(MaximumLengthFor.Nip));
         builder.Property(e => e.Jabatan).HasColumnType(CommonColumnTypes.Nvarchar(MaximumLengthFor.Jabatan));
+        builder.Property(e => e.Email).HasColumnType(CommonColumnTypes.Nvarchar(MaximumLengthFor.Email));
     }
 }

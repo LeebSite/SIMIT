@@ -17,6 +17,9 @@ public class UpdatePembimbingsPembimbing
 
     [OpenApiContentType(ContentTypes.TextPlain)]
     public string Jabatan { get; set; } = default!;
+
+    [OpenApiContentType(ContentTypes.TextPlain)]
+    public string Email { get; set; } = default!;
 }
 
 public class UpdatePembimbingsPembimbingValidator : AbstractValidator<UpdatePembimbingsPembimbing>
@@ -37,5 +40,9 @@ public class UpdatePembimbingsPembimbingValidator : AbstractValidator<UpdatePemb
         RuleFor(v => v.Jabatan)
             .NotEmpty()
             .MaximumLength(MaximumLengthFor.Jabatan);
+
+        RuleFor(v => v.Email)
+           .NotEmpty()
+           .MaximumLength(MaximumLengthFor.Email);
     }
 }

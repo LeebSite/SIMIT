@@ -13,4 +13,5 @@ public class DisplayTextFor
     public const string Nama = nameof(Nama);
     public static readonly string Nip = nameof(Nip).ToUpper();
     public const string Jabatan = nameof(Jabatan);
+    public const string Email = nameof(Email);
 }

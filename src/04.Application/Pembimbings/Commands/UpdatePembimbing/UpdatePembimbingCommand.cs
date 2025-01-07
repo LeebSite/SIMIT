@@ -53,6 +53,7 @@ public class UpdatePembimbingCommandHandler : IRequestHandler<UpdatePembimbingCo
         pembimbing.Nama = request.Nama;
         pembimbing.Nip = request.Nip;
         pembimbing.Jabatan = request.Jabatan;
+        pembimbing.Email = request.Email;
 
         await _context.SaveChangesAsync(this, cancellationToken);
 

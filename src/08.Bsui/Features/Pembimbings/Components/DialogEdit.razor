@@ -23,6 +23,12 @@
 								  Placeholder="@($"{DisplayTextFor.Pembimbing} {DisplayTextFor.Jabatan}")"
 								  @bind-Value="Request.Jabatan" />
 				</MudItem>
+				<MudItem xs="12">
+					<MudTextField Label="@DisplayTextFor.Email" Variant="Variant.Outlined"
+								  Required="true"
+								  Placeholder="@($"{DisplayTextFor.Pembimbing} {DisplayTextFor.Email}")"
+								  @bind-Value="Request.Email" />
+				</MudItem>
 			</MudGrid>
 			<BottomButtonPanel>
 				<MudButton Variant="Variant.Filled" Color="Color.Default" OnClick="Cancel">@CommonDisplayTextFor.Cancel</MudButton>

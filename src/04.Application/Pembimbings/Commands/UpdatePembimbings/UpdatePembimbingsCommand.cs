@@ -44,6 +44,7 @@ public class UpdatePembimbingsCommandHandler : IRequestHandler<UpdatePembimbings
             pembimbing.Nama = updatedPembimbing.Nama;
             pembimbing.Nip = updatedPembimbing.Nip;
             pembimbing.Jabatan = updatedPembimbing.Jabatan;
+            pembimbing.Email = updatedPembimbing.Email;
 
             response.PembimbingsUpdated++;
         }

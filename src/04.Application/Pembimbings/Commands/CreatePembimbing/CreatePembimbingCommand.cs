@@ -40,6 +40,7 @@ public class CreatePembimbingCommandHandler : IRequestHandler<CreatePembimbingCo
             Nama = request.Nama,
             Nip = request.Nip,
             Jabatan = request.Jabatan,
+            Email = request.Email,
         };
 
         _context.Pembimbings.Add(pembimbing);
