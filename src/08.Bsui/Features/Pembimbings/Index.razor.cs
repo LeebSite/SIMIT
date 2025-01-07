@@ -100,6 +100,7 @@ public partial class Index
             Nama = pembimbing.Nama,
             Nip = pembimbing.Nip,
             Jabatan = pembimbing.Jabatan,
+            Email = pembimbing.Email,
         });
 
         StateHasChanged();
@@ -114,6 +115,7 @@ public partial class Index
             Nama = pembimbing.Nama,
             Nip = pembimbing.Nip,
             Jabatan = pembimbing.Jabatan,
+            Email = pembimbing.Email,
         };
     }
 
@@ -123,6 +125,7 @@ public partial class Index
         pembimbing.Nama = _pembimbingBeforeEdited.Nama;
         pembimbing.Nip = _pembimbingBeforeEdited.Nip;
         pembimbing.Jabatan = _pembimbingBeforeEdited.Jabatan;
+        pembimbing.Email = _pembimbingBeforeEdited.Email;
     }
 
     private async Task UpdateEditedPembimbings()

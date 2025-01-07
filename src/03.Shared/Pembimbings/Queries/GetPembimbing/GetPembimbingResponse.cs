@@ -8,6 +8,7 @@ public class GetPembimbingResponse : Response
     public string Nama { get; set; } = default!;
     public string Nip { get; set; } = default!;
     public string Jabatan { get; set; } = default!;
+    public string Email { get; set; } = default!;
 
     public DateTimeOffset Created { get; set; }
     public string CreatedBy { get; set; } = default!;

@@ -82,7 +82,8 @@ public partial class Details
             PembimbingId = _pembimbing.Id,
             Nama = _pembimbing.Nama,
             Nip = _pembimbing.Nip,
-            Jabatan = _pembimbing.Jabatan
+            Jabatan = _pembimbing.Jabatan,
+            Email = _pembimbing.Email
         };
 
         var parameters = new DialogParameters

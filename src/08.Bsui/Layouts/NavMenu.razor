@@ -1,6 +1,4 @@
-﻿<AuthorizeView>
-	<Authorized>
-		<MudNavLink Icon="@Icons.Material.Filled.Home" Match="NavLinkMatch.All" Href="@CommonRouteFor.Index">@CommonDisplayTextFor.Home</MudNavLink>
+﻿		<MudNavLink Icon="@Icons.Material.Filled.Home" Match="NavLinkMatch.All" Href="@CommonRouteFor.Index">@CommonDisplayTextFor.Home</MudNavLink>
 
 		<MudNavLink Icon="@Icons.Material.Filled.Dashboard" Href="@Features.Dashboards.Constants.RouteFor.Index">@Pertamina.SIMIT.Shared.Mahasiswas.Constants.DisplayTextFor.Dashboard</MudNavLink>
 
@@ -17,17 +15,9 @@
 		<MudNavLink Icon="@Icons.Material.Filled.EventNote" Href="@Features.Audits.Constants.RouteFor.Index">@SIMIT.Shared.Audits.Constants.DisplayTextFor.Audits</MudNavLink>
 		<MudNavLink Icon="@Icons.Material.Filled.Countertops" Href="@CommonRouteFor.About">@CommonDisplayTextFor.About</MudNavLink>
 
-	</Authorized>
 
-	<NotAuthorized>
 		<MudNavMenu>
-			<MudNavLink Icon="@Icons.Material.Filled.School" Href="@Features.Mahasiswas.Constants.RouteFor.Index">
-				@Pertamina.SIMIT.Shared.Mahasiswas.Constants.DisplayTextFor.Mahasiswa
-			</MudNavLink>
-			<MudNavLink Icon="@Icons.Material.Filled.AdminPanelSettings" Href="@Features.Pembimbings.Constants.RouteFor.Index">
-				@Pertamina.SIMIT.Shared.Pembimbings.Constants.DisplayTextFor.Pembimbing
-			</MudNavLink>
-			<MudNavLink Icon="@Icons.Material.Filled.Home" Match="NavLinkMatch.All" Href="@CommonRouteFor.Index">@CommonDisplayTextFor.Home</MudNavLink>
+			
 
 			<MudNavGroup Icon="@Icons.Material.Filled.Book"
 						 ExpandIcon="@Icons.Material.Filled.ExpandMore"
@@ -38,7 +28,6 @@
 				<MudNavLink Icon="@Icons.Material.Outlined.Folder" Href="@Features.Logbooks.Constants.RouteFor.Index">@Pertamina.SIMIT.Shared.Logbooks.Constants.DisplayTextFor.LogbookHarianMahasiswa</MudNavLink>
 			</MudNavGroup>
 		</MudNavMenu>
-	</NotAuthorized>
-</AuthorizeView>
+
 
 

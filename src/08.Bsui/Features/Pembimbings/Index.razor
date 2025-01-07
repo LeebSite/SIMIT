@@ -23,6 +23,7 @@
 		<MudTh><MudTableSortLabel SortLabel="@nameof(GetPembimbingsPembimbing.Nama)" T="GetPembimbingsPembimbing">@DisplayTextFor.Nama</MudTableSortLabel></MudTh>
 		<MudTh><MudTableSortLabel SortLabel="@nameof(GetPembimbingsPembimbing.Nip)" T="GetPembimbingsPembimbing">@DisplayTextFor.Nip</MudTableSortLabel></MudTh>
 		<MudTh><MudTableSortLabel SortLabel="@nameof(GetPembimbingsPembimbing.Jabatan)" T="GetPembimbingsPembimbing">@DisplayTextFor.Jabatan</MudTableSortLabel></MudTh>
+		<MudTh><MudTableSortLabel SortLabel="@nameof(GetPembimbingsPembimbing.Email)" T="GetPembimbingsPembimbing">@DisplayTextFor.Email</MudTableSortLabel></MudTh>
 	</HeaderContent>
 	<RowTemplate>
 		<MudTd DataLabel="@DisplayTextFor.Nama">
@@ -35,6 +36,9 @@
 		</MudTd>
 		<MudTd DataLabel="@DisplayTextFor.Jabatan">
 			<MudHighlighter Text="@context.Jabatan.ToString()" HighlightedText="@_searchKeyword" />
+		</MudTd>
+		<MudTd DataLabel="@DisplayTextFor.Email">
+			<MudHighlighter Text="@context.Email.ToString()" HighlightedText="@_searchKeyword" />
 		</MudTd>
 	</RowTemplate>
 	<PagerContent>
