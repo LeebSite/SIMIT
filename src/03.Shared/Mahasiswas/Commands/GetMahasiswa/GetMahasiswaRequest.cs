@@ -44,11 +44,11 @@ public class GetMahasiswaRequestValidator : AbstractValidator<GetMahasiswaReques
             .IsInEnum();
 
         RuleFor(v => v.Kampus)
-          .NotEmpty()
+          //.NotEmpty()
           .MaximumLength(MaximumLengthFor.Kampus);
 
         RuleFor(v => v.Bagian)
-          .NotEmpty()
+          //.NotEmpty()
           .MaximumLength(MaximumLengthFor.Bagian);
     }
 }
