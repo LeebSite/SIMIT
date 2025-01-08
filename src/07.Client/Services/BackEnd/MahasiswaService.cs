@@ -4,6 +4,7 @@ using Pertamina.SIMIT.Client.Services.UserInfo;
 using Pertamina.SIMIT.Shared.Common.Requests;
 using Pertamina.SIMIT.Shared.Common.Responses;
 using Pertamina.SIMIT.Shared.Mahasiswas.Commands.CreateMahasiswa;
+using Pertamina.SIMIT.Shared.Mahasiswas.Commands.GetMahasiswa;
 using Pertamina.SIMIT.Shared.Mahasiswas.Commands.UpdateMahasiswa;
 using Pertamina.SIMIT.Shared.Mahasiswas.Commands.UpdateMahasiswas;
 using Pertamina.SIMIT.Shared.Mahasiswas.Queries.GetMahasiswa;
@@ -34,7 +35,7 @@ public class MahasiswaService
         return restResponse.ToResponseResult<CreateMahasiswaResponse>();
     }
 
-    public async Task<ResponseResult<PaginatedListResponse<GetMahasiswasMahasiswa>>> GetMahasiswasAsync(PaginatedListRequest request)
+    public async Task<ResponseResult<PaginatedListResponse<GetMahasiswasMahasiswa>>> GetMahasiswasAsync(GetMahasiswaRequest request)
     {
         var restRequest = new RestRequest(string.Empty, Method.Get);
         restRequest.AddQueryParameters(request);

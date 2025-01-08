@@ -10,10 +10,11 @@ using Pertamina.SIMIT.Domain.Entities;
 using Pertamina.SIMIT.Shared.Common.Enums;
 using Pertamina.SIMIT.Shared.Common.Requests;
 using Pertamina.SIMIT.Shared.Common.Responses;
+using Pertamina.SIMIT.Shared.Mahasiswas.Commands.GetMahasiswa;
 using Pertamina.SIMIT.Shared.Mahasiswas.Queries.GetMahasiswas;
 
 namespace Pertamina.SIMIT.Application.Mahasiswas.Queries.GetMahasiswasQuery;
-public class GetMahasiswasQuery : PaginatedListRequest, IRequest<PaginatedListResponse<GetMahasiswasMahasiswa>>
+public class GetMahasiswasQuery : GetMahasiswaRequest, IRequest<PaginatedListResponse<GetMahasiswasMahasiswa>>
 {
 }
 
@@ -21,7 +22,7 @@ public class GetMahasiswasQueryValidator : AbstractValidator<GetMahasiswasQuery>
 {
     public GetMahasiswasQueryValidator()
     {
-        Include(new PaginatedListRequestValidator());
+        Include(new GetMahasiswaRequestValidator());
     }
 }
 
@@ -54,7 +55,9 @@ public class GetMahasiswasQueryHandler : IRequestHandler<GetMahasiswasQuery, Pag
             .Include(m => m.Pembimbing)
             .Include(m => m.Laporans)
             .AsNoTracking()
-            .Where(m => !m.IsDeleted);
+            .Where(m => !m.IsDeleted)
+            .Where(x => string.IsNullOrEmpty(request.Kampus) || x.Kampus == request.Kampus)
+            .Where(x => string.IsNullOrEmpty(request.Bagian) || x.Bagian == request.Bagian);
 
         // Apply search if any
         if (!string.IsNullOrEmpty(request.SearchText))

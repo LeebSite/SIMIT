@@ -4,8 +4,10 @@ using Pertamina.SIMIT.Bsui.Common.Extensions;
 using Pertamina.SIMIT.Bsui.Features.Mahasiswas.Components;
 using Pertamina.SIMIT.Bsui.Features.Mahasiswas.Constants;
 using Pertamina.SIMIT.Shared.Common.Constants;
+using Pertamina.SIMIT.Shared.Common.Enums;
 using Pertamina.SIMIT.Shared.Common.Responses;
 using Pertamina.SIMIT.Shared.Mahasiswas.Commands.CreateMahasiswa;
+using Pertamina.SIMIT.Shared.Mahasiswas.Commands.GetMahasiswa;
 using Pertamina.SIMIT.Shared.Mahasiswas.Commands.UpdateMahasiswas;
 using Pertamina.SIMIT.Shared.Mahasiswas.Constants;
 using Pertamina.SIMIT.Shared.Mahasiswas.Queries.GetMahasiswas;
@@ -19,6 +21,7 @@ public partial class Index
     private ErrorResponse? _error;
     private List<UpdateMahasiswasMahasiswa> _editedMahasiswas = new();
     private GetMahasiswasMahasiswa _mahasiswaBeforeEdited = new();
+    //private FilterMahasiswa _requestMahasiswa = new();
 
     protected override async Task OnInitializedAsync()
     {
@@ -41,7 +44,19 @@ public partial class Index
         StateHasChanged();
 
         var tableData = new TableData<GetMahasiswasMahasiswa>();
-        var request = state.ToPaginatedListRequest(_searchKeyword);
+        //var request = state.ToPaginatedListRequest(_searchKeyword);
+
+        var request = new GetMahasiswaRequest
+        {
+            Page = state.Page + 1,
+            PageSize = state.PageSize,
+            SearchText = _searchKeyword,
+            SortField = state.SortLabel,
+            SortOrder = (SortOrder)state.SortDirection,
+            //Kampus = _requestMahasiswa.Kampus,
+            //Bagian = _requestMahasiswa.Bagian,
+        };
+
         var response = await _mahasiswaService.GetMahasiswasAsync(request);
 
         _error = response.Error;
@@ -154,5 +169,16 @@ public partial class Index
 
             await _tableMahasiswas.ReloadServerData();
         }
+    }
+
+    private class FilterMahasiswa
+    {
+        public int Page { get; set; } = 1;
+        public int PageSize { get; set; } = 10;
+        public string? SearchText { get; set; }
+        public string? SortField { get; set; }
+        public SortOrder? SortOrder { get; set; }
+        public string Kampus { get; set; } = default!;
+        public string Bagian { get; set; } = default!;
     }
 }
