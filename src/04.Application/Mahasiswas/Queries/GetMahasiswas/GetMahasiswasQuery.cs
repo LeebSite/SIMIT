@@ -8,7 +8,6 @@ using Pertamina.SIMIT.Application.Common.Mappings;
 using Pertamina.SIMIT.Application.Services.Persistence;
 using Pertamina.SIMIT.Domain.Entities;
 using Pertamina.SIMIT.Shared.Common.Enums;
-using Pertamina.SIMIT.Shared.Common.Requests;
 using Pertamina.SIMIT.Shared.Common.Responses;
 using Pertamina.SIMIT.Shared.Mahasiswas.Commands.GetMahasiswa;
 using Pertamina.SIMIT.Shared.Mahasiswas.Queries.GetMahasiswas;
@@ -77,8 +76,27 @@ public class GetMahasiswasQueryHandler : IRequestHandler<GetMahasiswasQuery, Pag
         // Paginate results
         var result = await query.ToPaginatedListAsync(request.Page, request.PageSize, cancellationToken);
 
-        // Map the paginated result to the response DTO
-        return result.AsPaginatedListResponse<GetMahasiswasMahasiswa, Mahasiswa>(_mapper.ConfigurationProvider);
+        // Ambil nilai distinct untuk dropdown
+        var kampusList = await _context.Mahasiswas
+            .AsNoTracking()
+            .Where(x => !x.IsDeleted)
+            .Select(x => x.Kampus)
+            .Distinct()
+            .ToListAsync(cancellationToken);
+
+        var bagianList = await _context.Mahasiswas
+            .AsNoTracking()
+            .Where(x => !x.IsDeleted)
+            .Select(x => x.Bagian)
+            .Distinct()
+            .ToListAsync(cancellationToken);
+
+        // Tambahkan nilai distinct ke dalam response (jika diperlukan di response utama)
+        var response = result.AsPaginatedListResponse<GetMahasiswasMahasiswa, Mahasiswa>(_mapper.ConfigurationProvider);
+        //response.Metadata["KampusList"] = kampusList;
+        //response.Metadata["BagianList"] = bagianList;
+
+        return response;
     }
 }
 
