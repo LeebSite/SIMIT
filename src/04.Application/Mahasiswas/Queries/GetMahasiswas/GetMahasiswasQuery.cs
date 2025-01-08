@@ -1,5 +1,4 @@
-﻿
-using AutoMapper;
+﻿using AutoMapper;
 using FluentValidation;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
@@ -56,7 +55,9 @@ public class GetMahasiswasQueryHandler : IRequestHandler<GetMahasiswasQuery, Pag
             .AsNoTracking()
             .Where(m => !m.IsDeleted)
             .Where(x => string.IsNullOrEmpty(request.Kampus) || x.Kampus == request.Kampus)
-            .Where(x => string.IsNullOrEmpty(request.Bagian) || x.Bagian == request.Bagian);
+            .Where(x => string.IsNullOrEmpty(request.Bagian) || x.Bagian == request.Bagian)
+            .Where(x => !request.MulaiMagang.HasValue || x.MulaiMagang.Date >= request.MulaiMagang.Value.Date)
+            .Where(x => !request.SelesaiMagang.HasValue || x.SelesaiMagang.Date <= request.SelesaiMagang.Value.Date);
 
         // Apply search if any
         if (!string.IsNullOrEmpty(request.SearchText))

@@ -27,6 +27,12 @@ public class GetMahasiswaRequest
 
     [OpenApiContentType(ContentTypes.TextPlain)]
     public string Bagian { get; set; } = default!;
+
+    [OpenApiContentType(ContentTypes.TextPlain)]
+    public DateTime? MulaiMagang { get; set; } = default!;
+
+    [OpenApiContentType(ContentTypes.TextPlain)]
+    public DateTime? SelesaiMagang { get; set; } = default!;
 }
 
 public class GetMahasiswaRequestValidator : AbstractValidator<GetMahasiswaRequest>
@@ -50,6 +56,13 @@ public class GetMahasiswaRequestValidator : AbstractValidator<GetMahasiswaReques
         RuleFor(v => v.Bagian)
           //.NotEmpty()
           .MaximumLength(MaximumLengthFor.Bagian);
+
+        RuleFor(v => v.MulaiMagang);
+        //.NotEmpty();
+
+        RuleFor(v => v.SelesaiMagang);
+        //.NotEmpty();
+
     }
 }
 
