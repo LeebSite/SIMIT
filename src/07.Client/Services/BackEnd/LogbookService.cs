@@ -57,7 +57,7 @@ public class LogbookService
 
     public async Task<ResponseResult<PaginatedListResponse<GetLogbooksLogbook>>> GetLogbooksApprovalAsync(GetLogbookRequest request)
     {
-        var restRequest = new RestRequest(nameof(Logbooks.RouteTemplateFor.Approval), Method.Get);
+        var restRequest = new RestRequest($"V1/Logbooks/Approval", Method.Get);
         restRequest.AddQueryParameters(request);
 
         var restResponse = await _restClient.ExecuteAsync(restRequest);
