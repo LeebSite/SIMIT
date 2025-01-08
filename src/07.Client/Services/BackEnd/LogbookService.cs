@@ -4,6 +4,7 @@ using Pertamina.SIMIT.Client.Services.UserInfo;
 using Pertamina.SIMIT.Shared.Common.Requests;
 using Pertamina.SIMIT.Shared.Common.Responses;
 using Pertamina.SIMIT.Shared.Logbooks.Commands.CreateLogbook;
+using Pertamina.SIMIT.Shared.Logbooks.Commands.GetLogbook;
 using Pertamina.SIMIT.Shared.Logbooks.Queries.GetLogbook;
 using Pertamina.SIMIT.Shared.Logbooks.Queries.GetLogbooks;
 using Pertamina.SIMIT.Shared.Logbooks.Queries.GetLogbooksList;
@@ -47,6 +48,16 @@ public class LogbookService
     public async Task<ResponseResult<PaginatedListResponse<GetLogbooksLogbook>>> GetLogbooksByIdAsync(PaginatedListRequest request, Guid mahasiswaId)
     {
         var restRequest = new RestRequest($"V1/Logbooks/ByMahasiswaId/{mahasiswaId}", Method.Get);
+        restRequest.AddQueryParameters(request);
+
+        var restResponse = await _restClient.ExecuteAsync(restRequest);
+
+        return restResponse.ToResponseResult<PaginatedListResponse<GetLogbooksLogbook>>();
+    }
+
+    public async Task<ResponseResult<PaginatedListResponse<GetLogbooksLogbook>>> GetLogbooksApprovalAsync(GetLogbookRequest request)
+    {
+        var restRequest = new RestRequest(nameof(Logbooks.RouteTemplateFor.Approval), Method.Get);
         restRequest.AddQueryParameters(request);
 
         var restResponse = await _restClient.ExecuteAsync(restRequest);

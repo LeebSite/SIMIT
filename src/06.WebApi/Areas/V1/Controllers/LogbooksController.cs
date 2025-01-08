@@ -57,6 +57,23 @@ public class LogbooksController : ApiControllerBase
         return await Mediator.Send(new GetLogbooksListQuery());
     }
 
+    [HttpGet(ApiEndPoint.V1.Logbooks.RouteTemplateFor.Approval)]
+    [Produces(typeof(PaginatedListResponse<GetLogbooksLogbook>))]
+    public async Task<ActionResult<PaginatedListResponse<GetLogbooksLogbook>>> GetLogbooks([FromQuery] GetLogbooksApprovalQuery request)
+    {
+        var query = new GetLogbooksApprovalQuery
+        {
+            Page = request.Page,
+            PageSize = request.PageSize,
+            SearchText = request.SearchText,
+            SortField = request.SortField,
+            SortOrder = request.SortOrder,
+            User = request.User
+        };
+
+        return await Mediator.Send(query);
+    }
+
     [HttpGet]
     [Produces(typeof(PaginatedListResponse<GetLogbooksLogbook>))]
     public async Task<ActionResult<PaginatedListResponse<GetLogbooksLogbook>>> GetLogbooks([FromQuery] GetLogbooksQuery query)

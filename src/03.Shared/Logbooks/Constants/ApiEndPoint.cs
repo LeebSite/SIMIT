@@ -18,6 +18,8 @@ public class ApiEndPoint
                 // Rute untuk mendapatkan daftar logbook
                 public const string List = $"{Segment}/{nameof(List)}";
 
+                public const string Approval = $"{Segment}/{nameof(Approval)}";
+
                 public const string Count = nameof(Count);
             }
         }
