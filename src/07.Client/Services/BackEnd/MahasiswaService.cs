@@ -1,7 +1,6 @@
 ﻿using Microsoft.Extensions.Options;
 using Pertamina.SIMIT.Client.Common.Extensions;
 using Pertamina.SIMIT.Client.Services.UserInfo;
-using Pertamina.SIMIT.Shared.Common.Requests;
 using Pertamina.SIMIT.Shared.Common.Responses;
 using Pertamina.SIMIT.Shared.Mahasiswas.Commands.CreateMahasiswa;
 using Pertamina.SIMIT.Shared.Mahasiswas.Commands.GetMahasiswa;

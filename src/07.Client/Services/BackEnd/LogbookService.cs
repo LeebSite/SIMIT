@@ -3,6 +3,7 @@ using Pertamina.SIMIT.Client.Common.Extensions;
 using Pertamina.SIMIT.Client.Services.UserInfo;
 using Pertamina.SIMIT.Shared.Common.Requests;
 using Pertamina.SIMIT.Shared.Common.Responses;
+using Pertamina.SIMIT.Shared.Logbooks.Commands.ApprovalLogbook;
 using Pertamina.SIMIT.Shared.Logbooks.Commands.CreateLogbook;
 using Pertamina.SIMIT.Shared.Logbooks.Commands.GetLogbook;
 using Pertamina.SIMIT.Shared.Logbooks.Queries.GetLogbook;
@@ -63,6 +64,25 @@ public class LogbookService
         var restResponse = await _restClient.ExecuteAsync(restRequest);
 
         return restResponse.ToResponseResult<PaginatedListResponse<GetLogbooksLogbook>>();
+    }
+
+    public async Task<ResponseResult<SuccessResponse>> ApproveSingleLogbookAsync(Guid logbookId)
+    {
+        var restRequest = new RestRequest(logbookId.ToString(), Method.Post);
+
+        var restResponse = await _restClient.ExecuteAsync(restRequest);
+
+        return restResponse.ToResponseResult<SuccessResponse>();
+    }
+
+    public async Task<ResponseResult<ApproveLogbookResponse>> ApproveMultiLogbookAsync(ApproveMultiLogbooksRequest request)
+    {
+        var restRequest = new RestRequest($"V1/Logbooks/ApproveMultiple", Method.Post);
+        restRequest.AddJsonBody(request);
+
+        var restResponse = await _restClient.ExecuteAsync(restRequest);
+
+        return restResponse.ToResponseResult<ApproveLogbookResponse>();
     }
 
     public async Task<ResponseResult<ListResponse<GetLogbooksList>>> GetLogbooksListAsync()

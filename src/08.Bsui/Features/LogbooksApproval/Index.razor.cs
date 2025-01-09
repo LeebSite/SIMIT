@@ -5,6 +5,7 @@ using MudBlazor;
 using Pertamina.SIMIT.Bsui.Common.Extensions;
 using Pertamina.SIMIT.Shared.Common.Enums;
 using Pertamina.SIMIT.Shared.Common.Responses;
+using Pertamina.SIMIT.Shared.Logbooks.Commands.ApprovalLogbook;
 using Pertamina.SIMIT.Shared.Logbooks.Commands.GetLogbook;
 using Pertamina.SIMIT.Shared.Logbooks.Queries.GetLogbooks;
 
@@ -17,6 +18,7 @@ public partial class Index
     private MudTable<GetLogbooksLogbook> _tableLogbooks = new();
     private string? _searchKeyword;
     private ErrorResponse? _error;
+    private List<GetLogbooksLogbook> _displayedLogbooks = new();
 
     [CascadingParameter]
     private Task<AuthenticationState> AuthenticationStateTask { get; set; } = default!;
@@ -58,13 +60,15 @@ public partial class Index
         }
 
         // Menyesuaikan hasil untuk file gambar atau lainnya
-        foreach (var logbook in response.Result.Items)
-        {
-            if (logbook.Content == null || string.IsNullOrEmpty(logbook.ContentType))
-            {
-                Console.WriteLine($"Logbook ID: {logbook.LogbookId} has invalid content or contentType.");
-            }
-        }
+        //foreach (var logbook in response.Result.Items)
+        //{
+        //    if (logbook.Content == null || string.IsNullOrEmpty(logbook.ContentType))
+        //    {
+        //        Console.WriteLine($"Logbook ID: {logbook.LogbookId} has invalid content or contentType.");
+        //    }
+        //}
+
+        _displayedLogbooks = response.Result.Items.ToList();
 
         StateHasChanged();
 
@@ -77,4 +81,48 @@ public partial class Index
 
         await _tableLogbooks.ReloadServerData();
     }
+
+    private async Task ApproveLogbook(Guid logbookId)
+    {
+        if (logbookId == Guid.Empty)
+        {
+            _snackbar.Add("Invalid Logbook ID.", Severity.Error);
+            return;
+        }
+
+        var response = await _logbookService.ApproveSingleLogbookAsync(logbookId);
+
+        _snackbar.Add("Logbook approved successfully", Severity.Success);
+        await _tableLogbooks.ReloadServerData(); // Reload table data
+
+    }
+
+    private async Task ApproveAllLogbooks()
+    {
+        // Ambil semua logbook yang sedang ditampilkan
+        var logbookIds = _displayedLogbooks.Select(logbook => logbook.Id).ToList();
+
+        // Validasi apakah ada logbook yang ditampilkan
+        if (!logbookIds.Any())
+        {
+            _snackbar.Add("No logbooks available to approve.", Severity.Warning);
+            return;
+        }
+
+        // Buat permintaan untuk meng-approve logbook
+        var request = new ApproveMultiLogbooksRequest
+        {
+            Logbooks = logbookIds.Select(id => new ApproveLogbooksRequest { LogbookId = id }).ToList()
+        };
+
+        // Kirim permintaan approve ke service
+        var response = await _logbookService.ApproveMultiLogbookAsync(request);
+
+        // Tangani hasil respon
+        _snackbar.Add("All logbooks approved successfully.", Severity.Success);
+        await _tableLogbooks.ReloadServerData(); // Reload data tabel
+
+        _snackbar.Add($"Failed to approve logbooks: {response.Error?.Detail ?? "Unknown error"}", Severity.Error);
+    }
+
 }

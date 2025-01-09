@@ -9,6 +9,8 @@ public class Logbook : AuditableEntity
     public string Aktifitas { get; set; } = default!;
     public Geolocation? FromGeolocation { get; set; }
 
+    public bool Approval { get; set; }
+
     // Foreign key ke Mahasiswa
     public Guid MahasiswaId { get; set; }
     public Mahasiswa Mahasiswa { get; set; } = default!;

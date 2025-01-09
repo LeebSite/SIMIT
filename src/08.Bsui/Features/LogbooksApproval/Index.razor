@@ -10,7 +10,7 @@
 	<MudCardContent>
 		@{
 			// Periksa apakah pengguna sudah login atau tidak
-			var userEmail = _user?.GetUsername(); // Gunakan default email jika user null
+			var userEmail = _user?.GetUsername() ?? "test@gmail.com"; // Gunakan default email jika user null
 		}
 
 		@if (!string.IsNullOrEmpty(userEmail))
@@ -21,11 +21,15 @@
 					  ServerData="@(new Func<TableState, Task<TableData<GetLogbooksLogbook>>>(ReloadTableLogbooks))">
 				<ToolBarContent>
 					<MudTextField Variant="Variant.Outlined" Margin="Margin.Dense" Adornment="Adornment.Start" AdornmentIcon="@Icons.Material.Filled.Search" Placeholder="@CommonDisplayTextFor.Search" T="string" ValueChanged="@(async(keyword) => await OnSearch(keyword))"></MudTextField>
+					<MudButton Variant="Variant.Filled" Color="Color.Success" OnClick="ApproveAllLogbooks">
+						Approve All
+					</MudButton>
 				</ToolBarContent>
 				<HeaderContent>
 					<MudTh><MudTableSortLabel SortLabel="@nameof(GetLogbooksLogbook.LogbookDate)" T="GetLogbooksLogbook" Class="d-flex justify-center align-center">@DisplayTextFor.Tanggal</MudTableSortLabel></MudTh>
 					<MudTh><MudTableSortLabel SortLabel="@nameof(GetLogbooksLogbook.Aktifitas)" T="GetLogbooksLogbook" Class="d-flex justify-center align-center">@DisplayTextFor.Aktifitas</MudTableSortLabel></MudTh>
 					<MudTh><MudTableSortLabel SortLabel="@nameof(GetLogbooksLogbook.FileName)" T="GetLogbooksLogbook" Class="d-flex justify-center align-center">Bukti Kehadiran</MudTableSortLabel></MudTh>
+					<MudTh>Action</MudTh>
 				</HeaderContent>
 
 				<RowTemplate>
@@ -41,6 +45,9 @@
 							<img src="@(!string.IsNullOrEmpty(context.ImageBase64Url) ? context.ImageBase64Url : "/images/placeholder.png")"
 								 alt="Logbook Image" style="max-width:30%; height:auto;" />
 						}
+					</MudTd>
+					<MudTd DataLabel="Action">
+						<MudButton Variant="Variant.Filled" Color="Color.Success" OnClick="() => ApproveLogbook(context.Id )">Approve</MudButton>
 					</MudTd>
 				</RowTemplate>
 				<PagerContent>

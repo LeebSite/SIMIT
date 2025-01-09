@@ -57,7 +57,7 @@ public class GetLogbooksApprovalQueryHandler : IRequestHandler<GetLogbooksApprov
             .Include(m => m.Attachments)
             .AsNoTracking()
             .Where(x => !x.IsDeleted)
-            //.Where(x => !x.Status)
+            .Where(x => !x.Approval)
             .Where(x => x.Mahasiswa.Pembimbing.Email == request.User)
             .ApplySearch(request.SearchText, typeof(GetLogbooksLogbook), _mapper.ConfigurationProvider)
             .ApplyOrder(request.SortField, request.SortOrder,

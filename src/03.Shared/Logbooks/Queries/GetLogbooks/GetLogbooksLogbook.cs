@@ -3,7 +3,7 @@
 namespace Pertamina.SIMIT.Shared.Logbooks.Queries.GetLogbooks;
 public class GetLogbooksLogbook : FileResponse
 {
-    public string Id { get; set; }
+    public Guid Id { get; set; }
     public Guid LogbookId { get; set; }
     public DateTime LogbookDate { get; set; } = default!;
     public string Aktifitas { get; set; } = default!;
@@ -13,6 +13,8 @@ public class GetLogbooksLogbook : FileResponse
     public Guid LogbookAttachmentId { get; set; }
     public bool StatusPagi { get; set; }
     public bool StatusSiang { get; set; }
+
+    public bool Approval { get; set; }
 
     // Contoh properti tambahan di GetLogbooksLogbook
     public string? ImageBase64Url => Content != null
