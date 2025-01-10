@@ -18,6 +18,14 @@ public class ApiEndPoint
                 // Rute untuk mendapatkan daftar logbook
                 public const string List = $"{Segment}/{nameof(List)}";
 
+                public const string Approval = $"{Segment}/{nameof(Approval)}";
+
+                public const string ApproveSingle = "{logbookId:guid}";
+
+                public const string MahasiswaId = "{mahasiswaId:guid}";
+
+                public const string ApproveMultiple = $"{Segment}/{nameof(ApproveMultiple)}";
+
                 public const string Count = nameof(Count);
             }
         }

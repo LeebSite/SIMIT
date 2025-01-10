@@ -7,6 +7,7 @@ public class DisplayTextFor
     public const string Logbook = nameof(Logbook);
 
     public static readonly string LogbookHarianMahasiswa = nameof(LogbookHarianMahasiswa).SplitWords();
+    public static readonly string LogbookApproval = nameof(LogbookApproval).SplitWords();
     public static readonly string NoBadgeMahasiswa = nameof(NoBadgeMahasiswa).SplitWords();
     public static readonly string StatusLogbookPagi = nameof(StatusLogbookPagi).SplitWords();
     public static readonly string StatusLogbookSiang = nameof(StatusLogbookSiang).SplitWords();

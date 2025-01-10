@@ -1,0 +1,63 @@
+﻿@page "/LogbooksApproval"
+
+@using Pertamina.SIMIT.Shared.Logbooks.Constants
+@using Pertamina.SIMIT.Shared.Logbooks.Queries.GetLogbooks
+@using Pertamina.SIMIT.Shared.Mahasiswas.Queries.GetMahasiswa
+
+<ErrorViewer Error="_error" />
+
+<MudCard Outlined="true" Class="pa-4">
+	<MudCardContent>
+		@{
+			// Periksa apakah pengguna sudah login atau tidak
+			var userEmail = _user?.GetUsername() ?? "test@gmail.com"; // Gunakan default email jika user null
+		}
+
+		@if (!string.IsNullOrEmpty(userEmail))
+		{
+			<MudTable Elevation="0" Hover="true" Breakpoint="Breakpoint.Sm" Bordered="true"
+					  FixedHeader="true" Height="@HeightFor.ScrollableTable"
+					  @ref="_tableLogbooks"
+					  ServerData="@(new Func<TableState, Task<TableData<GetLogbooksLogbook>>>(ReloadTableLogbooks))">
+				<ToolBarContent>
+					<MudTextField Variant="Variant.Outlined" Margin="Margin.Dense" Adornment="Adornment.Start" AdornmentIcon="@Icons.Material.Filled.Search" Placeholder="@CommonDisplayTextFor.Search" T="string" ValueChanged="@(async(keyword) => await OnSearch(keyword))"></MudTextField>
+					<MudButton Variant="Variant.Filled" Color="Color.Success" OnClick="ApproveAllLogbooks">
+						Approve All
+					</MudButton>
+				</ToolBarContent>
+				<HeaderContent>
+					<MudTh><MudTableSortLabel SortLabel="@nameof(GetLogbooksLogbook.LogbookDate)" T="GetLogbooksLogbook" Class="d-flex justify-center align-center">@DisplayTextFor.Tanggal</MudTableSortLabel></MudTh>
+					<MudTh><MudTableSortLabel SortLabel="@nameof(GetLogbooksLogbook.Aktifitas)" T="GetLogbooksLogbook" Class="d-flex justify-center align-center">@DisplayTextFor.Aktifitas</MudTableSortLabel></MudTh>
+					<MudTh><MudTableSortLabel SortLabel="@nameof(GetLogbooksLogbook.FileName)" T="GetLogbooksLogbook" Class="d-flex justify-center align-center">Bukti Kehadiran</MudTableSortLabel></MudTh>
+					<MudTh>Action</MudTh>
+				</HeaderContent>
+
+				<RowTemplate>
+					<MudTd DataLabel="@DisplayTextFor.Tanggal" Style="text-align: center;">
+						<MudHighlighter Text="@context.LogbookDate.ToString()" HighlightedText="@_searchKeyword" />
+					</MudTd>
+					<MudTd DataLabel="@DisplayTextFor.Aktifitas" Style="text-align: center;">
+						<MudHighlighter Text="@context.Aktifitas" HighlightedText="@_searchKeyword" />
+					</MudTd>
+					<MudTd DataLabel="File" Style="text-align: center;">
+						@if (!string.IsNullOrEmpty(context.ImageBase64Url))
+						{
+							<img src="@(!string.IsNullOrEmpty(context.ImageBase64Url) ? context.ImageBase64Url : "/images/placeholder.png")"
+								 alt="Logbook Image" style="max-width:30%; height:auto;" />
+						}
+					</MudTd>
+					<MudTd DataLabel="Action">
+						<MudButton Variant="Variant.Filled" Color="Color.Success" OnClick="() => ApproveLogbook(context.Id )">Approve</MudButton>
+					</MudTd>
+				</RowTemplate>
+				<PagerContent>
+					<MudTablePager />
+				</PagerContent>
+			</MudTable>
+		}
+		else
+		{
+			<p>Please Login untuk melakukan approval</p>
+		}
+	</MudCardContent>
+</MudCard>
