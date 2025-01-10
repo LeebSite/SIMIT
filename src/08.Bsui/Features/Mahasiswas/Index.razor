@@ -10,7 +10,6 @@
 <PageHeader Title="@DisplayTextFor.RekapDataMahasiswa" />
  <ErrorViewer Error="_error" />
 
-<!-- Toolbar hanya untuk Add Mahasiswa dan Search -->
 <ToolBarContent>
     <MudGrid GutterSize="2">
         <MudItem xs="12" sm="6">
@@ -26,7 +25,6 @@
     </MudGrid>
 </ToolBarContent>
 
-<!-- Baris Filter berada di luar MudTable -->
 <EditForm Model="_requestMahasiswa" OnValidSubmit="OnFilterSubmit" class="mt-3">
     <MudGrid GutterSize="2">
         <!-- Filter Kampus -->
@@ -63,7 +61,6 @@
 						   Margin="Margin.Dense"
 						   OnChange="OnFilterSubmit" />
 		</MudItem>
-        <!-- Tombol Filter -->
         <MudItem xs="12" md="12" >
             <MudButton Variant="Variant.Filled" Color="Color.Primary" StartIcon="@Icons.Material.Filled.Search" 
                        Type="Submit" Size="Size.Small" OnClick="OnFilterSubmit">
@@ -73,7 +70,6 @@
     </MudGrid>
 </EditForm>
 
-<!-- MudTable -->
 <MudTable Elevation="0" Hover="true" Breakpoint="Breakpoint.Sm" Bordered="true"
 		  FixedHeader="true" Height="@HeightFor.ScrollableTable"
 		  @ref="_tableMahasiswas"
