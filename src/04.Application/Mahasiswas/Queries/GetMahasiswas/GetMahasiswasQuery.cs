@@ -77,25 +77,8 @@ public class GetMahasiswasQueryHandler : IRequestHandler<GetMahasiswasQuery, Pag
         // Paginate results
         var result = await query.ToPaginatedListAsync(request.Page, request.PageSize, cancellationToken);
 
-        // Ambil nilai distinct untuk dropdown
-        var kampusList = await _context.Mahasiswas
-            .AsNoTracking()
-            .Where(x => !x.IsDeleted)
-            .Select(x => x.Kampus)
-            .Distinct()
-            .ToListAsync(cancellationToken);
-
-        var bagianList = await _context.Mahasiswas
-            .AsNoTracking()
-            .Where(x => !x.IsDeleted)
-            .Select(x => x.Bagian)
-            .Distinct()
-            .ToListAsync(cancellationToken);
-
         // Tambahkan nilai distinct ke dalam response (jika diperlukan di response utama)
         var response = result.AsPaginatedListResponse<GetMahasiswasMahasiswa, Mahasiswa>(_mapper.ConfigurationProvider);
-        //response.Metadata["KampusList"] = kampusList;
-        //response.Metadata["BagianList"] = bagianList;
 
         return response;
     }

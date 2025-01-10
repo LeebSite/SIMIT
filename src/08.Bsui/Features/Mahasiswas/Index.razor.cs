@@ -21,11 +21,17 @@ public partial class Index
     private ErrorResponse? _error;
     private List<UpdateMahasiswasMahasiswa> _editedMahasiswas = new();
     private GetMahasiswasMahasiswa _mahasiswaBeforeEdited = new();
-    //private FilterMahasiswa _requestMahasiswa = new();
+    public FilterMahasiswa _requestMahasiswa = new();
+    private List<string> _kampusList = new();
+    private List<string> _bagianList = new();
 
     protected override async Task OnInitializedAsync()
     {
         SetupBreadcrumb();
+    }
+    private async Task OnFilterSubmit()
+    {
+        await _tableMahasiswas.ReloadServerData();
     }
 
     private void SetupBreadcrumb()
@@ -53,8 +59,10 @@ public partial class Index
             SearchText = _searchKeyword,
             SortField = state.SortLabel,
             SortOrder = (SortOrder)state.SortDirection,
-            //Kampus = _requestMahasiswa.Kampus,
-            //Bagian = _requestMahasiswa.Bagian,
+            Kampus = _requestMahasiswa.Kampus,
+            Bagian = _requestMahasiswa.Bagian,
+            MulaiMagang = _requestMahasiswa.MulaiMagang,
+            SelesaiMagang = _requestMahasiswa.SelesaiMagang,
         };
 
         var response = await _mahasiswaService.GetMahasiswasAsync(request);
@@ -65,6 +73,9 @@ public partial class Index
         {
             return tableData;
         }
+
+        _kampusList = response.Result.Items.Select(x => x.Kampus).ToList();
+        _bagianList = response.Result.Items.Select(x => x.Bagian).ToList();
 
         StateHasChanged();
 
@@ -170,15 +181,17 @@ public partial class Index
             await _tableMahasiswas.ReloadServerData();
         }
     }
+}
 
-    private class FilterMahasiswa
-    {
-        public int Page { get; set; } = 1;
-        public int PageSize { get; set; } = 10;
-        public string? SearchText { get; set; }
-        public string? SortField { get; set; }
-        public SortOrder? SortOrder { get; set; }
-        public string Kampus { get; set; } = default!;
-        public string Bagian { get; set; } = default!;
-    }
+public class FilterMahasiswa
+{
+    public int Page { get; set; } = 1;
+    public int PageSize { get; set; } = 10;
+    public string? SearchText { get; set; }
+    public string? SortField { get; set; }
+    public SortOrder? SortOrder { get; set; }
+    public string Kampus { get; set; } = default!;
+    public string Bagian { get; set; } = default!;
+    public DateTime? MulaiMagang { get; set; } = default!;
+    public DateTime? SelesaiMagang { get; set; } = default!;
 }

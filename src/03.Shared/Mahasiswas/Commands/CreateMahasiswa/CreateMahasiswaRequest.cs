@@ -19,7 +19,6 @@ public class CreateMahasiswaRequest
     public string Kampus { get; set; } = default!;
 
     [OpenApiContentType(ContentTypes.TextPlain)]
-
     public DateTime? MulaiMagang { get; set; } = default!;
 
     [OpenApiContentType(ContentTypes.TextPlain)]
