@@ -3,7 +3,6 @@ using Pertamina.SIMIT.Application.Logbooks.Commands.ApprovalLogbook;
 using Pertamina.SIMIT.Application.Logbooks.Commands.CreateLogbook;
 using Pertamina.SIMIT.Application.Logbooks.Queries.GetLogbook;
 using Pertamina.SIMIT.Application.Logbooks.Queries.GetLogbooks;
-using Pertamina.SIMIT.Application.Logbooks.Queries.GetLogbooksListQuery;
 using Pertamina.SIMIT.Application.Logbooks.Queries.GetLogbooksQuery;
 using Pertamina.SIMIT.Shared.Common.Constants;
 using Pertamina.SIMIT.Shared.Common.Responses;
@@ -12,7 +11,6 @@ using Pertamina.SIMIT.Shared.Logbooks.Commands.CreateLogbook;
 using Pertamina.SIMIT.Shared.Logbooks.Constants;
 using Pertamina.SIMIT.Shared.Logbooks.Queries.GetLogbook;
 using Pertamina.SIMIT.Shared.Logbooks.Queries.GetLogbooks;
-using Pertamina.SIMIT.Shared.Logbooks.Queries.GetLogbooksList;
 
 namespace Pertamina.SIMIT.WebApi.Areas.V1.Controllers;
 
@@ -52,12 +50,12 @@ public class LogbooksController : ApiControllerBase
         return await Mediator.Send(query);
     }
 
-    [HttpGet(ApiEndPoint.V1.Logbooks.RouteTemplateFor.List)]
-    [Produces(typeof(ListResponse<GetLogbooksList>))]
-    public async Task<ActionResult<ListResponse<GetLogbooksList>>> GetLogbooksList()
-    {
-        return await Mediator.Send(new GetLogbooksListQuery());
-    }
+    //[HttpGet(ApiEndPoint.V1.Logbooks.RouteTemplateFor.List)]
+    //[Produces(typeof(ListResponse<GetLogbooksList>))]
+    //public async Task<ActionResult<ListResponse<GetLogbooksList>>> GetLogbooksList()
+    //{
+    //    return await Mediator.Send(new GetLogbooksListQuery());
+    //}
 
     [HttpGet(ApiEndPoint.V1.Logbooks.RouteTemplateFor.Approval)]
     [Produces(typeof(PaginatedListResponse<GetLogbooksLogbook>))]

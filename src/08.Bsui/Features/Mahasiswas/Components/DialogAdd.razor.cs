@@ -71,8 +71,9 @@ public partial class DialogAdd
                 return;
             }
 
-            // Tutup dialog jika berhasil
+            _snackbar.AddSuccess($"Mahasiswa dengan NIM {Request.Nim} berhasil ditambahkan.");
 
+            // Tutup dialog jika berhasil
             MudDialog.Close(DialogResult.Ok(mahasiswaId));
             //_navigationManager.NavigateTo(RouteFor.Index, forceLoad: true);
         }

@@ -42,12 +42,12 @@ public class MahasiswasController : ApiControllerBase
         return await Mediator.Send(query);
     }
 
-    [HttpGet(ApiEndpoint.V1.Mahasiswas.RouteTemplateFor.List)]
-    [Produces(typeof(ListResponse<GetMahasiswasList>))]
-    public async Task<ActionResult<ListResponse<GetMahasiswasList>>> GetMahasiswasList()
-    {
-        return await Mediator.Send(new GetMahasiswasListQuery());
-    }
+    //[HttpGet(ApiEndpoint.V1.Mahasiswas.RouteTemplateFor.List)]
+    //[Produces(typeof(ListResponse<GetMahasiswasList>))]
+    //public async Task<ActionResult<ListResponse<GetMahasiswasList>>> GetMahasiswasList()
+    //{
+    //    return await Mediator.Send(new GetMahasiswasListQuery());
+    //}
 
     [HttpPut(ApiEndpoint.V1.Mahasiswas.RouteTemplateFor.MahasiswaId)]
     public async Task<ActionResult> UpdateMahasiswa([FromRoute] Guid mahasiswaId, [FromForm] UpdateMahasiswaCommand command)

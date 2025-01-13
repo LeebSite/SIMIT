@@ -29,6 +29,7 @@
 					<MudTh><MudTableSortLabel SortLabel="@nameof(GetLogbooksLogbook.LogbookDate)" T="GetLogbooksLogbook" Class="d-flex justify-center align-center">@DisplayTextFor.Tanggal</MudTableSortLabel></MudTh>
 					<MudTh><MudTableSortLabel SortLabel="@nameof(GetLogbooksLogbook.Aktifitas)" T="GetLogbooksLogbook" Class="d-flex justify-center align-center">@DisplayTextFor.Aktifitas</MudTableSortLabel></MudTh>
 					<MudTh><MudTableSortLabel SortLabel="@nameof(GetLogbooksLogbook.FileName)" T="GetLogbooksLogbook" Class="d-flex justify-center align-center">Bukti Kehadiran</MudTableSortLabel></MudTh>
+					<MudTh><MudTableSortLabel SortLabel="@nameof(GetLogbooksLogbook.MahasiswaNama)" T="GetLogbooksLogbook" Class="d-flex justify-center align-center">@DisplayTextFor.NamaMahasiswa</MudTableSortLabel></MudTh>
 					<MudTh>Action</MudTh>
 				</HeaderContent>
 
@@ -45,6 +46,9 @@
 							<img src="@(!string.IsNullOrEmpty(context.ImageBase64Url) ? context.ImageBase64Url : "/images/placeholder.png")"
 								 alt="Logbook Image" style="max-width:30%; height:auto;" />
 						}
+					</MudTd>
+					<MudTd DataLabel="@DisplayTextFor.MahasiswaNama" Style="text-align: center;">
+						<MudHighlighter Text="@context.MahasiswaNama" HighlightedText="@_searchKeyword"   />
 					</MudTd>
 					<MudTd DataLabel="Action">
 						<MudButton Variant="Variant.Filled" Color="Color.Success" OnClick="() => ApproveLogbook(context.Id )">Approve</MudButton>

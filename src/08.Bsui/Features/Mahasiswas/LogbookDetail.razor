@@ -17,6 +17,7 @@
 				<MudTh><MudTableSortLabel SortLabel="@nameof(GetLogbooksLogbook.LogbookDate)" T="GetLogbooksLogbook" Class="d-flex justify-center align-center">@DisplayTextFor.Tanggal</MudTableSortLabel></MudTh>
 				<MudTh><MudTableSortLabel SortLabel="@nameof(GetLogbooksLogbook.Aktifitas)" T="GetLogbooksLogbook" Class="d-flex justify-center align-center">Aktivitas</MudTableSortLabel></MudTh>
 				<MudTh><MudTableSortLabel SortLabel="@nameof(GetLogbooksLogbook.FileName)" T="GetLogbooksLogbook" Class="d-flex justify-center align-center">Bukti Kehadiran</MudTableSortLabel></MudTh>
+				<MudTh><MudTableSortLabel SortLabel="@nameof(GetLogbooksLogbook.Approval)" T="GetLogbooksLogbook" Class="d-flex justify-center align-center">Status Logbook</MudTableSortLabel></MudTh>
 			</HeaderContent>
 
 			<RowTemplate>
@@ -34,6 +35,17 @@
 
 					}
 				</MudTd>
+				<MudTd DataLabel="Status" Style="text-align: center;">
+					@if (context.Approval)
+					{
+						<MudText Color="Color.Success">Approve</MudText>
+					}
+					else
+					{
+						<MudText Color="Color.Error">Ditolak</MudText>
+					}
+				</MudTd>
+
 			</RowTemplate>
 			<PagerContent>
 				<MudTablePager />
