@@ -42,12 +42,12 @@ public class UpdatePembimbingCommandHandler : IRequestHandler<UpdatePembimbingCo
 
         var pembimbingWithTheSameName = await _context.Pembimbings
             .AsNoTracking()
-            .Where(x => x.Id != request.PembimbingId && x.Nama == request.Nama)
+            .Where(x => x.Id != request.PembimbingId && x.Nip == request.Nip)
             .SingleOrDefaultAsync(cancellationToken);
 
         if (pembimbingWithTheSameName is not null)
         {
-            throw new AlreadyExistsExceptions(DisplayTextFor.Pembimbing, DisplayTextFor.Nama, request.Nama);
+            throw new AlreadyExistsExceptions(DisplayTextFor.Pembimbing, DisplayTextFor.Nip, request.Nip);
         }
 
         pembimbing.Nama = request.Nama;

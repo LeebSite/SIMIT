@@ -81,11 +81,11 @@ public class PembimbingsController : ApiControllerBase
         return await Mediator.Send(query);
     }
 
-    //[HttpGet(ApiEndPoint.V1.Pembimbings.RouteTemplateFor.List)]
-    //[Produces(typeof(ListResponse<GetPembimbingsList>))]
-    //public async Task<ActionResult<ListResponse<GetPembimbingsList>>> GetPembimbingsList()
-    //{
-    //    return await Mediator.Send(new GetPembimbingsListQuery());
-    //}
+    [HttpGet(ApiEndPoint.V1.Pembimbings.RouteTemplateFor.List)]
+    [Produces(typeof(ListResponse<GetPembimbingsList>))]
+    public async Task<ActionResult<ListResponse<GetPembimbingsList>>> GetPembimbingsList()
+    {
+        return await Mediator.Send(new GetPembimbingsListQuery());
+    }
 
 }

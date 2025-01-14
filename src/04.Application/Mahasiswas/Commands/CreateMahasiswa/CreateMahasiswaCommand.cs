@@ -73,7 +73,7 @@ public class CreateMahasiswaCommandHandler : IRequestHandler<CreateMahasiswaComm
             MulaiMagang = (DateTime)request.MulaiMagang,
             SelesaiMagang = (DateTime)request.SelesaiMagang,
             Bagian = request.Bagian,
-            PembimbingId = pembimbing.Id, // Set the foreign key
+            PembimbingId = pembimbing.Id,
         };
 
         _context.Mahasiswas.Add(mahasiswa);

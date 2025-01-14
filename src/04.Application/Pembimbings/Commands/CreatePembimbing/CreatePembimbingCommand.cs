@@ -32,7 +32,12 @@ public class CreatePembimbingCommandHandler : IRequestHandler<CreatePembimbingCo
     {
         var pembimbingWithTheSameName = await _context.Pembimbings
             .AsNoTracking()
-            .SingleOrDefaultAsync(x => x.Nama == request.Nama, cancellationToken);
+            .SingleOrDefaultAsync(x => x.Nip == request.Nip, cancellationToken);
+
+        if (pembimbingWithTheSameName != null)
+        {
+            throw new InvalidOperationException("Pembimbing dengan nama atau NIP yang sama sudah terdaftar.");
+        }
 
         var pembimbing = new Pembimbing
         {

@@ -6,7 +6,6 @@ using Pertamina.SIMIT.Application.Mahasiswas.Commands.UpdateMahasiswa;
 using Pertamina.SIMIT.Application.Mahasiswas.Commands.UpdateMahasiswas;
 using Pertamina.SIMIT.Application.Mahasiswas.Queries.GetMahasiswa;
 using Pertamina.SIMIT.Application.Mahasiswas.Queries.GetMahasiswas;
-using Pertamina.SIMIT.Application.Mahasiswas.Queries.GetMahasiswasListQuery;
 using Pertamina.SIMIT.Application.Mahasiswas.Queries.GetMahasiswasQuery;
 using Pertamina.SIMIT.Shared.Common.Responses;
 using Pertamina.SIMIT.Shared.Mahasiswas.Commands.CreateMahasiswa;
@@ -14,7 +13,6 @@ using Pertamina.SIMIT.Shared.Mahasiswas.Commands.UpdateMahasiswas;
 using Pertamina.SIMIT.Shared.Mahasiswas.Constants;
 using Pertamina.SIMIT.Shared.Mahasiswas.Queries.GetMahasiswa;
 using Pertamina.SIMIT.Shared.Mahasiswas.Queries.GetMahasiswas;
-using Pertamina.SIMIT.Shared.Mahasiswas.Queries.GetMahasiswasList;
 
 namespace Pertamina.SIMIT.WebApi.Areas.V1.Controllers;
 public class MahasiswasController : ApiControllerBase
