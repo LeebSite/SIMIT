@@ -1,33 +1,65 @@
-﻿		<MudNavLink Icon="@Icons.Material.Filled.Home" Match="NavLinkMatch.All" Href="@CommonRouteFor.Index">@CommonDisplayTextFor.Home</MudNavLink>
+﻿<MudNavMenu>
+	<!-- Home -->
+	<MudNavLink Icon="@Icons.Material.Filled.Home"
+				Match="NavLinkMatch.All"
+				Href="@CommonRouteFor.Index">
+		@CommonDisplayTextFor.Home
+	</MudNavLink>
 
-		<MudNavLink Icon="@Icons.Material.Filled.Dashboard" Href="@Features.Dashboards.Constants.RouteFor.Index">@Pertamina.SIMIT.Shared.Mahasiswas.Constants.DisplayTextFor.Dashboard</MudNavLink>
+	<!-- Dashboard -->
+	<MudNavLink Icon="@Icons.Material.Filled.Dashboard"
+				Href="@Features.Dashboards.Constants.RouteFor.Index">
+		@Pertamina.SIMIT.Shared.Mahasiswas.Constants.DisplayTextFor.Dashboard
+	</MudNavLink>
 
-		<MudNavLink Icon="@Icons.Material.Filled.School" Href="@Features.Mahasiswas.Constants.RouteFor.Index">
-			@Pertamina.SIMIT.Shared.Mahasiswas.Constants.DisplayTextFor.Mahasiswa
-		</MudNavLink>
+	<!-- Mahasiswa -->
+	<MudNavLink Icon="@Icons.Material.Filled.School"
+				Href="@Features.Mahasiswas.Constants.RouteFor.Index">
+		@Pertamina.SIMIT.Shared.Mahasiswas.Constants.DisplayTextFor.Mahasiswa
+	</MudNavLink>
 		<MudNavLink Icon="@Icons.Material.Filled.Folder" Href="@Features.Logbooks.Constants.RouteFor.Index">@Pertamina.SIMIT.Shared.Logbooks.Constants.DisplayTextFor.LogbookHarianMahasiswa</MudNavLink>
 
-		<MudNavLink Icon="@Icons.Material.Filled.AdminPanelSettings" Href="@Features.Pembimbings.Constants.RouteFor.Index">
-			@Pertamina.SIMIT.Shared.Pembimbings.Constants.DisplayTextFor.Pembimbing
+	<!-- Pembimbing -->
+	<MudNavLink Icon="@Icons.Material.Filled.AdminPanelSettings"
+				Href="@Features.Pembimbings.Constants.RouteFor.Index">
+		@Pertamina.SIMIT.Shared.Pembimbings.Constants.DisplayTextFor.Pembimbing
+	</MudNavLink>
+
+	<!-- Logbooks Group -->
+	<MudNavGroup Icon="@Icons.Material.Filled.Book"
+				 ExpandIcon="@Icons.Material.Filled.ExpandMore"
+				 Title="Logbooks">
+		<!-- Approval -->
+		<MudNavLink Icon="@Icons.Material.Outlined.Approval"
+					Href="@Features.LogbooksApproval.Constants.RouteFor.Index">
+			@Pertamina.SIMIT.Shared.Logbooks.Constants.DisplayTextFor.LogbookApproval
 		</MudNavLink>
+		<!-- Kehadiran Mahasiswa -->
+		<MudNavLink Icon="@Icons.Material.Outlined.PersonPin"
+					Href="/kehadiran-mahasiswa">
+			Kehadiran Mahasiswa
+		</MudNavLink>
+		<!-- Kegiatan Mahasiswa -->
+		<MudNavLink Icon="@Icons.Material.Outlined.Assignment"
+					Href="/logbook-kegiatan">
+			Kegiatan Mahasiswa
+		</MudNavLink>
+	</MudNavGroup>
+	<!-- Laporan -->
+	<MudNavLink Icon="@Icons.Material.Filled.Description"
+				Href="@Features.Laporans.Constants.RouteFor.Index">
+		@Pertamina.SIMIT.Shared.Laporans.Constants.DisplayTextFor.LaporanMahasiswa
+	</MudNavLink>
 
+	<!-- Audits -->
+	<MudNavLink Icon="@Icons.Material.Filled.EventNote"
+				Href="@Features.Audits.Constants.RouteFor.Index">
+		@SIMIT.Shared.Audits.Constants.DisplayTextFor.Audits
+	</MudNavLink>
 
-		<MudNavLink Icon="@Icons.Material.Filled.EventNote" Href="@Features.Audits.Constants.RouteFor.Index">@SIMIT.Shared.Audits.Constants.DisplayTextFor.Audits</MudNavLink>
-		<MudNavLink Icon="@Icons.Material.Filled.Countertops" Href="@CommonRouteFor.About">@CommonDisplayTextFor.About</MudNavLink>
-
-
-		<MudNavMenu>
-
-			<MudNavGroup Icon="@Icons.Material.Filled.Book"
-						 ExpandIcon="@Icons.Material.Filled.ExpandMore"
-						 Expanded="true"
-						 Title="@Pertamina.SIMIT.Shared.Laporans.Constants.DisplayTextFor.DokumenMahasiswa">
-
-				<MudNavLink Icon="@Icons.Material.Outlined.Folder" Href="@Features.Laporans.Constants.RouteFor.Index">@Pertamina.SIMIT.Shared.Laporans.Constants.DisplayTextFor.LaporanMahasiswa</MudNavLink>
-				<MudNavLink Icon="@Icons.Material.Outlined.Folder" Href="@Features.Logbooks.Constants.RouteFor.Index">@Pertamina.SIMIT.Shared.Logbooks.Constants.DisplayTextFor.LogbookHarianMahasiswa</MudNavLink>
-				<MudNavLink Icon="@Icons.Material.Outlined.Folder" Href="@Features.LogbooksApproval.Constants.RouteFor.Index">@Pertamina.SIMIT.Shared.Logbooks.Constants.DisplayTextFor.LogbookApproval</MudNavLink>
-			</MudNavGroup>
-		</MudNavMenu>
-
-
-
+	<!-- About -->
+	<MudNavLink Icon="@Icons.Material.Filled.Info"
+				Href="@CommonRouteFor.About">
+		@CommonDisplayTextFor.About
+	</MudNavLink>
+</MudNavMenu>

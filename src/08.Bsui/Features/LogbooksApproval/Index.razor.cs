@@ -38,7 +38,7 @@ public partial class Index
 
         var tableData = new TableData<GetLogbooksLogbook>();
         //var userEmail = _user?.GetUsername() ?? string.Empty;
-        var userEmail = "Rahman@Pertamina.com";
+        var userEmail = "jepri@pertamina.com";
 
         var request = new GetLogbookRequest
         {

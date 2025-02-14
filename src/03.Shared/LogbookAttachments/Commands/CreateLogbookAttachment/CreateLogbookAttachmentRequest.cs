@@ -25,7 +25,7 @@ public class CreateLogbookAttachmentRequestValidator : AbstractValidator<CreateL
         RuleFor(v => v.LogbookId)
             .NotEmpty();
 
-        //RuleFor(v => v.File.Length);
+        RuleFor(v => v.File).NotEmpty();
 
         //RuleFor(v => v.File.ContentType)
         //    .Must(HaveSupportedContentType)

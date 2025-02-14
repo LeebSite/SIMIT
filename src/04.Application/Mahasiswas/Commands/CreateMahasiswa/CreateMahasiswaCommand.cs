@@ -45,6 +45,11 @@ public class CreateMahasiswaCommandHandler : IRequestHandler<CreateMahasiswaComm
             .AsNoTracking()
             .SingleOrDefaultAsync(p => p.Id == request.PembimbingId, cancellationToken);
 
+        if (mahasiswaWithTheSameNim is not null)
+        {
+            throw new AlreadyExistsExceptions(DisplayTextFor.Mahasiswa, DisplayTextFor.Nama, request.Nama);
+        }
+
         //var mahasiswaAttachmentWithTheSameFileName = mahasiswaWithTheSameNim.Attachments
         //    .Where(x => x.FileName == request.File.FileName)
         //    .SingleOrDefault();
@@ -57,11 +62,6 @@ public class CreateMahasiswaCommandHandler : IRequestHandler<CreateMahasiswaComm
         if (pembimbing == null)
         {
             throw new NotFoundException($"Pembimbing with Nip '{request.PembimbingId}' was not found.");
-        }
-
-        if (mahasiswaWithTheSameNim is not null)
-        {
-            throw new AlreadyExistsExceptions(DisplayTextFor.Mahasiswa, DisplayTextFor.Nama, request.Nama);
         }
 
         var mahasiswa = new Mahasiswa

@@ -31,7 +31,15 @@
 						<MudTextField Label="NIM" @bind-Value="Request.Nim" Required="true" Variant="Variant.Outlined" Class="mb-3" />
 						<MudTextField Label="Kampus" @bind-Value="Request.Kampus" Required="true" Variant="Variant.Outlined" Class="mb-3" />
 						<MudDatePicker Label="Mulai Magang" @bind-Date="Request.MulaiMagang" Required="true" MinDate="DateTime.Now" ShowToolbar="false" PickerVariant="PickerVariant.Dialog" Variant="Variant.Outlined" Class="mb-3" />
-						<MudDatePicker Label="Selesai Magang" @bind-Date="Request.SelesaiMagang" Required="true" MinDate="Request.MulaiMagang" ShowToolbar="false" PickerVariant="PickerVariant.Dialog" Variant="Variant.Outlined" Class="mb-3" />
+						<MudDatePicker Label="Selesai Magang"
+									   @bind-Date="Request.SelesaiMagang"
+									   Required="true"
+									   MinDate="Request.MulaiMagang"
+									   ShowToolbar="false"
+									   PickerVariant="PickerVariant.Dialog"
+									   Variant="Variant.Outlined"
+									   Class="mb-3"
+									   Disabled="@(!Request.MulaiMagang.HasValue)" />
 						<MudTextField Label="Bagian" @bind-Value="Request.Bagian" Required="true" Variant="Variant.Outlined" Class="mb-3" />
 						<MudSelect Label="Pembimbing" @bind-Value="Request.PembimbingId" Required="true" Placeholder="Pilih Pembimbing" Variant="Variant.Outlined" Class="mb-3">
 							<MudSelectItem Value="default(Guid)">Pilih Pembimbing</MudSelectItem>

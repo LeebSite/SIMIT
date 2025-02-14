@@ -29,6 +29,8 @@ public class CreatePembimbingRequestValidator : AbstractValidator<CreatePembimbi
 
         RuleFor(v => v.Nip)
             .NotEmpty()
+            .Matches("^[0-9]+$")
+            .WithMessage("Nip hanya boleh berisi angka.")
             .MaximumLength(MaximumLengthFor.Nip);
 
         RuleFor(v => v.Jabatan)
